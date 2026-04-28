@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../assets/logo.svg';
-import RegisterForm from '../features/auth/components/RegisterForm';
+import { RegisterForm } from '../features/auth/components/RegisterForm';
 import { ThemeToggle } from '../components/common';
 
 const RegisterPage: React.FC = () => {
