@@ -1,21 +1,44 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { LandingPage, RegisterPage } from './pages';
+import { ProtectedRoute } from './routes/ProtectedRoute';
+import { PublicRoute } from './routes/PublicRoute';
+import { Toaster } from 'sonner';
 
 export const App = () => {
     return (
         <BrowserRouter>
+            <Toaster position="top-right" richColors closeButton />
             <Routes>
-                {/* Public Routes */}
+                {/* Public routes*/}
                 <Route path="/" element={<LandingPage />} />
 
-                <Route path="/login" element={<div className="p-10 dark:text-white">Página de Login en construcción...</div>} />
-                <Route path="/register" element={<RegisterPage />} />
+                {/* Auth Routes */}
+                <Route path="/login" element={
+                    <PublicRoute>
+                        <div className="p-10 dark:text-white">Página de Login en construcción...</div>
+                    </PublicRoute>
+                } />
+
+                <Route path="/register" element={
+                    <PublicRoute>
+                        <RegisterPage />
+                    </PublicRoute>
+                } />
 
                 {/* Private Routes */}
-                {/* <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} /> */}
+                <Route
+                    path="/dashboard"
+                    element={
+                        <ProtectedRoute>
+                            <div className="p-20 dark:text-white text-center">
+                                <h1 className="text-4xl font-bold">¡Bienvenido al Dashboard, cerote!</h1>
+                                <p className="mt-4 text-slate-400">Solo vos podés ver esta babosada.</p>
+                            </div>
+                        </ProtectedRoute>
+                    }
+                />
 
-                {/* Redirect any unknown route to home */}
-                <Route path="*" element={<Navigate to="/" />} />
+                <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
         </BrowserRouter>
     );
