@@ -3,7 +3,7 @@ import { Sun, Moon } from 'lucide-react';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { toggleDarkMode } from '../../store/slices/uiSlice';
 
-const ThemeToggle: React.FC = () => {
+export const ThemeToggle: React.FC = () => {
     const dispatch = useAppDispatch();
     const { darkMode } = useAppSelector((state) => state.ui);
 
@@ -34,5 +34,3 @@ const ThemeToggle: React.FC = () => {
         </button>
     );
 };
-
-export default ThemeToggle;

@@ -1,15 +1,11 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAppSelector } from '../store';
 import logo from '../assets/logo.svg';
 import Footer from '../components/layout/Footer';
-import Button from '../components/common/Button';
-import Badge from '../components/common/Badge';
-import ThemeToggle from '../components/common/ThemeToggle';
+import { ThemeToggle, Button, Badge } from '../components/common';
 
 const LandingPage: React.FC = () => {
     const navigate = useNavigate();
-    const { darkMode } = useAppSelector((state) => state.ui);
 
     return (
         <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
