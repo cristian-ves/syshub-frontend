@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { LandingPage, RegisterPage } from './pages';
+import { ForgotPasswordPage, LandingPage, LoginPage, RegisterPage } from './pages';
 import { ProtectedRoute } from './routes/ProtectedRoute';
 import { PublicRoute } from './routes/PublicRoute';
 import { Toaster } from 'sonner';
@@ -15,7 +15,13 @@ export const App = () => {
                 {/* Auth Routes */}
                 <Route path="/login" element={
                     <PublicRoute>
-                        <div className="p-10 dark:text-white">Página de Login en construcción...</div>
+                        <LoginPage />
+                    </PublicRoute>
+                } />
+
+                <Route path="/forgot-password" element={
+                    <PublicRoute>
+                        <ForgotPasswordPage />
                     </PublicRoute>
                 } />
 

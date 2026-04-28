@@ -4,7 +4,7 @@ import logo from '../assets/logo.svg';
 import Footer from '../components/layout/Footer';
 import { ThemeToggle, Button, Badge } from '../components/common';
 
-const LandingPage: React.FC = () => {
+export const LandingPage: React.FC = () => {
     const navigate = useNavigate();
 
     return (
@@ -63,5 +63,3 @@ const LandingPage: React.FC = () => {
         </div>
     );
 };
-
-export default LandingPage;

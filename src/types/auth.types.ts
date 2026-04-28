@@ -7,8 +7,13 @@ export interface RegisterRequestDTO {
     idCarrera: number;
 }
 
-export interface AuthResponse {
+export interface AuthResponseDTO {
     token: string;
     username: string;
-    roles: string[];
+    role: string;
+}
+
+export interface LoginRequestDTO {
+    username: string;
+    password: string;
 }

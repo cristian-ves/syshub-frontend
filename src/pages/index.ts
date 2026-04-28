@@ -1,2 +1,4 @@
-export { default as LandingPage } from "./LandingPage";
-export { default as RegisterPage } from "./RegisterPage";
+export * from "./LandingPage";
+export * from "./ForgotPasswordPage";
+export * from "./LoginPage";
+export * from "./RegisterPage";
