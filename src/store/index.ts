@@ -5,10 +5,12 @@ import {
     useSelector,
     type TypedUseSelectorHook,
 } from "react-redux";
+import uiSlice from "./slices/uiSlice";
 
 export const store = configureStore({
     reducer: {
         auth: authReducer,
+        ui: uiSlice,
     },
 });
 

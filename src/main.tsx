@@ -5,12 +5,12 @@ import { store } from './store/index';
 
 import './index.css'
 
-import { Syshub } from './Syshub'
+import { App } from './App'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Provider store={store}>
-      <Syshub />
+      <App />
     </Provider>
   </StrictMode>,
 )
