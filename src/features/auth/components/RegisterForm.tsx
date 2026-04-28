@@ -41,8 +41,8 @@ export const RegisterForm: React.FC = () => {
             const response = await authService.register(registerDto);
 
             dispatch(loginSuccess({
-                username: response.username,
-                token: response.token
+                token: response.token,
+                user: { username: response.username, role: response.role }
             }))
 
             console.log("adentro cerote")
@@ -121,13 +121,12 @@ export const RegisterForm: React.FC = () => {
                     />
                 </div>
 
-                <Button type="submit" className="w-full py-4 mt-2" disabled={loading}>
-                    {loading ? (
-                        <div className="flex items-center justify-center gap-2">
-                            <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                            <span>Registrando...</span>
-                        </div>
-                    ) : "Crear Cuenta"}
+                <Button
+                    type="submit"
+                    className="w-full py-4 mt-2"
+                    isLoading={loading}
+                >
+                    Crear Cuenta
                 </Button>
             </form>
 

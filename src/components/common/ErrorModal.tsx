@@ -8,7 +8,7 @@ interface ErrorModalProps {
     message: string;
 }
 
-export const ErrorModal: React.FC<ErrorModalProps> = ({ isOpen, onClose, title = "¡Hubo un clavo!", message }) => {
+export const ErrorModal: React.FC<ErrorModalProps> = ({ isOpen, onClose, title = "¡Hubo un problema!", message }) => {
     if (!isOpen) return null;
 
     return (

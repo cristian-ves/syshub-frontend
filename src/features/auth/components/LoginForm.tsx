@@ -12,6 +12,7 @@ import { Input, Button, ErrorModal } from "../../../components/common";
 import { loginFailure, loginStart, loginSuccess } from "../../../store/slices/authSlice";
 
 export const LoginForm = () => {
+
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const { loading } = useAppSelector((state: RootState) => state.auth);
@@ -28,7 +29,7 @@ export const LoginForm = () => {
             const response = await authService.login(data);
 
             dispatch(loginSuccess({
-                username: {
+                user: {
                     username: response.username,
                     role: response.role
                 },
@@ -70,8 +71,12 @@ export const LoginForm = () => {
                     </Link>
                 </div>
 
-                <Button type="submit" className="w-full" disabled={loading}>
-                    {loading ? "Entrando..." : "Iniciar Sesión"}
+                <Button
+                    type="submit"
+                    className="w-full"
+                    isLoading={loading}
+                >
+                    Iniciar Sesión
                 </Button>
             </form>
 

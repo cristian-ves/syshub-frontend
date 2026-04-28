@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { ForgotPasswordPage, LandingPage, LoginPage, RegisterPage } from './pages';
+import { ForgotPasswordPage, LandingPage, LoginPage, RegisterPage, ResetPasswordPage } from './pages';
 import { ProtectedRoute } from './routes/ProtectedRoute';
 import { PublicRoute } from './routes/PublicRoute';
 import { Toaster } from 'sonner';
@@ -30,6 +30,15 @@ export const App = () => {
                         <RegisterPage />
                     </PublicRoute>
                 } />
+
+                <Route
+                    path="/reset-password"
+                    element={
+                        <PublicRoute>
+                            <ResetPasswordPage />
+                        </PublicRoute>
+                    }
+                />
 
                 {/* Private Routes */}
                 <Route
