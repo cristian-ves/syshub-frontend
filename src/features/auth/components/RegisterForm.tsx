@@ -3,6 +3,7 @@ import { useForm, type SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Input, Select } from '../../../components/common';
 import { registerSchema, type RegisterFormValues } from '../schemas/register.schema';
+import { authService } from '../services/auth.service';
 
 export const RegisterForm: React.FC = () => {
     const {
@@ -22,8 +23,17 @@ export const RegisterForm: React.FC = () => {
         }
     });
 
-    const onSubmit: SubmitHandler<RegisterFormValues> = (data) => {
-        const { confirmPassword, ...registerDto } = data;
+    const onSubmit: SubmitHandler<RegisterFormValues> = async (data) => {
+        try {
+            const { confirmPassword, ...registerDto } = data;
+
+            console.log("Enviando a la API...", registerDto);
+            const response = await authService.register(registerDto);
+
+            console.log("¡Registro exitoso, cerote!", response);
+        } catch (error: any) {
+            alert(error);
+        }
     };
 
     const carreras = [

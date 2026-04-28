@@ -16,7 +16,7 @@ export const Input = forwardRef<HTMLInputElement, any>(({ label, error, type, ..
                     className={`w-full px-4 py-3 rounded-xl border transition-all outline-none bg-white dark:bg-slate-800 text-slate-900 dark:text-white ${error ? 'border-red-500 focus:ring-red-200' : 'border-slate-200 dark:border-slate-700 focus:ring-brand-blue/20 focus:border-brand-blue'}`}
                 />
                 {isPassword && (
-                    <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 text-slate-400 z-10">
+                    <button type="button" onClick={() => setShowPassword(!showPassword)} tabIndex={-1} className="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 text-slate-400 z-10">
                         {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                     </button>
                 )}
