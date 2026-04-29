@@ -45,11 +45,38 @@ export const authSlice = createSlice({
             state.user = null;
             state.token = null;
             state.isAuthenticated = false;
+            state.loading = false;
+            state.error = null;
             localStorage.removeItem("token");
+        },
+        setCredentials: (
+            state,
+            action: PayloadAction<{
+                username: string;
+                role: string;
+                token: string;
+            }>
+        ) => {
+            state.loading = false;
+            state.isAuthenticated = true;
+            state.user = {
+                username: action.payload.username,
+                role: action.payload.role,
+            };
+            state.token = action.payload.token;
+            localStorage.setItem("token", action.payload.token);
+        },
+        setLoading: (state, action: PayloadAction<boolean>) => {
+            state.loading = action.payload;
         },
     },
 });
 
-export const { loginStart, loginSuccess, loginFailure, logout } =
-    authSlice.actions;
+export const {
+    loginStart,
+    loginSuccess,
+    loginFailure,
+    logout,
+    setCredentials,
+} = authSlice.actions;
 export default authSlice.reducer;

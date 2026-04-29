@@ -45,7 +45,6 @@ export const RegisterForm: React.FC = () => {
                 user: { username: response.username, role: response.role }
             }))
 
-            console.log("adentro cerote")
             navigate('/dashboard')
         } catch (error: any) {
             dispatch(loginFailure(error));
@@ -83,7 +82,7 @@ export const RegisterForm: React.FC = () => {
                     />
                     <Input
                         label="Registro Académico"
-                        placeholder="202131936"
+                        placeholder="202012345"
                         error={errors.registroAcademico?.message}
                         {...register('registroAcademico')}
                     />

@@ -28,4 +28,8 @@ export const authService = {
         });
         return data;
     },
+    validateToken: async (): Promise<AuthResponseDTO> => {
+        const { data } = await api.get<AuthResponseDTO>("/auth/validate");
+        return data;
+    },
 };
