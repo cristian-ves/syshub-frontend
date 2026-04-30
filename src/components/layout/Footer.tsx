@@ -3,7 +3,7 @@ import logo from '../../assets/logo.svg';
 
 const Footer: React.FC = () => {
     return (
-        <footer className="py-10 bg-white dark:bg-slate-950 border-t border-slate-100 dark:border-slate-800 transition-colors">
+        <footer className="py-10 bg-white dark:bg-slate-950 border-t border-slate-100 dark:border-slate-800 transition-colors shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.03)] dark:shadow-none">
             <div className="max-w-7xl mx-auto px-12 flex flex-col md:flex-row justify-between items-center gap-6">
                 <div className="flex items-center gap-3">
                     <img src={logo} alt="syshub logo" className="h-6 w-auto" />

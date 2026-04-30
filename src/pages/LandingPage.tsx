@@ -1,37 +1,16 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import logo from '../assets/logo.svg';
-import Footer from '../components/layout/Footer';
-import { ThemeToggle, Button, Badge } from '../components/common';
+import { Button, Badge } from '../components/common';
 
 export const LandingPage: React.FC = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
-            {/* Navbar */}
-            <nav className="flex items-center justify-between px-6 md:px-12 py-5 bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 sticky top-0 z-50">
-                <Link to="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer">
-                    <img src={logo} alt="SysHub Logo" className="h-10 w-auto" />
-                    <span className="text-2xl font-black text-slate-950 dark:text-white tracking-tighter">
-                        sys<span className="text-brand-blue">hub</span>
-                    </span>
-                </Link>
+        <div className="h-full flex items-center justify-center p-6">
 
-                <div className="flex items-center gap-4 md:gap-6">
-                    <ThemeToggle />
-                    <Button variant="ghost" onClick={() => navigate('/login')}>
-                        Iniciar Sesión
-                    </Button>
-                    <Button onClick={() => navigate('/register')}>
-                        Empezar
-                    </Button>
-                </div>
-            </nav>
-
-            {/* Hero */}
-            <main className="flex-grow flex items-center bg-white dark:bg-slate-950">
-                <div className="max-w-7xl mx-auto px-6 md:px-12 py-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="flex-grow flex w-full">
+                <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center my-auto w-full">
                     <div>
                         <Badge>Ecosistema para Ingeniería</Badge>
                         <h1 className="text-5xl md:text-7xl leading-[1.1] dark:text-white">
@@ -58,8 +37,7 @@ export const LandingPage: React.FC = () => {
                         />
                     </div>
                 </div>
-            </main>
-            <Footer />
+            </div>
         </div>
     );
 };

@@ -4,6 +4,7 @@ import { useAppDispatch } from '../../store';
 import { setCredentials, logout, loginStart } from '../../store/slices/authSlice';
 import { authService } from '../../features/auth/services/auth.service';
 import Footer from './Footer';
+import { Navbar } from './Navbar';
 
 export const AppLayout = () => {
     const dispatch = useAppDispatch();
@@ -43,9 +44,10 @@ export const AppLayout = () => {
     }
 
     return (
-        <div className="flex flex-col min-h-screen">
-            {/* TODO: NAVBAR */}
-            <main className="flex-grow">
+        <div className="h-screen flex flex-col bg-slate-50 dark:bg-slate-950 overflow-hidden">
+            <Navbar />
+
+            <main className="flex-grow flex items-center justify-center p-6 overflow-y-auto">
                 <Outlet />
             </main>
 

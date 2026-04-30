@@ -8,9 +8,7 @@ export const ThemeToggle: React.FC = () => {
     const { darkMode } = useAppSelector((state) => state.ui);
 
     return (
-        /**
-         * Reusable toggle switch with smooth transitions
-         */
+        // Reusable toggle switch with smooth transitions
         <button
             onClick={() => dispatch(toggleDarkMode())}
             className="relative inline-flex h-10 w-20 items-center rounded-full bg-slate-200 dark:bg-slate-800 transition-colors duration-300 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900"
