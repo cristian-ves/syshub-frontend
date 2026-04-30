@@ -6,11 +6,13 @@ import {
     type TypedUseSelectorHook,
 } from "react-redux";
 import uiSlice from "./slices/uiSlice";
+import projectSlice from "./slices/projectSlice";
 
 export const store = configureStore({
     reducer: {
         auth: authReducer,
         ui: uiSlice,
+        projects: projectSlice,
     },
 });
 

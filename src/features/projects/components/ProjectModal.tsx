@@ -6,6 +6,8 @@ import type { Project } from '../../../types/project.types';
 import { Badge, Button } from '../../../components/common';
 import { AreaBadge, FeaturedBadge, FileItem, ProjectSection, ProjectTag } from './';
 import { formatDate } from '../../../helpers/date.helper';
+import { toggleProjectFeatured } from '../../../store/slices/projectSlice';
+import { useAppDispatch } from '../../../store';
 
 interface ProjectModalProps {
     project: Project | null;
@@ -15,6 +17,7 @@ interface ProjectModalProps {
 }
 
 export const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onClose, canToggleDestacado }) => {
+    const dispatch = useAppDispatch();
     if (!isOpen || !project) return null;
 
     const handleDownload = (nombreArchivo: string, nombreOriginal: string) => {
@@ -27,11 +30,13 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onC
 
     const handleToggle = async () => {
         try {
-            await projectService.toggleDestacado(project.id, !project.destacado);
+            await dispatch(toggleProjectFeatured({
+                id: project.id,
+                featured: !project.destacado
+            })).unwrap();
 
+            toast.success(project.destacado ? "Removido de destacados" : "¡Proyecto destacado!");
         } catch (error) {
-            toast.error("No se pudo actualizar el estado");
-            console.error(error);
         }
     };
 
@@ -107,11 +112,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onC
 
                     {canToggleDestacado && (
                         <footer className="mt-8 flex justify-end pt-6 border-t border-slate-100 dark:border-slate-800">
-                            <Button
-                                variant="ghost"
-                                onClick={handleToggle}
-                                className={`gap-2 ${project.destacado ? 'text-amber-500 hover:bg-amber-50' : ''}`}
-                            >
+                            <Button variant="ghost" onClick={handleToggle} className="...">
                                 <Star size={18} fill={project.destacado ? "currentColor" : "none"} />
                                 {project.destacado ? 'Quitar Destacado' : 'Marcar como Destacado'}
                             </Button>

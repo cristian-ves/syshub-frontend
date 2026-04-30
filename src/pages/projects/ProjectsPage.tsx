@@ -1,50 +1,33 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Search, Filter, Rocket } from 'lucide-react';
-import { toast } from 'sonner';
 
-import { useAppSelector } from '../../store';
-import type { PaginatedResponse, Project } from '../../types/project.types';
-import { projectService } from '../../features/projects/services/project.service';
+import { useAppDispatch, useAppSelector } from '../../store';
+import { fetchProjects } from '../../store/slices/projectSlice';
 import { Badge, Button } from '../../components/common';
-import { ProjectCard } from '../../features/projects/components/ProjectCard';
-import { ProjectModal } from '../../features/projects/components/ProjectModal';
-
+import { Pagination, ProjectCard, ProjectModal } from '../../features/projects/components';
 
 export const ProjectsPage: React.FC = () => {
-    const { user } = useAppSelector((state) => state.auth);
+    const dispatch = useAppDispatch();
 
-    const [projects, setProjects] = useState<Project[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+    const { user } = useAppSelector((state) => state.auth);
+    const { projects, loading, totalPages, currentPage } = useAppSelector((state) => state.projects);
+
+    const [selectedProjectId, setSelectedProjectId] = useState<number | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const [currentPage, setCurrentPage] = useState(0);
-    const [totalPages, setTotalPages] = useState(0);
-
-    const fetchProjects = useCallback(async (page: number) => {
-        try {
-            setLoading(true);
-            const data: PaginatedResponse<Project> = await projectService.getProjects({
-                page,
-                size: 8
-            });
-
-            setProjects(data.content);
-            setTotalPages(data.totalPages);
-            setCurrentPage(data.number);
-        } catch (error) {
-            toast.error("No se pudieron cargar los proyectos");
-        } finally {
-            setLoading(false);
-        }
-    }, []);
+    const selectedProject = projects.find(p => p.id === selectedProjectId) || null;
 
     useEffect(() => {
-        fetchProjects(0);
-    }, [fetchProjects]);
+        dispatch(fetchProjects({ page: 0, size: 8 }));
+    }, [dispatch]);
 
-    const handleOpenModal = (project: Project) => {
-        setSelectedProject(project);
+    const handlePageChange = (newPage: number) => {
+        dispatch(fetchProjects({ page: newPage, size: 8 }));
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    const handleOpenModal = (project: any) => {
+        setSelectedProjectId(project.id);
         setIsModalOpen(true);
     };
 
@@ -81,57 +64,55 @@ export const ProjectsPage: React.FC = () => {
                 </Button>
             </div>
 
-            {loading ? (
-                <div className="flex-grow flex items-center justify-center">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-blue"></div>
-                </div>
-            ) : projects.length > 0 ? (
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-                    {projects.map((project) => (
-                        <ProjectCard
-                            key={project.id}
-                            project={project}
-                            onClick={handleOpenModal}
-                        />
-                    ))}
-                </div>
-            ) : (
-                <div className="flex-grow flex flex-col items-center justify-center text-center py-20">
-                    <div className="bg-slate-100 dark:bg-slate-900 p-6 rounded-full mb-6">
-                        <Search size={40} className="text-slate-400" />
-                    </div>
-                    <h3 className="text-xl font-bold dark:text-white">No se encontraron proyectos</h3>
-                    <p className="text-slate-500 mt-2">Prueba cambiando los términos de búsqueda o filtros.</p>
-                </div>
-            )}
+            <div className="relative flex-grow flex flex-col">
 
-            {totalPages > 1 && (
-                <div className="mt-12 flex justify-center gap-2">
-                    <Button
-                        variant="ghost"
-                        disabled={currentPage === 0}
-                        onClick={() => fetchProjects(currentPage - 1)}
-                    >
-                        Anterior
-                    </Button>
-                    <div className="flex items-center px-4 font-bold text-slate-600 dark:text-slate-400">
-                        {currentPage + 1} / {totalPages}
+                {loading && projects.length === 0 ? (
+                    <div className="flex-grow flex items-center justify-center py-20">
+                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-blue"></div>
                     </div>
-                    <Button
-                        variant="ghost"
-                        disabled={currentPage + 1 === totalPages}
-                        onClick={() => fetchProjects(currentPage + 1)}
-                    >
-                        Siguiente
-                    </Button>
-                </div>
-            )}
+                ) : projects.length > 0 ? (
+                    <>
+                        {loading && (
+                            <div className="absolute inset-0 z-10 flex justify-center pt-20 bg-white/10 dark:bg-slate-950/10 backdrop-blur-[1px]">
+                                <div className="w-10 h-10 border-4 border-brand-blue/20 border-t-brand-blue rounded-full animate-spin" />
+                            </div>
+                        )}
+
+                        <div className={`transition-all duration-300 ${loading ? 'opacity-40 pointer-events-none' : 'opacity-100'}`}>
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                                {projects.map((project) => (
+                                    <ProjectCard
+                                        key={project.id}
+                                        project={project}
+                                        onClick={handleOpenModal}
+                                    />
+                                ))}
+                            </div>
+
+                            <Pagination
+                                currentPage={currentPage}
+                                totalPages={totalPages}
+                                onPageChange={handlePageChange}
+                                isLoading={loading}
+                            />
+                        </div>
+                    </>
+                ) : (
+                    <div className="flex-grow flex flex-col items-center justify-center text-center py-20">
+                        <div className="bg-slate-100 dark:bg-slate-900 p-6 rounded-full mb-6">
+                            <Search size={40} className="text-slate-400" />
+                        </div>
+                        <h3 className="text-xl font-bold dark:text-white">No se encontraron proyectos</h3>
+                        <p className="text-slate-500 mt-2">Prueba cambiando los términos de búsqueda o filtros.</p>
+                    </div>
+                )}
+            </div>
 
             <ProjectModal
                 project={selectedProject}
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
-                canToggleDestacado={user?.role === 'ROLE_AUXILIAR' || user?.role == 'ROLE_ADMIN'}
+                canToggleDestacado={user?.role === 'ROLE_AUXILIAR' || user?.role === 'ROLE_ADMIN'}
             />
         </div>
     );
