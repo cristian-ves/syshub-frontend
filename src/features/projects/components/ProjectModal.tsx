@@ -25,6 +25,16 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onC
         });
     };
 
+    const handleToggle = async () => {
+        try {
+            await projectService.toggleDestacado(project.id, !project.destacado);
+
+        } catch (error) {
+            toast.error("No se pudo actualizar el estado");
+            console.error(error);
+        }
+    };
+
     return (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
             <div className="absolute inset-0 bg-slate-950/40 backdrop-blur-sm transition-opacity" onClick={onClose} />
@@ -97,7 +107,11 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onC
 
                     {canToggleDestacado && (
                         <footer className="mt-8 flex justify-end pt-6 border-t border-slate-100 dark:border-slate-800">
-                            <Button variant="ghost" className={`gap-2 ${project.destacado ? 'text-amber-500 hover:bg-amber-50' : ''}`}>
+                            <Button
+                                variant="ghost"
+                                onClick={handleToggle}
+                                className={`gap-2 ${project.destacado ? 'text-amber-500 hover:bg-amber-50' : ''}`}
+                            >
                                 <Star size={18} fill={project.destacado ? "currentColor" : "none"} />
                                 {project.destacado ? 'Quitar Destacado' : 'Marcar como Destacado'}
                             </Button>

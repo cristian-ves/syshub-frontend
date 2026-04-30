@@ -18,8 +18,16 @@ export const projectService = {
         return data;
     },
 
-    toggleDestacado: async (projectId: number): Promise<void> => {
-        await api.patch(`/projects/${projectId}/destacado`);
+    toggleDestacado: async (
+        projectId: number,
+        isFeatured: boolean
+    ): Promise<Project> => {
+        const { data } = await api.patch<Project>(
+            `/projects/${projectId}/featured`,
+            null,
+            { params: { featured: isFeatured } }
+        );
+        return data;
     },
 
     downloadFile: async (nombreArchivo: string, originalName: string) => {

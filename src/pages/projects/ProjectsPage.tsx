@@ -131,7 +131,7 @@ export const ProjectsPage: React.FC = () => {
                 project={selectedProject}
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
-                canToggleDestacado={user?.role === 'ROLE_AUXILIAR'}
+                canToggleDestacado={user?.role === 'ROLE_AUXILIAR' || user?.role == 'ROLE_ADMIN'}
             />
         </div>
     );
