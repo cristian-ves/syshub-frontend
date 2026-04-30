@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Search, Filter, Rocket } from 'lucide-react';
-
+import { Search, Rocket } from 'lucide-react';
 import { useAppDispatch, useAppSelector } from '../../store';
-import { fetchProjects } from '../../store/slices/projectSlice';
+import { fetchProjects, projectSlice } from '../../store/slices/projectSlice';
 import { Badge, Button } from '../../components/common';
-import { Pagination, ProjectCard, ProjectModal } from '../../features/projects/components';
+import { Pagination, ProjectCard, ProjectFilters, ProjectModal } from '../../features/projects/components';
 
 export const ProjectsPage: React.FC = () => {
     const dispatch = useAppDispatch();
-
     const { user } = useAppSelector((state) => state.auth);
-    const { projects, loading, totalPages, currentPage } = useAppSelector((state) => state.projects);
+    const { projects, loading, totalPages, currentPage, filters } = useAppSelector((state) => state.projects);
 
     const [selectedProjectId, setSelectedProjectId] = useState<number | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -18,11 +16,11 @@ export const ProjectsPage: React.FC = () => {
     const selectedProject = projects.find(p => p.id === selectedProjectId) || null;
 
     useEffect(() => {
-        dispatch(fetchProjects({ page: 0, size: 8 }));
-    }, [dispatch]);
+        dispatch(fetchProjects(filters));
+    }, [dispatch, filters]);
 
     const handlePageChange = (newPage: number) => {
-        dispatch(fetchProjects({ page: newPage, size: 8 }));
+        dispatch(projectSlice.actions.setFilters({ page: newPage }));
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
@@ -33,7 +31,6 @@ export const ProjectsPage: React.FC = () => {
 
     return (
         <div className="flex-grow flex flex-col w-full max-w-6xl mx-auto px-6 md:px-12 py-10">
-
             <header className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
                 <div className="max-w-2xl">
                     <Badge>Explorador de Repositorios</Badge>
@@ -49,23 +46,9 @@ export const ProjectsPage: React.FC = () => {
                 </Button>
             </header>
 
-            <div className="flex flex-col md:flex-row gap-4 mb-10">
-                <div className="relative flex-grow">
-                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
-                    <input
-                        type="text"
-                        placeholder="Buscar por título, tag o curso..."
-                        className="w-full pl-12 pr-4 py-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 outline-none focus:ring-2 focus:ring-brand-blue/10 focus:border-brand-blue transition-all font-medium dark:text-white"
-                    />
-                </div>
-                <Button variant="ghost" className="border border-slate-200 dark:border-slate-800 rounded-2xl px-6 gap-2">
-                    <Filter size={18} />
-                    Filtros
-                </Button>
-            </div>
+            <ProjectFilters />
 
             <div className="relative flex-grow flex flex-col">
-
                 {loading && projects.length === 0 ? (
                     <div className="flex-grow flex items-center justify-center py-20">
                         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-blue"></div>
@@ -103,7 +86,7 @@ export const ProjectsPage: React.FC = () => {
                             <Search size={40} className="text-slate-400" />
                         </div>
                         <h3 className="text-xl font-bold dark:text-white">No se encontraron proyectos</h3>
-                        <p className="text-slate-500 mt-2">Prueba cambiando los términos de búsqueda o filtros.</p>
+                        <p className="text-slate-500 mt-2 text-sm">Prueba ajustando los filtros o el término de búsqueda.</p>
                     </div>
                 )}
             </div>

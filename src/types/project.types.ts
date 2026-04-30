@@ -43,6 +43,10 @@ export interface ProjectFilters {
     size?: number;
     destacado?: boolean;
     pensumId?: number;
-    semestreId?: number;
+    semestreNum?: number;
     areaId?: number;
+    tag?: string;
+    cursoNombre?: string;
+    search?: string;
+    userId?: number;
 }

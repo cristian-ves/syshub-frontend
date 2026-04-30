@@ -16,6 +16,7 @@ interface ProjectState {
     currentPage: number;
     loading: boolean;
     error: string | null;
+    filters: ProjectFilters;
 }
 
 const initialState: ProjectState = {
@@ -24,6 +25,18 @@ const initialState: ProjectState = {
     currentPage: 0,
     loading: false,
     error: null,
+    filters: {
+        page: 0,
+        size: 8,
+        destacado: undefined,
+        pensumId: undefined,
+        semestreNum: undefined,
+        areaId: undefined,
+        tag: undefined,
+        cursoNombre: undefined,
+        userId: undefined,
+        search: undefined,
+    },
 };
 
 export const fetchProjects = createAsyncThunk(
@@ -58,12 +71,26 @@ export const projectSlice = createSlice({
         clearProjectError: (state) => {
             state.error = null;
         },
+        setFilters: (state, action: PayloadAction<Partial<ProjectFilters>>) => {
+            const newPage =
+                action.payload.page !== undefined ? action.payload.page : 0;
+
+            state.filters = {
+                ...state.filters,
+                ...action.payload,
+                page: newPage,
+            };
+        },
+        resetFilters: (state) => {
+            state.filters = initialState.filters;
+        },
     },
     extraReducers: (builder) => {
         builder
-            .addCase(fetchProjects.pending, (state) => {
+            .addCase(fetchProjects.pending, (state, action) => {
                 state.loading = true;
                 state.error = null;
+                state.filters = action.meta.arg;
             })
             .addCase(
                 fetchProjects.fulfilled,
