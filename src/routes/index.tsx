@@ -11,6 +11,7 @@ import { ProtectedRoute } from './ProtectedRoute';
 import { PublicRoute } from './PublicRoute';
 import { AppLayout } from '../components/layout/AppLayout';
 import { AuthLayout } from '../components/layout/AuthLayout';
+import { ProjectsPage } from '../pages/projects/ProjectsPage';
 export const router = createBrowserRouter([
     {
         path: '/',
@@ -19,16 +20,26 @@ export const router = createBrowserRouter([
                 element: <AppLayout />,
                 children: [
                     { index: true, element: <LandingPage /> },
-                    { path: 'forgot-password', element: <PublicRoute><ForgotPasswordPage /></PublicRoute> },
-                    { path: 'reset-password', element: <PublicRoute><ResetPasswordPage /></PublicRoute> },
+                    {
+                        path: 'forgot-password',
+                        element: <PublicRoute><ForgotPasswordPage /></PublicRoute>
+                    },
+                    {
+                        path: 'reset-password',
+                        element: <PublicRoute><ResetPasswordPage /></PublicRoute>
+                    },
+                    {
+                        path: 'projects',
+                        element: <ProtectedRoute><ProjectsPage /></ProtectedRoute>
+                    },
                     {
                         path: 'dashboard',
-                        element: <ProtectedRoute><ProtectedRoute>
+                        element: <ProtectedRoute>
                             <div className="p-20 text-center">
                                 <h1 className="text-4xl font-bold dark:text-white">Dashboard</h1>
                                 <p className="text-slate-500 mt-4">Bienvenido a la plataforma.</p>
                             </div>
-                        </ProtectedRoute></ProtectedRoute>
+                        </ProtectedRoute>
                     },
                 ]
             },

@@ -44,13 +44,11 @@ export const AppLayout = () => {
     }
 
     return (
-        <div className="h-screen flex flex-col bg-slate-50 dark:bg-slate-950 overflow-hidden">
+        <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950">
             <Navbar />
-
-            <main className="flex-grow flex items-center justify-center p-6 overflow-y-auto">
+            <main className="flex-grow !flex items-center justify-center p-6">
                 <Outlet />
             </main>
-
             <Footer />
         </div>
     );

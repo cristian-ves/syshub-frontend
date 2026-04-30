@@ -1,5 +1,5 @@
-import logo from '../assets/logo.svg';
-import { ResetPasswordForm } from '../features/auth/components/ResetPasswordForm';
+import logo from '../../assets/logo.svg';
+import { ResetPasswordForm } from '../../features/auth/components/ResetPasswordForm';
 
 export const ResetPasswordPage: React.FC = () => {
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import logo from '../assets/logo.svg';
-import { Button, Badge } from '../components/common';
+import logo from '../../assets/logo.svg';
+import { Button, Badge } from '../../components/common';
 
 export const LandingPage: React.FC = () => {
     const navigate = useNavigate();
