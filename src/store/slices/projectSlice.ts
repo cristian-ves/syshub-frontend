@@ -9,7 +9,6 @@ import type {
     PaginatedResponse,
     ProjectFilters,
 } from "../../types/project.types";
-import { toast } from "sonner";
 
 interface ProjectState {
     projects: Project[];
@@ -33,9 +32,7 @@ export const fetchProjects = createAsyncThunk(
         try {
             return await projectService.getProjects(filters);
         } catch (error: any) {
-            return rejectWithValue(
-                error.response?.data?.message || "Error al cargar proyectos"
-            );
+            return rejectWithValue(error);
         }
     }
 );
@@ -49,10 +46,7 @@ export const toggleProjectFeatured = createAsyncThunk(
         try {
             return await projectService.toggleDestacado(id, featured);
         } catch (error: any) {
-            toast.error("Error al actualizar estado");
-            return rejectWithValue(
-                error.response?.data?.message || "Error en la operación"
-            );
+            return rejectWithValue(error);
         }
     }
 );
@@ -60,12 +54,16 @@ export const toggleProjectFeatured = createAsyncThunk(
 export const projectSlice = createSlice({
     name: "projects",
     initialState,
-    reducers: {},
+    reducers: {
+        clearProjectError: (state) => {
+            state.error = null;
+        },
+    },
     extraReducers: (builder) => {
         builder
-            // Fetch Projects
             .addCase(fetchProjects.pending, (state) => {
                 state.loading = true;
+                state.error = null;
             })
             .addCase(
                 fetchProjects.fulfilled,
@@ -80,8 +78,6 @@ export const projectSlice = createSlice({
                 state.loading = false;
                 state.error = action.payload as string;
             })
-
-            // Toggle Featured
             .addCase(
                 toggleProjectFeatured.fulfilled,
                 (state, action: PayloadAction<Project>) => {
@@ -96,4 +92,5 @@ export const projectSlice = createSlice({
     },
 });
 
+export const { clearProjectError } = projectSlice.actions;
 export default projectSlice.reducer;

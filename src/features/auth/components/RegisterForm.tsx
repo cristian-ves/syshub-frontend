@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, ErrorModal, Input, Select } from '../../../components/common';
 import { registerSchema, type RegisterFormValues } from '../schemas/register.schema';
-import { authService } from '../services/auth.service';
 import { useAppDispatch, useAppSelector, type RootState } from '../../../store';
 import { useNavigate } from 'react-router-dom';
-import { loginFailure, loginStart, loginSuccess } from '../../../store/slices/authSlice';
+import { registerUser } from '../../../store/slices/authSlice';
+import { toast } from 'sonner';
+import { CARRERAS } from '../../../helpers/carreras.helper';
 
 export const RegisterForm: React.FC = () => {
 
@@ -35,30 +36,14 @@ export const RegisterForm: React.FC = () => {
 
     const onSubmit: SubmitHandler<RegisterFormValues> = async (data) => {
         try {
-            dispatch(loginStart());
             const { confirmPassword, ...registerDto } = data;
-
-            const response = await authService.register(registerDto);
-
-            dispatch(loginSuccess({
-                token: response.token,
-                user: { username: response.username, role: response.role }
-            }))
-
-            navigate('/dashboard')
+            await dispatch(registerUser(registerDto)).unwrap();
+            toast.success("Cuenta creada exitosamente");
+            navigate('/dashboard');
         } catch (error: any) {
-            dispatch(loginFailure(error));
             setErrorMsg(error);
         }
     };
-
-    const carreras = [
-        { id: 1, nombre: "Ingeniería en Ciencias y Sistemas" },
-        { id: 2, nombre: "Ingeniería Mecánica" },
-        { id: 3, nombre: "Ingeniería Mecánica Industrial" },
-        { id: 4, nombre: "Ingeniería Civil" },
-        { id: 5, nombre: "Ingeniería Industrial" },
-    ];
 
     return (
         <>
@@ -98,7 +83,7 @@ export const RegisterForm: React.FC = () => {
 
                 <Select
                     label="Carrera"
-                    options={carreras}
+                    options={CARRERAS}
                     error={errors.idCarrera?.message}
                     {...register('idCarrera', { valueAsNumber: true })}
                 />

@@ -6,10 +6,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 
 import { loginSchema, type LoginFormValues } from "../schemas/login.schema";
-import { authService } from "../services/auth.service";
 import { useAppDispatch, useAppSelector, type RootState } from "../../../store";
 import { Input, Button, ErrorModal } from "../../../components/common";
-import { loginFailure, loginStart, loginSuccess } from "../../../store/slices/authSlice";
+import { loginUser } from "../../../store/slices/authSlice";
 
 export const LoginForm = () => {
 
@@ -25,21 +24,10 @@ export const LoginForm = () => {
 
     const onSubmit = async (data: LoginFormValues) => {
         try {
-            dispatch(loginStart());
-            const response = await authService.login(data);
-
-            dispatch(loginSuccess({
-                user: {
-                    username: response.username,
-                    role: response.role
-                },
-                token: response.token
-            }));
-
+            const response = await dispatch(loginUser(data)).unwrap();
             toast.success(`¡Qué tal, ${response.username}! Bienvenido.`);
             navigate("/dashboard");
         } catch (error: any) {
-            dispatch(loginFailure(error));
             setErrorMsg(error);
         }
     };
