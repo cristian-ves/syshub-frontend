@@ -26,7 +26,7 @@ export const LoginForm = () => {
         try {
             const response = await dispatch(loginUser(data)).unwrap();
             toast.success(`¡Qué tal, ${response.username}! Bienvenido.`);
-            navigate("/dashboard");
+            navigate("/me");
         } catch (error: any) {
             setErrorMsg(error);
         }

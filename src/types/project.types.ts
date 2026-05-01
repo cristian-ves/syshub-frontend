@@ -48,5 +48,5 @@ export interface ProjectFilters {
     tag?: string;
     cursoNombre?: string;
     search?: string;
-    userId?: number;
+    userId?: string;
 }

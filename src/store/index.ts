@@ -7,12 +7,14 @@ import {
 } from "react-redux";
 import uiSlice from "./slices/uiSlice";
 import projectSlice from "./slices/projectSlice";
+import myProjectsSlice from "./slices/myProjectsSlice";
 
 export const store = configureStore({
     reducer: {
         auth: authReducer,
         ui: uiSlice,
         projects: projectSlice,
+        myProjects: myProjectsSlice,
     },
 });
 

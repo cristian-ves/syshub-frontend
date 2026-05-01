@@ -1,11 +1,23 @@
-export const MyProjectsPage = () => {
-    return (
-        <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-800">
-            <h2 className="text-xl font-bold mb-4">Mis Proyectos</h2>
+import { Folder } from "lucide-react";
+import { ProjectList } from "../../features/projects/components/ProjectList";
+import { useMyProjects } from "../../hooks/useMyProjects";
 
-            <p className="text-slate-500 text-sm">
-                Aquí se mostrarán los proyectos del usuario.
-            </p>
-        </div>
+export const MyProjectsPage = () => {
+
+    const { projects, loading, currentPage, totalPages, fetchPage } =
+        useMyProjects();
+
+    return (
+        <ProjectList
+            projects={projects}
+            loading={loading}
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={fetchPage}
+            emptyIcon={<Folder size={32} className="text-slate-400" />}
+            emptyTitle="No has subido proyectos"
+            emptySubtitle="Empieza subiendo tu primer proyecto"
+            emptyActionPath="/projects/create"
+        />
     );
 };

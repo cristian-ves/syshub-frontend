@@ -98,10 +98,9 @@ export const projectSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(fetchProjects.pending, (state, action) => {
+            .addCase(fetchProjects.pending, (state) => {
                 state.loading = true;
                 state.error = null;
-                state.filters = action.meta.arg;
             })
             .addCase(
                 fetchProjects.fulfilled,
@@ -130,5 +129,6 @@ export const projectSlice = createSlice({
     },
 });
 
-export const { clearProjectError } = projectSlice.actions;
+export const { clearProjectError, setFilters, resetFilters } =
+    projectSlice.actions;
 export default projectSlice.reducer;
