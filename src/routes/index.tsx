@@ -5,15 +5,16 @@ import {
     LandingPage,
     ForgotPasswordPage,
     ResetPasswordPage,
-    MyProfilePage
+    ProfileInfoPage,
+    MyProjectsPage,
 } from '../pages';
 
 import { ProtectedRoute } from './ProtectedRoute';
 import { PublicRoute } from './PublicRoute';
-import { AppLayout } from '../components/layout/AppLayout';
-import { AuthLayout } from '../components/layout/AuthLayout';
 import { ProjectsPage } from '../pages/projects/ProjectsPage';
 import { CreateProjectPage } from '../pages/projects/CreateProjectPage';
+import { MyProfileLayout } from '../components/layout/MyProfileLayout';
+import { AppLayout, AuthLayout } from '../components/layout';
 export const router = createBrowserRouter([
     {
         path: '/',
@@ -39,8 +40,13 @@ export const router = createBrowserRouter([
                         element: <ProtectedRoute><CreateProjectPage /></ProtectedRoute>
                     },
                     {
-                        path: 'me',
-                        element: <ProtectedRoute><MyProfilePage /></ProtectedRoute>
+                        path: 'profile',
+                        element: <ProtectedRoute><MyProfileLayout /></ProtectedRoute>,
+                        children: [
+                            { index: true, element: <Navigate to="info" replace /> },
+                            { path: 'info', element: <ProfileInfoPage /> },
+                            { path: 'projects', element: <MyProjectsPage /> },
+                        ]
                     },
                 ]
             },
