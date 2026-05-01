@@ -9,3 +9,4 @@ export * from "./Pagination";
 export * from "./ProjectFilters";
 export * from "./createProject/CourseSearchInput";
 export * from "./createProject/TagInput";
+export * from "./createProject/FileUpload";

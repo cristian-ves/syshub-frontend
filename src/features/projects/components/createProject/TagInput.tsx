@@ -72,7 +72,7 @@ export const TagInput: React.FC<Props> = ({ value, onChange, error }) => {
             </div>
 
             {showPicker && (
-                <div className="absolute z-30 mt-2 p-3 bg-white dark:bg-slate-900 rounded-xl shadow-lg border border-slate-200 dark:border-slate-700">
+                <div className="right-0 absolute z-30 p-3 bg-white dark:bg-slate-900 rounded-xl shadow-lg border border-slate-200 dark:border-slate-700">
                     <div className="flex justify-between items-center mb-2">
                         <span className="text-xs font-medium text-slate-500">
                             Seleccionar color

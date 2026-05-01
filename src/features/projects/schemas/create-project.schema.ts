@@ -13,7 +13,7 @@ export const createProjectSchema = z.object({
             })
         )
         .min(1, "Agrega al menos una tag"),
-    files: z.any().optional(),
+    files: z.array(z.instanceof(File)).optional(),
 });
 
 export type CreateProjectFormValues = z.infer<typeof createProjectSchema>;

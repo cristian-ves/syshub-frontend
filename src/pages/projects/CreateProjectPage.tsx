@@ -10,7 +10,7 @@ import { useAppDispatch } from "../../store";
 import { createProject } from "../../store/slices/projectSlice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { CourseSearchInput, TagInput } from "../../features/projects/components";
+import { CourseSearchInput, FileUpload, TagInput } from "../../features/projects/components";
 
 
 export const CreateProjectPage: React.FC = () => {
@@ -22,6 +22,13 @@ export const CreateProjectPage: React.FC = () => {
     const handleTagsChange = (newTags: any[]) => {
         setTags(newTags);
         setValue("tags", newTags, { shouldValidate: true });
+    };
+
+    const [files, setFiles] = useState<File[]>([]);
+
+    const handleFilesChange = (newFiles: File[]) => {
+        setFiles(newFiles);
+        setValue("files", newFiles, { shouldValidate: true });
     };
 
     const {
@@ -117,17 +124,13 @@ export const CreateProjectPage: React.FC = () => {
                 <TagInput value={tags} onChange={handleTagsChange} error={errors.tags?.message} />
                 <input type="hidden" {...register("tags")} />
 
-                <div>
-                    <label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1.5 ml-1">
-                        Archivos
-                    </label>
-                    <input
-                        type="file"
-                        multiple
-                        {...register("files")}
-                        className="block w-full text-sm text-slate-600 dark:text-slate-300"
-                    />
-                </div>
+                <FileUpload
+                    value={files}
+                    onChange={handleFilesChange}
+                    error={errors.files?.message}
+                />
+
+                <input type="hidden" {...register("files")} />
 
                 <Button
                     type="submit"
