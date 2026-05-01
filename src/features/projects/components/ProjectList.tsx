@@ -1,8 +1,9 @@
-import { Search } from "lucide-react";
+import { Rocket, Search } from "lucide-react";
 import { Pagination, ProjectCard, ProjectModal } from ".";
 import { useProjectModal } from "../../../hooks/useProjectModal";
 import type { Project } from "../../../types/project.types";
 import { useNavigate } from "react-router-dom";
+import { Button } from "../../../components/common";
 
 interface Props {
     projects: Project[];
@@ -57,17 +58,18 @@ export const ProjectList: React.FC<Props> = ({
                     {emptyTitle}
                 </h3>
 
-                <p className="text-sm text-slate-500 mt-1">
+                <p className="text-sm text-slate-500 mt-1 mb-3">
                     {emptySubtitle}
                 </p>
 
                 {emptyActionPath &&
-                    <button
+                    <Button
+                        className="gap-2 shadow-lg shadow-brand-blue/20"
                         onClick={() => navigate(emptyActionPath)}
-                        className="btn-primary mt-4"
                     >
+                        <Rocket size={18} />
                         Subir Proyecto
-                    </button>
+                    </Button>
                 }
             </div>
         );
