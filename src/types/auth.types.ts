@@ -9,8 +9,14 @@ export interface RegisterRequestDTO {
 
 export interface AuthResponseDTO {
     token: string;
+    id: string;
     username: string;
+    email: string;
     role: string;
+    nombreCompleto: string;
+    registroAcademico: string;
+    carreraId: number;
+    carreraNombre: string;
 }
 
 export interface LoginRequestDTO {

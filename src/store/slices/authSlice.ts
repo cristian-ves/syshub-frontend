@@ -9,9 +9,19 @@ import type {
     RegisterRequestDTO,
     AuthResponseDTO,
 } from "../../types/auth.types";
+import { userService } from "../../features/profile/services/user.service";
 
 interface AuthState {
-    user: { username: string; role: string } | null;
+    user: {
+        id: string;
+        username: string;
+        email: string;
+        role: string;
+        nombreCompleto: string;
+        registroAcademico?: string;
+        carreraId?: number;
+        carreraNombre?: string;
+    } | null;
     token: string | null;
     isAuthenticated: boolean;
     loading: boolean;
@@ -36,7 +46,9 @@ export const loginUser = createAsyncThunk(
             localStorage.setItem("token", data.token);
             return data;
         } catch (error: any) {
-            return rejectWithValue(error);
+            return rejectWithValue(
+                error.response?.data?.message || "Error al iniciar sesión"
+            );
         }
     }
 );
@@ -49,7 +61,9 @@ export const registerUser = createAsyncThunk(
             localStorage.setItem("token", data.token);
             return data;
         } catch (error: any) {
-            return rejectWithValue(error);
+            return rejectWithValue(
+                error.response?.data?.message || "Error al registrarse"
+            );
         }
     }
 );
@@ -67,6 +81,19 @@ export const checkAuth = createAsyncThunk(
     }
 );
 
+export const updateUserProfile = createAsyncThunk(
+    "auth/updateProfile",
+    async ({ id, data }: { id: string; data: any }, { rejectWithValue }) => {
+        try {
+            return await userService.updateProfile(id, data);
+        } catch (error: any) {
+            return rejectWithValue(
+                error.response?.data?.message || "Error al actualizar perfil"
+            );
+        }
+    }
+);
+
 export const authSlice = createSlice({
     name: "auth",
     initialState,
@@ -79,6 +106,9 @@ export const authSlice = createSlice({
             state.error = null;
             localStorage.removeItem("token");
         },
+        clearError: (state) => {
+            state.error = null;
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -86,61 +116,59 @@ export const authSlice = createSlice({
                 state.loading = true;
                 state.error = null;
             })
-            .addCase(
-                loginUser.fulfilled,
-                (state, action: PayloadAction<AuthResponseDTO>) => {
-                    state.loading = false;
-                    state.isAuthenticated = true;
-                    state.user = {
-                        username: action.payload.username,
-                        role: action.payload.role,
-                    };
-                    state.token = action.payload.token;
-                }
-            )
+            .addCase(updateUserProfile.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+
             .addCase(loginUser.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload as string;
             })
-            .addCase(registerUser.pending, (state) => {
-                state.loading = true;
-                state.error = null;
-            })
-            .addCase(
-                registerUser.fulfilled,
-                (state, action: PayloadAction<AuthResponseDTO>) => {
-                    state.loading = false;
-                    state.isAuthenticated = true;
-                    state.user = {
-                        username: action.payload.username,
-                        role: action.payload.role,
-                    };
-                    state.token = action.payload.token;
-                }
-            )
-            .addCase(registerUser.rejected, (state, action) => {
+            .addCase(updateUserProfile.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload as string;
             })
-            .addCase(
-                checkAuth.fulfilled,
-                (state, action: PayloadAction<AuthResponseDTO>) => {
-                    state.isInitializing = false;
-                    state.isAuthenticated = true;
-                    state.user = {
-                        username: action.payload.username,
-                        role: action.payload.role,
-                    };
-                }
-            )
             .addCase(checkAuth.rejected, (state) => {
                 state.isInitializing = false;
                 state.isAuthenticated = false;
                 state.user = null;
                 state.token = null;
-            });
+                localStorage.removeItem("token");
+            })
+            .addMatcher(
+                (action): action is PayloadAction<AuthResponseDTO> =>
+                    [
+                        loginUser.fulfilled.type,
+                        registerUser.fulfilled.type,
+                        checkAuth.fulfilled.type,
+                        updateUserProfile.fulfilled.type,
+                    ].includes(action.type),
+                (state: AuthState, action: PayloadAction<AuthResponseDTO>) => {
+                    state.loading = false;
+                    state.isInitializing = false;
+                    state.isAuthenticated = true;
+
+                    if (action.payload.token) {
+                        state.token = action.payload.token;
+                        localStorage.setItem("token", action.payload.token);
+                    }
+
+                    state.user = {
+                        id: action.payload.id,
+                        username: action.payload.username,
+                        email: action.payload.email,
+                        role: action.payload.role,
+                        nombreCompleto: action.payload.nombreCompleto,
+                        registroAcademico: action.payload.registroAcademico,
+                        carreraId: action.payload.carreraId,
+                        carreraNombre: action.payload.carreraNombre,
+                    };
+                    state.error = null;
+                }
+            );
     },
 });
 
-export const { logout } = authSlice.actions;
+export const { logout, clearError } = authSlice.actions;
 export default authSlice.reducer;

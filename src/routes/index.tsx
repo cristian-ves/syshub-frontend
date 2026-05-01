@@ -4,7 +4,8 @@ import {
     RegisterPage,
     LandingPage,
     ForgotPasswordPage,
-    ResetPasswordPage
+    ResetPasswordPage,
+    MyProfilePage
 } from '../pages';
 
 import { ProtectedRoute } from './ProtectedRoute';
@@ -38,13 +39,8 @@ export const router = createBrowserRouter([
                         element: <ProtectedRoute><CreateProjectPage /></ProtectedRoute>
                     },
                     {
-                        path: 'dashboard',
-                        element: <ProtectedRoute>
-                            <div className="p-20 text-center">
-                                <h1 className="text-4xl font-bold dark:text-white">Dashboard</h1>
-                                <p className="text-slate-500 mt-4">Bienvenido a la plataforma.</p>
-                            </div>
-                        </ProtectedRoute>
+                        path: 'me',
+                        element: <ProtectedRoute><MyProfilePage /></ProtectedRoute>
                     },
                 ]
             },

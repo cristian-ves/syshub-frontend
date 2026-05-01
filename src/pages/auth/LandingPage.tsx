@@ -2,9 +2,11 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import logo from '../../assets/logo.svg';
 import { Button, Badge } from '../../components/common';
+import { useAppSelector } from '../../store';
 
 export const LandingPage: React.FC = () => {
     const navigate = useNavigate();
+    const { isAuthenticated } = useAppSelector((state) => state.auth);
 
     return (
         <div className="h-full flex items-center justify-center p-6">
@@ -22,9 +24,15 @@ export const LandingPage: React.FC = () => {
                             Centraliza tus cursos, foros y proyectos en un solo lugar.
                         </p>
                         <div className="mt-12 flex flex-col sm:flex-row gap-5">
-                            <Button className="text-lg py-4 px-10" onClick={() => navigate('/register')}>
-                                Crear Cuenta
-                            </Button>
+                            {isAuthenticated ?
+
+                                (<Button className="text-lg py-4 px-10" onClick={() => navigate('/me')}>
+                                    Ver mi perfil
+                                </Button>) :
+                                (<Button className="text-lg py-4 px-10" onClick={() => navigate('/register')}>
+                                    Crear Cuenta
+                                </Button>)
+                            }
                         </div>
                     </div>
 
