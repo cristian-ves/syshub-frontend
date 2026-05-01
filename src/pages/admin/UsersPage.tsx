@@ -2,8 +2,10 @@ import { Plus, Users, Loader2 } from "lucide-react";
 import { Button, Badge, Pagination } from "../../components/common";
 import { UserCard } from "../../features/admin/components/UserCard";
 import { useAdminUsers } from "../../hooks/admin/useAdminUsers";
+import { useNavigate } from "react-router-dom";
 
 export const UsersPage = () => {
+    const navigate = useNavigate();
     const { users, loading, totalPages, currentPage, fetchPage } = useAdminUsers();
 
     return (
@@ -17,7 +19,7 @@ export const UsersPage = () => {
                     </h1>
                 </div>
 
-                <Button className="gap-2 shadow-xl shadow-brand-blue/20 py-6 px-8 rounded-2xl">
+                <Button className="gap-2 shadow-xl shadow-brand-blue/20 py-6 px-8 rounded-2xl" onClick={() => navigate("/users/create")}>
                     <Plus size={20} />
                     Crear Usuario
                 </Button>

@@ -26,6 +26,17 @@ const initialState: AdminState = {
     error: null,
 };
 
+export const createUserAction = createAsyncThunk(
+    "admin/createUser",
+    async (data: any, { rejectWithValue }) => {
+        try {
+            return await adminService.createUser(data);
+        } catch (error: any) {
+            return rejectWithValue(error || "Error al crear usuario");
+        }
+    }
+);
+
 export const fetchUsers = createAsyncThunk(
     "admin/fetchUsers",
     async (
@@ -111,6 +122,12 @@ const adminSlice = createSlice({
                         state.users[index] = action.payload;
                     }
                     toast.success("Usuario actualizado");
+                }
+            )
+            .addCase(
+                createUserAction.fulfilled,
+                (state, action: PayloadAction<UserResponse>) => {
+                    state.users = [action.payload, ...state.users];
                 }
             );
     },

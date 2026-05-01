@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-    userAdminSchema,
-    type UserAdminFormValues,
-} from "../../features/admin/schemas/user-admin.schema";
 import { useAppDispatch } from "../../store";
 import {
     deleteUserAction,
     updateUserAction,
 } from "../../store/slices/adminSlice";
+import {
+    updateUserSchema,
+    type UpdateUserFormValues,
+} from "../../features/admin/schemas/user-admin.schema";
 
 export const useUserCard = (user: any) => {
     const dispatch = useAppDispatch();
@@ -17,8 +17,8 @@ export const useUserCard = (user: any) => {
     const [isLoading, setIsLoading] = useState(false);
     const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-    const form = useForm<UserAdminFormValues>({
-        resolver: zodResolver(userAdminSchema) as any,
+    const form = useForm<UpdateUserFormValues>({
+        resolver: zodResolver(updateUserSchema) as any,
         defaultValues: {
             nombreCompleto: user.nombreCompleto,
             username: user.username,
@@ -31,7 +31,7 @@ export const useUserCard = (user: any) => {
         },
     });
 
-    const handleUpdate = async (data: UserAdminFormValues) => {
+    const handleUpdate = async (data: UpdateUserFormValues) => {
         setIsLoading(true);
         try {
             const payload = { ...data };

@@ -7,6 +7,8 @@ import {
     ResetPasswordPage,
     ProfileInfoPage,
     MyProjectsPage,
+    UsersPage,
+    CreateUserPage,
 } from '../pages';
 
 import { ProtectedRoute } from './ProtectedRoute';
@@ -16,7 +18,6 @@ import { CreateProjectPage } from '../pages/projects/CreateProjectPage';
 import { MyProfileLayout } from '../components/layout/MyProfileLayout';
 import { AppLayout, AuthLayout } from '../components/layout';
 import { AdminRoute } from './AdminRoute';
-import { UsersPage } from '../pages/admin/UsersPage';
 export const router = createBrowserRouter([
     {
         path: '/',
@@ -44,6 +45,10 @@ export const router = createBrowserRouter([
                     {
                         path: 'users',
                         element: <ProtectedRoute><AdminRoute><UsersPage /></AdminRoute></ProtectedRoute>
+                    },
+                    {
+                        path: 'users/create',
+                        element: <ProtectedRoute><AdminRoute><CreateUserPage /></AdminRoute></ProtectedRoute>
                     },
                     {
                         path: 'profile',
