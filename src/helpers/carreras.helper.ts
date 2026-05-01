@@ -5,3 +5,7 @@ export const CARRERAS = [
     { id: 4, nombre: "Ingeniería Civil" },
     { id: 5, nombre: "Ingeniería Industrial" },
 ];
+
+export const getCarreraNombre = (id: number) => {
+    return CARRERAS.find((c) => c.id === id)?.nombre || "No asignada";
+};

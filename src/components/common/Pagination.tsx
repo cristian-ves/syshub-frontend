@@ -1,6 +1,6 @@
 import React from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { Button } from '../../../components/common';
+import { Button } from '.';
 
 interface PaginationProps {
     currentPage: number;

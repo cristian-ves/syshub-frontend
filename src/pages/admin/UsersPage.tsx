@@ -1,18 +1,10 @@
-import { useEffect } from "react";
-import { Plus, Users } from "lucide-react";
-import { Button, Badge } from "../../components/common";
+import { Plus, Users, Loader2 } from "lucide-react";
+import { Button, Badge, Pagination } from "../../components/common";
 import { UserCard } from "../../features/admin/components/UserCard";
-import { useAppDispatch, useAppSelector } from "../../store";
-import { fetchUsers } from "../../store/slices/adminSlice";
+import { useAdminUsers } from "../../hooks/admin/useAdminUsers";
 
 export const UsersPage = () => {
-    const dispatch = useAppDispatch();
-    const { users, loading } = useAppSelector(state => state.admin);
-
-    useEffect(() => {
-        dispatch(fetchUsers({ page: 0, size: 10 }));
-    }, [dispatch]);
-
+    const { users, loading, totalPages, currentPage, fetchPage } = useAdminUsers();
 
     return (
         <div className="max-w-6xl mx-auto px-6 py-10">
@@ -31,20 +23,36 @@ export const UsersPage = () => {
                 </Button>
             </header>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                {loading ? (
-                    <p className="text-slate-500">Cargando usuarios...</p>
-                ) : (
-                    users.map((u: any) => (
-                        <UserCard key={u.id} user={u} />
-                    ))
-                )}
-            </div>
+            {loading && users.length === 0 ? (
+                <div className="flex flex-col items-center justify-center py-20">
+                    <Loader2 className="w-10 h-10 text-brand-blue animate-spin mb-4" />
+                    <p className="text-slate-500 font-medium">Cargando usuarios...</p>
+                </div>
+            ) : (
+                <div className="space-y-10">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        {users.map((u) => (
+                            <UserCard key={u.id} user={u} />
+                        ))}
+                    </div>
 
-            {!loading && users.length === 0 && (
-                <div className="text-center py-20 bg-slate-50 dark:bg-slate-900/50 rounded-[2rem] border border-dashed border-slate-200 dark:border-slate-800">
-                    <Users className="mx-auto text-slate-300 mb-4" size={48} />
-                    <p className="text-slate-500">No hay usuarios registrados.</p>
+                    {!loading && users.length === 0 && (
+                        <div className="text-center py-20 bg-slate-50 dark:bg-slate-900/50 rounded-[2rem] border border-dashed border-slate-200 dark:border-slate-800">
+                            <Users className="mx-auto text-slate-300 mb-4" size={48} />
+                            <p className="text-slate-500 font-medium">No hay usuarios registrados.</p>
+                        </div>
+                    )}
+
+                    {totalPages > 1 && (
+                        <div className="pt-6">
+                            <Pagination
+                                currentPage={currentPage}
+                                totalPages={totalPages}
+                                onPageChange={fetchPage}
+                                isLoading={loading}
+                            />
+                        </div>
+                    )}
                 </div>
             )}
         </div>

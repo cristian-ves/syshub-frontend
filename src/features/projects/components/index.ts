@@ -5,7 +5,6 @@ export * from "./ProjectCard";
 export * from "./ProjectModal";
 export * from "./ProjectSection";
 export * from "./ProjectTag";
-export * from "./Pagination";
 export * from "./ProjectFilters";
 export * from "./createProject/CourseSearchInput";
 export * from "./createProject/TagInput";

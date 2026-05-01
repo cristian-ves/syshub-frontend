@@ -15,6 +15,7 @@ export const useUserCard = (user: any) => {
     const dispatch = useAppDispatch();
     const [isEditing, setIsEditing] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
     const form = useForm<UserAdminFormValues>({
         resolver: zodResolver(userAdminSchema) as any,
@@ -32,18 +33,19 @@ export const useUserCard = (user: any) => {
 
     const handleUpdate = async (data: UserAdminFormValues) => {
         setIsLoading(true);
-        const payload = { ...data };
-        if (!payload.password) delete payload.password;
+        try {
+            const payload = { ...data };
+            if (!payload.password) delete payload.password;
 
-        const result = await dispatch(
-            updateUserAction({ id: user.id, data: payload })
-        );
-
-        if (updateUserAction.fulfilled.match(result)) {
+            await dispatch(
+                updateUserAction({ id: user.id, data: payload })
+            ).unwrap();
             setIsEditing(false);
-            form.reset(data);
+        } catch (error: any) {
+            setErrorMsg(error);
+        } finally {
+            setIsLoading(false);
         }
-        setIsLoading(false);
     };
 
     const handleDelete = async () => {
@@ -53,7 +55,12 @@ export const useUserCard = (user: any) => {
             )
         )
             return;
-        dispatch(deleteUserAction(user.id));
+
+        try {
+            await dispatch(deleteUserAction(user.id)).unwrap();
+        } catch (error: any) {
+            setErrorMsg(error);
+        }
     };
 
     return {
@@ -61,6 +68,8 @@ export const useUserCard = (user: any) => {
         isEditing,
         setIsEditing,
         isLoading,
+        errorMsg,
+        setErrorMsg,
         handleDelete,
         onSubmit: form.handleSubmit(handleUpdate),
     };

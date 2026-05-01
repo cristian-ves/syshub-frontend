@@ -1,9 +1,9 @@
 import { Rocket, Search } from "lucide-react";
-import { Pagination, ProjectCard, ProjectModal } from ".";
+import { ProjectCard, ProjectModal } from ".";
 import { useProjectModal } from "../../../hooks/useProjectModal";
 import type { Project } from "../../../types/project.types";
 import { useNavigate } from "react-router-dom";
-import { Button } from "../../../components/common";
+import { Button, Pagination } from "../../../components/common";
 
 interface Props {
     projects: Project[];
