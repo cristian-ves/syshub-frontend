@@ -47,4 +47,13 @@ export const projectService = {
         document.body.removeChild(link);
         window.URL.revokeObjectURL(url);
     },
+
+    createProject: async (formData: FormData): Promise<Project> => {
+        const { data } = await api.post("/projects", formData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        });
+        return data;
+    },
 };

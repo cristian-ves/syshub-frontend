@@ -5,7 +5,7 @@ import { NAV_ITEMS } from './nav-config';
 export const NavLinks = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const isActive = (path: string) => location.pathname === path;
+    const isActive = (path: string) => location.pathname.startsWith(path);
 
     return (
         <div className="hidden md:flex items-center gap-2">
@@ -15,8 +15,8 @@ export const NavLinks = () => {
                     variant="ghost"
                     onClick={() => navigate(item.path)}
                     className={`relative transition-all ${isActive(item.path)
-                            ? 'text-brand-blue dark:text-blue-400 bg-blue-50/50 dark:bg-blue-900/20'
-                            : 'text-slate-600 dark:text-slate-400'
+                        ? 'text-brand-blue dark:text-blue-400 bg-blue-50/50 dark:bg-blue-900/20'
+                        : 'text-slate-600 dark:text-slate-400'
                         }`}
                 >
                     {item.name}

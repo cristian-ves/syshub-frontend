@@ -4,8 +4,10 @@ import { useAppDispatch, useAppSelector } from '../../store';
 import { fetchProjects, projectSlice } from '../../store/slices/projectSlice';
 import { Badge, Button } from '../../components/common';
 import { Pagination, ProjectCard, ProjectFilters, ProjectModal } from '../../features/projects/components';
+import { useNavigate } from 'react-router-dom';
 
 export const ProjectsPage: React.FC = () => {
+    const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const { user } = useAppSelector((state) => state.auth);
     const { projects, loading, totalPages, currentPage, filters } = useAppSelector((state) => state.projects);
@@ -40,7 +42,10 @@ export const ProjectsPage: React.FC = () => {
                     </h1>
                 </div>
 
-                <Button className="gap-2 shadow-lg shadow-brand-blue/20">
+                <Button
+                    className="gap-2 shadow-lg shadow-brand-blue/20"
+                    onClick={() => navigate('/projects/create')}
+                >
                     <Rocket size={18} />
                     Subir Proyecto
                 </Button>

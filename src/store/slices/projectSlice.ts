@@ -64,6 +64,17 @@ export const toggleProjectFeatured = createAsyncThunk(
     }
 );
 
+export const createProject = createAsyncThunk(
+    "projects/create",
+    async (formData: FormData, { rejectWithValue }) => {
+        try {
+            return await projectService.createProject(formData);
+        } catch (error: any) {
+            return rejectWithValue(error);
+        }
+    }
+);
+
 export const projectSlice = createSlice({
     name: "projects",
     initialState,

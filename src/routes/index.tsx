@@ -12,6 +12,7 @@ import { PublicRoute } from './PublicRoute';
 import { AppLayout } from '../components/layout/AppLayout';
 import { AuthLayout } from '../components/layout/AuthLayout';
 import { ProjectsPage } from '../pages/projects/ProjectsPage';
+import { CreateProjectPage } from '../pages/projects/CreateProjectPage';
 export const router = createBrowserRouter([
     {
         path: '/',
@@ -31,6 +32,10 @@ export const router = createBrowserRouter([
                     {
                         path: 'projects',
                         element: <ProtectedRoute><ProjectsPage /></ProtectedRoute>
+                    },
+                    {
+                        path: 'projects/create',
+                        element: <ProtectedRoute><CreateProjectPage /></ProtectedRoute>
                     },
                     {
                         path: 'dashboard',
