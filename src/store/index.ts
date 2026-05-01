@@ -8,6 +8,7 @@ import {
 import uiSlice from "./slices/uiSlice";
 import projectSlice from "./slices/projectSlice";
 import myProjectsSlice from "./slices/myProjectsSlice";
+import adminSlice from "./slices/adminSlice";
 
 export const store = configureStore({
     reducer: {
@@ -15,6 +16,7 @@ export const store = configureStore({
         ui: uiSlice,
         projects: projectSlice,
         myProjects: myProjectsSlice,
+        admin: adminSlice,
     },
 });
 

@@ -39,7 +39,7 @@ export const RegisterForm: React.FC = () => {
             const { confirmPassword, ...registerDto } = data;
             await dispatch(registerUser(registerDto)).unwrap();
             toast.success("Cuenta creada exitosamente");
-            navigate('/dashboard');
+            navigate('/profile');
         } catch (error: any) {
             setErrorMsg(error);
         }

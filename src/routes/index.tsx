@@ -15,6 +15,8 @@ import { ProjectsPage } from '../pages/projects/ProjectsPage';
 import { CreateProjectPage } from '../pages/projects/CreateProjectPage';
 import { MyProfileLayout } from '../components/layout/MyProfileLayout';
 import { AppLayout, AuthLayout } from '../components/layout';
+import { AdminRoute } from './AdminRoute';
+import { UsersPage } from '../pages/admin/UsersPage';
 export const router = createBrowserRouter([
     {
         path: '/',
@@ -38,6 +40,10 @@ export const router = createBrowserRouter([
                     {
                         path: 'projects/create',
                         element: <ProtectedRoute><CreateProjectPage /></ProtectedRoute>
+                    },
+                    {
+                        path: 'users',
+                        element: <ProtectedRoute><AdminRoute><UsersPage /></AdminRoute></ProtectedRoute>
                     },
                     {
                         path: 'profile',

@@ -26,7 +26,7 @@ export const LandingPage: React.FC = () => {
                         <div className="mt-12 flex flex-col sm:flex-row gap-5">
                             {isAuthenticated ?
 
-                                (<Button className="text-lg py-4 px-10" onClick={() => navigate('/me')}>
+                                (<Button className="text-lg py-4 px-10" onClick={() => navigate('/profile')}>
                                     Ver mi perfil
                                 </Button>) :
                                 (<Button className="text-lg py-4 px-10" onClick={() => navigate('/register')}>
