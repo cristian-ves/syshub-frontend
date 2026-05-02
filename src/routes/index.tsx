@@ -13,6 +13,7 @@ import {
     CreateArticlePage,
     ArticleDetailPage,
     EditArticlePage,
+    MyFavoriteArticles,
 } from '../pages';
 
 import { ProtectedRoute } from './ProtectedRoute';
@@ -77,6 +78,7 @@ export const router = createBrowserRouter([
                             { index: true, element: <Navigate to="info" replace /> },
                             { path: 'info', element: <ProfileInfoPage /> },
                             { path: 'projects', element: <MyProjectsPage /> },
+                            { path: 'favorites', element: <MyFavoriteArticles /> },
                         ]
                     },
                 ]

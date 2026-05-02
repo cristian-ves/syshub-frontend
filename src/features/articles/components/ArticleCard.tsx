@@ -10,7 +10,7 @@ import { VoteControl } from './VoteControl';
 
 import { useAppDispatch, useAppSelector } from '../../../store';
 import { deleteArticleThunk } from '../../../store/slices/articleSlice';
-import { ConfirmDeleteModal } from '../../../components/common/ConfirmDeleteModal'; // Ajusta la ruta si es necesario
+import { ConfirmDeleteModal } from '../../../components/common/ConfirmDeleteModal';
 
 interface ArticleCardProps {
     article: Article;
@@ -23,7 +23,7 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
 
     const { user } = useAppSelector(state => state.auth);
     const isOwner = user?.id === article.autor.id;
-    const isAdmin = user?.role === "ROLE_ADMIN" || user?.role === "ROLE_AUXILIAR";
+    const isAdmin = user?.role === "ROLE_ADMIN";
     const canEdit = isOwner || isAdmin;
 
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);

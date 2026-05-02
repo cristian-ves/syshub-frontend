@@ -10,6 +10,7 @@ import projectSlice from "./slices/projectSlice";
 import myProjectsSlice from "./slices/myProjectsSlice";
 import adminSlice from "./slices/adminSlice";
 import articleSlice from "./slices/articleSlice";
+import favoriteArticleSlice from "./slices/favoriteArticleSlice";
 
 export const store = configureStore({
     reducer: {
@@ -19,6 +20,7 @@ export const store = configureStore({
         myProjects: myProjectsSlice,
         admin: adminSlice,
         articles: articleSlice,
+        favoriteArticles: favoriteArticleSlice,
     },
 });
 

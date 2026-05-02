@@ -35,7 +35,7 @@ const initialState: ArticleState = {
         courseId: undefined,
         tag: undefined,
         status: "PUBLISHED",
-        sort: "createdAt,desc",
+        sort: "puntos,desc",
     },
 };
 

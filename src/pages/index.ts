@@ -5,6 +5,7 @@ export * from "./auth/RegisterPage";
 export * from "./auth/ResetPasswordPage";
 export * from "./profile/MyProjectsPage";
 export * from "./profile/ProfileInfoPage";
+export * from "./profile/MyFavoriteArticles";
 export * from "./admin/CreateUserPage";
 export * from "./admin/UsersPage";
 export * from "./articles/ArticlesPage";

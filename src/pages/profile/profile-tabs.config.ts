@@ -7,4 +7,8 @@ export const PROFILE_TABS = [
         label: "Mis Proyectos",
         path: "/profile/projects",
     },
+    {
+        label: "Mis articulos",
+        path: "/profile/favorites",
+    },
 ];
