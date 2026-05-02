@@ -5,11 +5,13 @@ import { articleSlice } from '../../../store/slices/articleSlice';
 import { Select } from '../../../components/common/Select';
 import { Button } from '../../../components/common/Button';
 import { CourseSearchInput } from '../../projects/components';
+import { useNavigate } from 'react-router-dom';
 
 
 type ArticleSearchMode = 'search' | 'tag';
 
 export const ArticleFilters: React.FC = () => {
+    const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const { filters } = useAppSelector(state => state.articles);
     const { user } = useAppSelector(state => state.auth);
@@ -71,12 +73,12 @@ export const ArticleFilters: React.FC = () => {
                         <Button
                             variant="ghost"
                             onClick={() => {
-                                // TODO: navigate my favs
+                                navigate('/profile/favorites');
                             }}
                             className="border border-slate-200 dark:border-slate-800 rounded-2xl px-6 gap-2 hover:bg-red-50 hover:text-red-500 transition-all"
                         >
                             <Heart size={18} className="text-red-500" />
-                            <span className="hidden sm:inline italic">Favoritos</span>
+                            <span className="hidden sm:inline">Favoritos</span>
                         </Button>
                     )}
 

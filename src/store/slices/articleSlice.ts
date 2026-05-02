@@ -6,6 +6,7 @@ import {
 import { articleService } from "../../features/articles/services/article.service";
 import type {
     Article,
+    ArticleDetail,
     ArticleFilters,
     CreateArticleRequest,
     PaginatedResponse,
@@ -13,7 +14,7 @@ import type {
 
 interface ArticleState {
     articles: Article[];
-    selectedArticle: Article | null;
+    selectedArticle: ArticleDetail | null;
     totalPages: number;
     currentPage: number;
     loading: boolean;
@@ -126,6 +127,26 @@ export const updateArticleThunk = createAsyncThunk(
     }
 );
 
+export const addCommentThunk = createAsyncThunk(
+    "articles/addComment",
+    async ({
+        articleId,
+        contenido,
+    }: {
+        articleId: number;
+        contenido: string;
+    }) => {
+        return await articleService.addComment(articleId, contenido);
+    }
+);
+
+export const deleteCommentThunk = createAsyncThunk(
+    "articles/deleteComment",
+    async (commentId: number) => {
+        return await articleService.deleteComment(commentId);
+    }
+);
+
 export const articleSlice = createSlice({
     name: "articles",
     initialState,
@@ -155,7 +176,7 @@ export const articleSlice = createSlice({
             })
             .addCase(
                 fetchArticleBySlug.fulfilled,
-                (state, action: PayloadAction<Article>) => {
+                (state, action: PayloadAction<ArticleDetail>) => {
                     state.loading = false;
                     state.selectedArticle = action.payload;
                 }
@@ -230,8 +251,29 @@ export const articleSlice = createSlice({
                 state.articles[index] = updatedArticle;
             }
 
-            if (state.selectedArticle?.id === updatedArticle.id) {
-                state.selectedArticle = updatedArticle;
+            if (
+                state.selectedArticle &&
+                state.selectedArticle.id === updatedArticle.id
+            ) {
+                state.selectedArticle = {
+                    ...updatedArticle,
+                    comentarios: state.selectedArticle.comentarios,
+                };
+            }
+        });
+
+        builder.addCase(addCommentThunk.fulfilled, (state, action) => {
+            if (state.selectedArticle) {
+                state.selectedArticle.comentarios.unshift(action.payload);
+            }
+        });
+
+        builder.addCase(deleteCommentThunk.fulfilled, (state, action) => {
+            if (state.selectedArticle) {
+                state.selectedArticle.comentarios =
+                    state.selectedArticle.comentarios.filter(
+                        (c) => c.id !== action.payload
+                    );
             }
         });
     },

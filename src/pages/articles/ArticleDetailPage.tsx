@@ -7,6 +7,7 @@ import { useAppSelector } from "../../store";
 import { ArticleSidebar } from "../../features/articles/components/ArticleSidebar";
 import { ArticleHeader } from "../../features/articles/components/ArticleHeader";
 import { useArticleDetail } from "../../hooks/articles/useArticleDetails";
+import { CommentSection } from "../../features/articles/components/CommentSection";
 
 export const ArticleDetailPage: React.FC = () => {
     const { user } = useAppSelector(state => state.auth);
@@ -47,6 +48,11 @@ export const ArticleDetailPage: React.FC = () => {
                     <div className="prose dark:prose-invert max-w-none prose-pre:bg-slate-900 dark:prose-pre:bg-black prose-img:rounded-3xl">
                         <ReactMarkdown>{article.contenido}</ReactMarkdown>
                     </div>
+
+                    <CommentSection
+                        articleId={article.id}
+                        comments={article.comentarios}
+                    />
                 </main>
             </div>
         </div>

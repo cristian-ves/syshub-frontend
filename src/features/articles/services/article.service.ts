@@ -1,6 +1,7 @@
 import api from "../../../api/axios.config";
 import type {
     Article,
+    ArticleDetail,
     ArticleFilters,
     CreateArticleRequest,
     PaginatedResponse,
@@ -20,8 +21,8 @@ export const articleService = {
         return data;
     },
 
-    getArticleBySlug: async (slug: string): Promise<Article> => {
-        const { data } = await api.get<Article>(`/articles/${slug}`);
+    getArticleBySlug: async (slug: string): Promise<ArticleDetail> => {
+        const { data } = await api.get<ArticleDetail>(`/articles/${slug}`);
         return data;
     },
 
@@ -61,5 +62,17 @@ export const articleService = {
 
     deleteArticle: async (id: number): Promise<void> => {
         await api.delete(`/articles/${id}`);
+    },
+
+    addComment: async (articleId: number, contenido: string) => {
+        const { data } = await api.post(`/articles/${articleId}/comments`, {
+            contenido,
+        });
+        return data;
+    },
+
+    deleteComment: async (commentId: number) => {
+        await api.delete(`/articles/comments/${commentId}`);
+        return commentId;
     },
 };

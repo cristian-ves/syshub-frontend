@@ -112,7 +112,7 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
                                 </div>
                             </div>
 
-                            <h3 className="text-xl font-black text-slate-950 dark:text-white leading-tight group-hover:text-brand-blue transition-colors line-clamp-2">
+                            <h3 className="ml-2 text-xl font-black text-slate-950 dark:text-white leading-tight group-hover:text-brand-blue transition-colors line-clamp-2">
                                 {article.titulo}
                             </h3>
                         </header>

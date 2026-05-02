@@ -15,6 +15,18 @@ export interface VoteResponse {
     vote: number;
 }
 
+export interface ArticleComment {
+    id: number;
+    contenido: string;
+    createdAt: string;
+    autor: {
+        id: string;
+        username: string;
+        nombreCompleto: string;
+        roleId: number;
+    };
+}
+
 export interface Article {
     id: number;
     titulo: string;
@@ -37,6 +49,10 @@ export interface Article {
         nombre: string;
     };
     tags: Tag[];
+}
+
+export interface ArticleDetail extends Article {
+    comentarios: ArticleComment[];
 }
 
 export interface ArticleFilters {
