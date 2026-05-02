@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Search, ChevronDown } from "lucide-react";
-import api from "../../../../api/axios.config";
+import api from "../../api/axios.config";
 
 interface Props {
     onSelect: (course: any) => void;

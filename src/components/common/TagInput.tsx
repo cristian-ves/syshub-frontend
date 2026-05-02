@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { HexColorPicker } from "react-colorful";
 import { X, Plus } from "lucide-react";
-import { Button } from "../../../../components/common";
+import { Button } from ".";
 
 interface Tag {
     nombre: string;

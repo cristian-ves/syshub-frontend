@@ -7,3 +7,4 @@ export * from "./profile/MyProjectsPage";
 export * from "./profile/ProfileInfoPage";
 export * from "./admin/CreateUserPage";
 export * from "./admin/UsersPage";
+export * from "./articles/ArticlesPage";

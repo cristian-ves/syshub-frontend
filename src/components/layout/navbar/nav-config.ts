@@ -7,6 +7,6 @@ export interface NavItem {
 export const NAV_ITEMS: NavItem[] = [
     { name: "Mi Perfil", path: "/profile" },
     { name: "Proyectos", path: "/projects" },
-    { name: "Foro", path: "/forum" },
+    { name: "Articulos y blogs", path: "/articles" },
     { name: "Usuarios", path: "/users", roles: ["ROLE_ADMIN"] },
 ];
