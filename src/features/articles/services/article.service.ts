@@ -53,10 +53,10 @@ export const articleService = {
 
     updateArticle: async (
         id: number,
-        article: Partial<Article>
+        article: Partial<CreateArticleRequest>
     ): Promise<Article> => {
-        const { data } = await api.put<Article>(`/articles/${id}`, article);
-        return data;
+        const response = await api.put(`/articles/${id}`, article);
+        return response.data;
     },
 
     deleteArticle: async (id: number): Promise<void> => {

@@ -13,6 +13,7 @@ interface ArticleFormProps {
     tags: { nombre: string; color: string }[];
     onTagsChange: (newTags: any[]) => void;
     submitLabel?: string;
+    initialCourse?: { id: number; nombre: string; codigo?: string } | null;
 }
 
 export const ArticleForm: React.FC<ArticleFormProps> = ({
@@ -21,7 +22,8 @@ export const ArticleForm: React.FC<ArticleFormProps> = ({
     isSubmitting,
     tags,
     onTagsChange,
-    submitLabel = "Publicar Artículo"
+    submitLabel = "Publicar Artículo",
+    initialCourse
 }) => {
     const [previewMode, setPreviewMode] = useState(false);
     const { register, setValue, watch, formState: { errors } } = formMethods;
@@ -52,6 +54,7 @@ export const ArticleForm: React.FC<ArticleFormProps> = ({
                         <CourseSearchInput
                             onSelect={(course) => setValue("courseId", course.id, { shouldValidate: true })}
                             error={errors.courseId?.message}
+                            initialCourse={initialCourse}
                         />
                         <div className="space-y-2">
                             <TagInput value={tags} onChange={onTagsChange} error={errors.tags?.message} />
@@ -109,7 +112,7 @@ export const ArticleForm: React.FC<ArticleFormProps> = ({
             <footer className="flex flex-col md:flex-row items-center justify-between gap-6 py-4">
                 <div className="text-sm text-slate-500 flex items-center gap-2">
                     <Info size={16} className="text-brand-blue" />
-                    Markdown habilitado para código, tablas e imágenes.
+                    Markdown habilitado para código y tablas.
                 </div>
                 <Button
                     type="submit"

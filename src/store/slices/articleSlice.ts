@@ -94,6 +94,38 @@ export const toggleFavoriteThunk = createAsyncThunk(
         return id;
     }
 );
+
+export const deleteArticleThunk = createAsyncThunk(
+    "articles/delete",
+    async (id: number, { rejectWithValue }) => {
+        try {
+            await articleService.deleteArticle(id);
+            return id;
+        } catch (error: any) {
+            return rejectWithValue(
+                error.message || "Error al eliminar el artículo"
+            );
+        }
+    }
+);
+
+export const updateArticleThunk = createAsyncThunk(
+    "articles/update",
+    async (
+        { id, data }: { id: number; data: Partial<CreateArticleRequest> },
+        { rejectWithValue }
+    ) => {
+        try {
+            return await articleService.updateArticle(id, data);
+        } catch (error: any) {
+            return rejectWithValue(
+                error.response?.data?.message ||
+                    "Error al actualizar el artículo"
+            );
+        }
+    }
+);
+
 export const articleSlice = createSlice({
     name: "articles",
     initialState,
@@ -177,6 +209,31 @@ export const articleSlice = createSlice({
                         !state.selectedArticle.favorite;
                 }
             });
+
+        builder.addCase(deleteArticleThunk.fulfilled, (state, action) => {
+            const deletedId = action.payload;
+            state.articles = state.articles.filter(
+                (article) => article.id !== deletedId
+            );
+            if (state.selectedArticle?.id === deletedId) {
+                state.selectedArticle = null;
+            }
+        });
+
+        builder.addCase(updateArticleThunk.fulfilled, (state, action) => {
+            const updatedArticle = action.payload;
+
+            const index = state.articles.findIndex(
+                (a) => a.id === updatedArticle.id
+            );
+            if (index !== -1) {
+                state.articles[index] = updatedArticle;
+            }
+
+            if (state.selectedArticle?.id === updatedArticle.id) {
+                state.selectedArticle = updatedArticle;
+            }
+        });
     },
 });
 

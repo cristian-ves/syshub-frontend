@@ -5,10 +5,13 @@ import api from "../../api/axios.config";
 interface Props {
     onSelect: (course: any) => void;
     error?: string;
+    initialCourse?: { id: number; nombre: string; codigo?: string } | null;
 }
 
-export const CourseSearchInput: React.FC<Props> = ({ onSelect, error }) => {
-    const [query, setQuery] = useState("");
+export const CourseSearchInput: React.FC<Props> = ({ onSelect, error, initialCourse }) => {
+    const [query, setQuery] = useState(
+        initialCourse ? `${initialCourse.nombre} ${initialCourse.codigo ? `(${initialCourse.codigo})` : ''}` : ""
+    );
     const [courses, setCourses] = useState<any[]>([]);
     const [open, setOpen] = useState(false);
 
@@ -20,9 +23,7 @@ export const CourseSearchInput: React.FC<Props> = ({ onSelect, error }) => {
                 setOpen(false);
             }
         };
-
         document.addEventListener("mousedown", handleClickOutside);
-
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
@@ -30,17 +31,13 @@ export const CourseSearchInput: React.FC<Props> = ({ onSelect, error }) => {
 
     const searchCourses = async (value: string) => {
         setQuery(value);
-
         if (value.length < 2) {
             setCourses([]);
             setOpen(false);
             return;
         }
-
         try {
-            const { data } = await api.get("/catalog/courses/search", {
-                params: { q: value },
-            });
+            const { data } = await api.get("/catalog/courses/search", { params: { q: value } });
             setCourses(data);
             setOpen(data.length > 0);
         } catch (err) {

@@ -15,7 +15,9 @@ export const ArticleDetailPage: React.FC = () => {
 
     const { article, loading } = useArticleDetail(slug);
 
-    const canEdit = user?.role === "ROLE_ADMIN" || user?.role === "ROLE_AUXILIAR";
+    const isAdmin = user?.role === "ROLE_ADMIN";
+    const isOwner = user?.id === article?.autor?.id;
+    const canEdit = isAdmin || isOwner;
 
     if (loading) {
         return <div className="py-20 text-center animate-pulse text-slate-500 font-medium">Preparando lectura...</div>;

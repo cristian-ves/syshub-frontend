@@ -10,3 +10,4 @@ export * from "./admin/UsersPage";
 export * from "./articles/ArticlesPage";
 export * from "./articles/CreateArticlePage";
 export * from "./articles/ArticleDetailPage";
+export * from "./articles/EditArticlePage";

@@ -8,7 +8,7 @@ export const ArticleHeader: React.FC<{ article: Article }> = ({ article }) => {
     return (
         <header className="mb-10">
             <div className="flex flex-wrap items-center gap-2 mb-6">
-                <Badge className="bg-brand-blue text-white border-none py-1 !m-0">
+                <Badge className=" py-1 !m-0">
                     {article.curso.nombre}
                 </Badge>
                 {article.tags.map(tag => (
