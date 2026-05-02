@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link as LinkIcon, Star, User } from 'lucide-react';
+import { Link as LinkIcon, User } from 'lucide-react';
 import type { Project } from '../../../types/project.types';
 import { ProjectTag } from './ProjectTag';
 import { FeaturedBadge } from './FeatureBadge';

@@ -6,7 +6,7 @@ export const useMyProjects = () => {
     const dispatch = useAppDispatch();
 
     const { user } = useAppSelector((state) => state.auth);
-    const { id } = user;
+    const id = user?.id;
 
     const { projects, loading, totalPages, currentPage } = useAppSelector(
         (state) => state.myProjects

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Search, Star, X, Settings2, Filter } from 'lucide-react';
+import { Search, Star, X, Settings2 } from 'lucide-react';
 import { useAppDispatch, useAppSelector } from '../../../store';
 import { projectSlice } from '../../../store/slices/projectSlice';
 import { Select } from '../../../components/common/Select';

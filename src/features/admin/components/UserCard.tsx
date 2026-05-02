@@ -6,9 +6,7 @@ import {
     ShieldCheck,
     User as UserIcon,
     Shield,
-    Mail,
     BookOpen,
-    IdCard
 } from "lucide-react";
 import { Button, Input, Badge, Select, ErrorModal } from "../../../components/common";
 import { useUserCard } from "../../../hooks/admin/useUserCard";

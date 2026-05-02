@@ -1,34 +1,43 @@
 import { useAppDispatch, useAppSelector } from "../store";
 import {
-    loginStart,
-    loginSuccess,
-    loginFailure,
+    checkAuth,
+    loginUser,
+    registerUser,
     logout as logoutAction,
 } from "../store/slices/authSlice";
-import api from "../api/axios.config";
+import type { LoginRequestDTO, RegisterRequestDTO } from "../types/auth.types";
 
 export const useAuth = () => {
     const dispatch = useAppDispatch();
 
-    const { loading, error, isAuthenticated, user } = useAppSelector(
-        (state) => state.auth
-    );
+    const { loading, error, isAuthenticated, user, isInitializing } =
+        useAppSelector((state) => state.auth);
 
-    const login = async (credentials: any) => {
-        dispatch(loginStart());
-        try {
-            const { data } = await api.post("/auth/login", credentials);
+    const login = async (credentials: LoginRequestDTO) => {
+        return await dispatch(loginUser(credentials)).unwrap();
+    };
 
-            dispatch(loginSuccess({ user: data, token: data.token }));
-            return data;
-        } catch (err: any) {
-            dispatch(loginFailure(err));
-        }
+    const register = async (userData: RegisterRequestDTO) => {
+        return await dispatch(registerUser(userData)).unwrap();
+    };
+
+    const checkSession = async () => {
+        return await dispatch(checkAuth()).unwrap();
     };
 
     const logout = () => {
         dispatch(logoutAction());
     };
 
-    return { login, logout, loading, error, isAuthenticated, user };
+    return {
+        login,
+        register,
+        logout,
+        checkSession,
+        loading,
+        error,
+        isAuthenticated,
+        user,
+        isInitializing,
+    };
 };

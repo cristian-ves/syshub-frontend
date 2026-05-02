@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Search, Heart, X, Settings2, BookOpen } from 'lucide-react';
+import { Search, Heart, X, Settings2 } from 'lucide-react';
 import { useAppDispatch, useAppSelector } from '../../../store';
 import { articleSlice } from '../../../store/slices/articleSlice';
 import { Select } from '../../../components/common/Select';

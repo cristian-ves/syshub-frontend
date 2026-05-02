@@ -5,7 +5,7 @@ import type { JSX } from 'react';
 
 export const AdminRoute = ({ children }: { children: JSX.Element }) => {
     const { user } = useSelector((state: RootState) => state.auth);
-    const { role } = user;
+    const role = user?.role;
 
     if (role !== "ROLE_ADMIN") {
         return <Navigate to="/profile" />;

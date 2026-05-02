@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ReactMarkdown from "react-markdown";
-import { FileText, Tags, Info, Eye, Edit3, Send } from "lucide-react";
+import { FileText, Info, Eye, Edit3, Send } from "lucide-react";
 import { CourseSearchInput, TagInput } from "../../../features/projects/components";
 import type { UseFormReturn } from "react-hook-form";
 import type { CreateArticleFormValues } from "../schemas/create-article.schema";

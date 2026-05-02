@@ -1,9 +1,8 @@
 import React from 'react';
-import { BookOpenText, Search } from "lucide-react";
+import { Search } from "lucide-react";
 import { ArticleCard } from "./ArticleCard";
 import type { Article } from "../../../types/article.types";
-import { useNavigate } from "react-router-dom";
-import { Button, Pagination } from "../../../components/common";
+import { Pagination } from "../../../components/common";
 
 interface Props {
     articles: Article[];

@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { ChevronLeft, UserPlus, Shield, GraduationCap, Lock, Info, Send } from "lucide-react";
+import { ChevronLeft, UserPlus, GraduationCap, Lock, Info } from "lucide-react";
 import { Button, Input, Badge, Select, ErrorModal } from "../../components/common";
 import { useCreateUser } from "../../hooks/admin/useCreateUser";
 import { ROLE_OPTIONS } from "../../helpers/roleOptions.helper";
