@@ -10,6 +10,7 @@ import {
     UsersPage,
     CreateUserPage,
     ArticlesPage,
+    CreateArticlePage,
 } from '../pages';
 
 import { ProtectedRoute } from './ProtectedRoute';
@@ -46,6 +47,10 @@ export const router = createBrowserRouter([
                     {
                         path: 'articles',
                         element: <ProtectedRoute><ArticlesPage /></ProtectedRoute>
+                    },
+                    {
+                        path: 'articles/create',
+                        element: <ProtectedRoute><CreateArticlePage /></ProtectedRoute>
                     },
                     {
                         path: 'users',

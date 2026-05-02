@@ -7,8 +7,10 @@ import { articleService } from "../../features/articles/services/article.service
 import type {
     Article,
     ArticleFilters,
+    CreateArticleRequest,
     PaginatedResponse,
 } from "../../types/article.types";
+import type { CreateArticleFormValues } from "../../features/articles/schemas/create-article.schema";
 
 interface ArticleState {
     articles: Article[];
@@ -46,6 +48,19 @@ export const fetchArticles = createAsyncThunk(
         } catch (error: any) {
             return rejectWithValue(
                 error.response?.data?.message || "Error al cargar artículos"
+            );
+        }
+    }
+);
+
+export const createArticleThunk = createAsyncThunk(
+    "articles/create",
+    async (article: CreateArticleRequest, { rejectWithValue }) => {
+        try {
+            return await articleService.createArticle(article);
+        } catch (error: any) {
+            return rejectWithValue(
+                error.message || "Error al crear el artículo"
             );
         }
     }

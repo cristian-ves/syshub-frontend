@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "normalize.css";
+@plugin "@tailwindcss/typography";
 
 @theme {
     --color-brand-blue: #40419c;
@@ -9,6 +10,14 @@
 @variant dark (&:where(.dark, .dark *));
 
 @layer base {
+    ::placeholder {
+        @apply text-slate-400 dark:text-slate-500 opacity-100;
+    }
+
+    input:focus::placeholder {
+        @apply opacity-50 transition-opacity;
+    }
+
     body {
         @apply bg-slate-50 text-slate-900 font-sans antialiased transition-colors duration-300;
     }

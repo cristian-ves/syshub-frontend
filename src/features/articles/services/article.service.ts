@@ -2,6 +2,7 @@ import api from "../../../api/axios.config";
 import type {
     Article,
     ArticleFilters,
+    CreateArticleRequest,
     PaginatedResponse,
     VoteResponse,
 } from "../../../types/article.types";
@@ -45,7 +46,7 @@ export const articleService = {
         return data;
     },
 
-    createArticle: async (article: Partial<Article>): Promise<Article> => {
+    createArticle: async (article: CreateArticleRequest): Promise<Article> => {
         const { data } = await api.post<Article>("/articles", article);
         return data;
     },

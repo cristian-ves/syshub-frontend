@@ -1,5 +1,14 @@
 import type { Tag, PaginatedResponse } from "./project.types";
 
+export interface CreateArticleRequest {
+    titulo: string;
+    extracto: string;
+    contenido: string;
+    courseId: number;
+    status: "DRAFT" | "PUBLISHED";
+    tags: { nombre: string; color?: string }[]; // Aquí estaba el conflicto
+}
+
 export interface VoteResponse {
     articleId: number;
     newPoints: number;
