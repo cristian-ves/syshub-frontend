@@ -29,7 +29,7 @@ const initialState: ArticleState = {
     error: null,
     filters: {
         page: 0,
-        size: 9,
+        size: 8,
         search: undefined,
         courseId: undefined,
         tag: undefined,

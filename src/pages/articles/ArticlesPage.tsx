@@ -6,6 +6,7 @@ import { useAppSelector } from "../../store";
 import { Badge, Button } from "../../components/common";
 import { useArticles } from "../../hooks/articles/useArticles";
 import { ArticleList } from "../../features/articles/components/ArticleList";
+import { ArticleFilters } from "../../features/articles/components/ArticleFilters";
 
 export const ArticlesPage: React.FC = () => {
     const navigate = useNavigate();
@@ -45,10 +46,9 @@ export const ArticlesPage: React.FC = () => {
                 )}
             </header>
 
-            {/* ArticleFilters
-            */}
+            <ArticleFilters />
 
-            <div className="flex-grow mt-8">
+            <div className="flex-grow">
                 <ArticleList
                     articles={articles}
                     loading={loading}

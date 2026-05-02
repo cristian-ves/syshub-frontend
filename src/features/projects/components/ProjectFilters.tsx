@@ -44,7 +44,7 @@ export const ProjectFilters: React.FC = () => {
     // Debounce search
     useEffect(() => {
         const timer = setTimeout(() => {
-            // Verificamos si el valor local es diferente al del store para evitar peticiones infinitas
+            // Verify if local value it's diferrent than the store one to avoid infinite loops
             if (localSearch !== (filters[searchMode] || '')) {
                 const searchUpdate: any = {
                     search: undefined,
