@@ -10,7 +10,6 @@ import type {
     CreateArticleRequest,
     PaginatedResponse,
 } from "../../types/article.types";
-import type { CreateArticleFormValues } from "../../features/articles/schemas/create-article.schema";
 
 interface ArticleState {
     articles: Article[];
@@ -39,6 +38,17 @@ const initialState: ArticleState = {
         sort: "createdAt,desc",
     },
 };
+
+export const fetchArticleBySlug = createAsyncThunk(
+    "articles/fetchBySlug",
+    async (slug: string, { rejectWithValue }) => {
+        try {
+            return await articleService.getArticleBySlug(slug);
+        } catch (error: any) {
+            return rejectWithValue("Error al cargar el artículo");
+        }
+    }
+);
 
 export const fetchArticles = createAsyncThunk(
     "articles/fetchAll",
@@ -107,6 +117,22 @@ export const articleSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
+            .addCase(fetchArticleBySlug.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(
+                fetchArticleBySlug.fulfilled,
+                (state, action: PayloadAction<Article>) => {
+                    state.loading = false;
+                    state.selectedArticle = action.payload;
+                }
+            )
+            .addCase(fetchArticleBySlug.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload as string;
+            })
+
             .addCase(fetchArticles.pending, (state) => {
                 state.loading = true;
                 state.error = null;
@@ -126,19 +152,29 @@ export const articleSlice = createSlice({
             })
             .addCase(voteArticleThunk.fulfilled, (state, action) => {
                 const { id, newPoints, vote } = action.payload;
-                const article = state.articles.find((a) => a.id === id);
-                console.log(action.payload);
 
-                if (article) {
-                    article.puntos = newPoints;
-                    article.vote = vote;
+                const listArticle = state.articles.find((a) => a.id === id);
+                if (listArticle) {
+                    listArticle.puntos = newPoints;
+                    listArticle.vote = vote;
+                }
+
+                if (state.selectedArticle?.id === id) {
+                    state.selectedArticle.puntos = newPoints;
+                    state.selectedArticle.vote = vote;
                 }
             })
             .addCase(toggleFavoriteThunk.fulfilled, (state, action) => {
                 const id = action.payload;
-                const article = state.articles.find((a) => a.id === id);
-                if (article) {
-                    article.favorite = !article.favorite;
+
+                const listArticle = state.articles.find((a) => a.id === id);
+                if (listArticle) {
+                    listArticle.favorite = !listArticle.favorite;
+                }
+
+                if (state.selectedArticle?.id === id) {
+                    state.selectedArticle.favorite =
+                        !state.selectedArticle.favorite;
                 }
             });
     },

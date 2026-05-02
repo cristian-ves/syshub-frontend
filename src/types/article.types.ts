@@ -6,7 +6,7 @@ export interface CreateArticleRequest {
     contenido: string;
     courseId: number;
     status: "DRAFT" | "PUBLISHED";
-    tags: { nombre: string; color?: string }[]; // Aquí estaba el conflicto
+    tags: { nombre: string; color?: string }[];
 }
 
 export interface VoteResponse {

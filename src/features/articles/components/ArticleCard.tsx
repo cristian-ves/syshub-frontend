@@ -16,19 +16,14 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
 
     return (
         <div className="relative h-full">
-            {/* Componente de Votos: 
-                Al estar fuera del div con la clase 'group', sus eventos de mouse 
-                no disparan el hover de la card principal.
-            */}
+
             <VoteControl
                 articleId={article.id}
                 puntos={article.puntos}
                 userVote={article.vote}
+                className="absolute -left-4 top-8 z-30 bg-white/90 dark:bg-slate-800/90 backdrop-blur-md border border-slate-200/60 dark:border-slate-700/50 rounded-2xl shadow-xl shadow-slate-200/40 dark:shadow-none"
             />
 
-            {/* Cuerpo de la Card:
-                Contiene todos los estilos visuales y la navegación.
-            */}
             <div
                 onClick={() => navigate(`/articles/${article.slug}`)}
                 className="group bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm hover:shadow-xl hover:shadow-brand-blue/5 transition-all cursor-pointer flex flex-col h-full"
@@ -49,8 +44,8 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
                                     toggleFavorite(article.id, article.favorite);
                                 }}
                                 className={`cursor-pointer p-2 rounded-full transition-all ${article.favorite
-                                        ? 'text-red-500 bg-red-50 dark:bg-red-500/10'
-                                        : 'text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
+                                    ? 'text-red-500 bg-red-50 dark:bg-red-500/10'
+                                    : 'text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
                                     }`}
                             >
                                 <Heart
