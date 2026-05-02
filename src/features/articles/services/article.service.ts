@@ -3,6 +3,7 @@ import type {
     Article,
     ArticleFilters,
     PaginatedResponse,
+    VoteResponse,
 } from "../../../types/article.types";
 
 export const articleService = {
@@ -23,8 +24,11 @@ export const articleService = {
         return data;
     },
 
-    voteArticle: async (id: number, value: number): Promise<void> => {
-        await api.post(`/articles/${id}/vote`, null, { params: { value } });
+    voteArticle: async (id: number, value: number): Promise<VoteResponse> => {
+        const { data } = await api.post(`/articles/${id}/vote`, null, {
+            params: { value },
+        });
+        return data;
     },
 
     toggleFavorite: async (id: number): Promise<void> => {

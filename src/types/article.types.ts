@@ -1,5 +1,11 @@
 import type { Tag, PaginatedResponse } from "./project.types";
 
+export interface VoteResponse {
+    articleId: number;
+    newPoints: number;
+    vote: number;
+}
+
 export interface Article {
     id: number;
     titulo: string;
@@ -8,8 +14,9 @@ export interface Article {
     contenido: string;
     status: "DRAFT" | "PUBLISHED";
     puntos: number;
+    vote: number;
     createdAt: string;
-    isFavorite: boolean;
+    favorite: boolean;
     autor: {
         id: string;
         username: string;

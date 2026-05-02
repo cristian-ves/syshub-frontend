@@ -51,6 +51,24 @@ export const fetchArticles = createAsyncThunk(
     }
 );
 
+export const voteArticleThunk = createAsyncThunk(
+    "articles/vote",
+    async ({ id, newVote }: { id: number; newVote: number }) => {
+        const { newPoints, vote } = await articleService.voteArticle(
+            id,
+            newVote
+        );
+        return { id, newPoints, vote };
+    }
+);
+
+export const toggleFavoriteThunk = createAsyncThunk(
+    "articles/toggleFavorite",
+    async (id: number) => {
+        await articleService.toggleFavorite(id);
+        return id;
+    }
+);
 export const articleSlice = createSlice({
     name: "articles",
     initialState,
@@ -90,6 +108,23 @@ export const articleSlice = createSlice({
             .addCase(fetchArticles.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload as string;
+            })
+            .addCase(voteArticleThunk.fulfilled, (state, action) => {
+                const { id, newPoints, vote } = action.payload;
+                const article = state.articles.find((a) => a.id === id);
+                console.log(action.payload);
+
+                if (article) {
+                    article.puntos = newPoints;
+                    article.vote = vote;
+                }
+            })
+            .addCase(toggleFavoriteThunk.fulfilled, (state, action) => {
+                const id = action.payload;
+                const article = state.articles.find((a) => a.id === id);
+                if (article) {
+                    article.favorite = !article.favorite;
+                }
             });
     },
 });

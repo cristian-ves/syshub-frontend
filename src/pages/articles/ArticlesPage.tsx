@@ -20,6 +20,7 @@ export const ArticlesPage: React.FC = () => {
         setFilters
     } = useArticles();
 
+
     return (
         <div className="flex-grow flex flex-col w-full max-w-6xl mx-auto px-6 md:px-12 py-10">
             <header className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
@@ -57,8 +58,6 @@ export const ArticlesPage: React.FC = () => {
                     onPageChange={(page) => setFilters({ page })}
                     emptyIcon={<BookOpenText size={32} className="text-slate-400" />}
                     emptyTitle="No se encontraron artículos"
-                    emptySubtitle="Sé el primero en compartir conocimiento o intenta ajustar los filtros."
-                    emptyActionPath={(user?.role === "ROLE_AUXILIAR" || user?.role === "ROLE_ADMIN") ? "/articles/create" : undefined}
                 />
             </div>
         </div>
