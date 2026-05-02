@@ -31,21 +31,37 @@ export const projectService = {
     },
 
     downloadFile: async (nombreArchivo: string, originalName: string) => {
-        const response = await api.get(`/projects/files/${nombreArchivo}`, {
-            responseType: "blob",
-        });
+        if (nombreArchivo.startsWith("http")) {
+            const link = document.createElement("a");
+            link.href = nombreArchivo;
 
-        const url = window.URL.createObjectURL(new Blob([response.data]));
-        const link = document.createElement("a");
-        link.href = url;
+            link.target = "_blank";
+            link.setAttribute("download", originalName);
 
-        link.setAttribute("download", originalName);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
 
-        document.body.appendChild(link);
-        link.click();
+        try {
+            const response = await api.get(`/projects/files/${nombreArchivo}`, {
+                responseType: "blob",
+            });
 
-        document.body.removeChild(link);
-        window.URL.revokeObjectURL(url);
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement("a");
+            link.href = url;
+
+            link.setAttribute("download", originalName);
+
+            document.body.appendChild(link);
+            link.click();
+
+            document.body.removeChild(link);
+            window.URL.revokeObjectURL(url);
+        } catch (error) {
+            console.error("Error al descargar el archivo local:", error);
+        }
     },
 
     createProject: async (formData: FormData): Promise<Project> => {
