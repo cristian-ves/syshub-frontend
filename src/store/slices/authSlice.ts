@@ -73,10 +73,14 @@ export const checkAuth = createAsyncThunk(
     async (_, { rejectWithValue }) => {
         try {
             const token = localStorage.getItem("token");
-            if (!token) throw new Error("No hay sesión activa");
+            if (!token) return rejectWithValue("No hay sesión activa");
             return await authService.validateToken();
         } catch (error: any) {
-            return rejectWithValue(error);
+            const errorMessage =
+                error?.response?.data?.message ||
+                error.message ||
+                "Authentication error";
+            return rejectWithValue(errorMessage);
         }
     }
 );

@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { checkAuth } from '../../store/slices/authSlice';
 import Footer from './Footer';
-import { Navbar } from './Navbar';
+import { Navbar } from './';
 
 export const AppLayout = () => {
     const dispatch = useAppDispatch();
@@ -25,7 +25,7 @@ export const AppLayout = () => {
         <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950">
             <Navbar />
 
-            <main className="flex-grow w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <main className="grow w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <Outlet />
             </main>
 
