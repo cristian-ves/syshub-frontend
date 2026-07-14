@@ -17,6 +17,9 @@ export const useUserCard = (user: any) => {
     const [isLoading, setIsLoading] = useState(false);
     const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [isDeleting, setIsDeleting] = useState(false);
+
     const form = useForm<UpdateUserFormValues>({
         resolver: zodResolver(updateUserSchema) as any,
         defaultValues: {
@@ -49,17 +52,14 @@ export const useUserCard = (user: any) => {
     };
 
     const handleDelete = async () => {
-        if (
-            !window.confirm(
-                `¿Seguro que deseas eliminar a ${user.nombreCompleto}?`
-            )
-        )
-            return;
-
+        setIsDeleting(true);
         try {
             await dispatch(deleteUserAction(user.id)).unwrap();
+            setIsDeleteModalOpen(false);
         } catch (error: any) {
             setErrorMsg(error);
+        } finally {
+            setIsDeleting(false);
         }
     };
 
@@ -70,6 +70,9 @@ export const useUserCard = (user: any) => {
         isLoading,
         errorMsg,
         setErrorMsg,
+        isDeleteModalOpen,
+        setIsDeleteModalOpen,
+        isDeleting,
         handleDelete,
         onSubmit: form.handleSubmit(handleUpdate),
     };

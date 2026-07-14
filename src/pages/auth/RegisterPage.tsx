@@ -24,7 +24,7 @@ export const RegisterPage: React.FC = () => {
                 <div className="absolute bottom-0 right-0 w-96 h-96 bg-white/5 rounded-full -mr-20 -mb-20 blur-3xl"></div>
             </div>
 
-            <div className="flex-grow flex items-center justify-center p-6 md:p-12 relative">
+            <div className="grow flex items-center justify-center p-6 md:p-12 relative">
                 <div className="absolute top-8 right-8">
                     <ThemeToggle />
                 </div>

@@ -49,7 +49,7 @@ export const RegisterForm: React.FC = () => {
         <>
             <form
                 onSubmit={handleSubmit(onSubmit)}
-                className="space-y-4 max-h-[70vh] overflow-y-auto pr-2 custom-scrollbar text-left"
+                className="space-y-4 text-left"
             >
                 <Input
                     label="Nombre Completo"

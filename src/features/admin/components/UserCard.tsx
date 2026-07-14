@@ -8,10 +8,10 @@ import {
     Shield,
     BookOpen,
 } from "lucide-react";
-import { Button, Input, Badge, Select, ErrorModal } from "../../../components/common";
+import { Button, Input, Badge, Select, ErrorModal, ConfirmDeleteModal } from "../../../components/common";
 import { useUserCard } from "../../../hooks/admin/useUserCard";
 import { ROLE_OPTIONS, getRoleLabel } from "../../../helpers/roleOptions.helper";
-import { CARRERAS } from "../../../helpers/carreras.helper"; // Ajusta la ruta
+import { CARRERAS } from "../../../helpers/carreras.helper";
 import type { UserResponse } from "../../../types/users.types";
 
 interface Props {
@@ -28,7 +28,10 @@ export const UserCard = ({ user }: Props) => {
         handleDelete,
         errorMsg,
         setErrorMsg,
-        formState: { errors }
+        formState: { errors },
+        isDeleteModalOpen,
+        setIsDeleteModalOpen,
+        isDeleting
     } = useUserCard(user);
 
     const carreraActual = CARRERAS.find(c => c.id === user.carreraId)?.nombre || "No asignada";
@@ -36,7 +39,7 @@ export const UserCard = ({ user }: Props) => {
     return (
         <>
             <div className={`
-                bg-white dark:bg-slate-900 rounded-[2rem] p-7 border transition-all duration-500
+                bg-white dark:bg-slate-900 rounded-4xl p-7 border transition-all duration-500
                 ${isEditing
                     ? 'border-brand-blue shadow-2xl shadow-blue-500/10 ring-1 ring-brand-blue/20 scale-[1.02]'
                     : 'border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-md'}
@@ -44,7 +47,7 @@ export const UserCard = ({ user }: Props) => {
                 <div className="flex justify-between items-center mb-8">
                     <div className="flex items-center gap-5">
                         <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-500 ${user.enabled
-                            ? 'bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-900/40 text-brand-blue'
+                            ? 'bg-linear-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-900/40 text-brand-blue'
                             : 'bg-slate-100 dark:bg-slate-800 text-slate-400'
                             }`}>
                             {user.roleId === 1 ? <ShieldCheck size={28} /> : <UserIcon size={28} />}
@@ -72,7 +75,12 @@ export const UserCard = ({ user }: Props) => {
                                 <Button variant="secondary" size="sm" onClick={() => setIsEditing(true)} className="rounded-xl">
                                     <Pencil size={15} />
                                 </Button>
-                                <Button variant="ghost" size="sm" className="text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl" onClick={handleDelete}>
+                                <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    className="text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl"
+                                    onClick={() => setIsDeleteModalOpen(true)}
+                                >
                                     <Trash2 size={15} />
                                 </Button>
                             </>
@@ -189,7 +197,7 @@ export const UserCard = ({ user }: Props) => {
                                         {...register("enabled")}
                                         className="sr-only peer"
                                     />
-                                    <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-brand-blue"></div>
+                                    <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-brand-blue"></div>
                                     <span className="ml-3 text-sm font-bold text-slate-700 dark:text-slate-300 italic opacity-80">
                                         Cuenta Habilitada
                                     </span>
@@ -200,10 +208,13 @@ export const UserCard = ({ user }: Props) => {
                 </form>
             </div>
 
-            <ErrorModal
-                isOpen={!!errorMsg}
-                onClose={() => setErrorMsg(null)}
-                message={errorMsg || ""}
+            <ConfirmDeleteModal
+                isOpen={isDeleteModalOpen}
+                onClose={() => setIsDeleteModalOpen(false)}
+                onConfirm={handleDelete}
+                title="Eliminar Usuario"
+                description={`¿Estás seguro de que deseas eliminar permanentemente al usuario ${user.username}? Esta acción no se puede deshacer.`}
+                isDeleting={isDeleting}
             />
         </>
     );

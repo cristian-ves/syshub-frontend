@@ -35,7 +35,7 @@ export const CreateUserPage: React.FC = () => {
 
             <form
                 onSubmit={onSubmit}
-                className="w-full bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[2rem] shadow-2xl shadow-slate-200/50 dark:shadow-none overflow-hidden"
+                className="w-full bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-4xl shadow-2xl shadow-slate-200/50 dark:shadow-none overflow-hidden"
             >
                 <section className="p-8 md:p-10 space-y-6">
                     <div className="flex items-center gap-2 mb-2 text-brand-blue">
@@ -117,10 +117,12 @@ export const CreateUserPage: React.FC = () => {
                             error={errors.password?.message}
                             required
                         />
-                        <div className="flex items-center gap-4 px-2 h-full pt-6">
-                            <label className="relative inline-flex items-center cursor-pointer">
+                        <div className="flex items-center gap-4 px-2 md:h-full pt-2 md:pt-6">
+                            <label className="inline-flex items-center cursor-pointer">
                                 <input type="checkbox" {...register("enabled")} className="sr-only peer" />
-                                <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-brand-blue"></div>
+
+                                <div className="relative shrink-0 w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-brand-blue"></div>
+
                                 <span className="ml-3 text-sm font-bold text-slate-700 dark:text-slate-300 italic opacity-80">
                                     Activar cuenta inmediatamente
                                 </span>

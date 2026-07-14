@@ -41,13 +41,13 @@ export const CommentItem: React.FC<CommentItemProps> = ({ comment }) => {
         <>
             <div className={`group flex gap-4 p-4 md:p-5 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl transition-all ${isDeleting ? 'opacity-50 pointer-events-none' : ''}`}>
 
-                <div className="flex-shrink-0">
+                <div className="shrink-0">
                     <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-brand-blue/10 dark:bg-brand-blue/20 text-brand-blue flex items-center justify-center font-bold text-lg border border-brand-blue/20">
                         {initial}
                     </div>
                 </div>
 
-                <div className="flex-grow min-w-0">
+                <div className="grow min-w-0">
                     <div className="flex justify-between items-start mb-1">
                         <div>
                             <h4 className="font-bold text-slate-900 dark:text-white text-sm md:text-base truncate">
@@ -61,7 +61,7 @@ export const CommentItem: React.FC<CommentItemProps> = ({ comment }) => {
                         {isAdmin && (
                             <button
                                 onClick={() => setIsModalOpen(true)}
-                                className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-full transition-colors opacity-0 group-hover:opacity-100 focus:opacity-100 cursor-pointer"
+                                className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-full transition-colors cursor-pointer"
                                 title="Eliminar comentario"
                             >
                                 <Trash2 size={16} />
@@ -69,7 +69,7 @@ export const CommentItem: React.FC<CommentItemProps> = ({ comment }) => {
                         )}
                     </div>
 
-                    <p className="text-slate-600 dark:text-slate-300 text-sm md:text-base mt-2 whitespace-pre-wrap break-words leading-relaxed">
+                    <p className="text-slate-600 dark:text-slate-300 text-sm md:text-base mt-2 whitespace-pre-wrap wrap-break-words leading-relaxed">
                         {comment.contenido}
                     </p>
                 </div>
