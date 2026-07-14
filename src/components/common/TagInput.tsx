@@ -53,20 +53,17 @@ export const TagInput: React.FC<Props> = ({ value, onChange, error }) => {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="Ej. React, Compiladores..."
-                    className="flex-1 px-4 py-3 rounded-xl border transition-all outline-none 
-                    bg-white dark:bg-slate-800 text-slate-900 dark:text-white
-                    border-slate-200 dark:border-slate-700 
-                    focus:ring-brand-blue/20 focus:border-brand-blue"
+                    className="flex-1 min-w-0 px-4 py-3 rounded-xl border transition-all outline-none                     bg-white dark:bg-slate-800 text-slate-900 dark:text-white border-slate-200 dark:border-slate-700 focus:ring-brand-blue/20 focus:border-brand-blue"
                 />
 
                 <button
                     type="button"
                     onClick={() => setShowPicker(!showPicker)}
-                    className="cursor-pointer w-10 h-10 rounded-xl border border-slate-200 dark:border-slate-700"
+                    className="cursor-pointer shrink-0 w-10 h-10 rounded-xl border border-slate-200 dark:border-slate-700"
                     style={{ background: color }}
                 />
 
-                <Button type="button" onClick={addTag}>
+                <Button type="button" onClick={addTag} className="shrink-0">
                     <Plus size={16} />
                 </Button>
             </div>
