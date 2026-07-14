@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { X, Link, Star, BookOpen, Tag as TagIcon, FileText } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -16,8 +17,21 @@ interface ProjectModalProps {
     canToggleDestacado?: boolean;
 }
 
-export const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onClose, canToggleDestacado }) => {
+export const ProjectModal = ({ project, isOpen, onClose, canToggleDestacado }: ProjectModalProps) => {
     const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        if (!isOpen) return;
+
+        const originalOverflow = document.body.style.overflow;
+        document.body.style.overflow = 'hidden';
+
+        return () => {
+            document.body.style.overflow = originalOverflow;
+        }
+
+    }, [isOpen]);
+
     if (!isOpen || !project) return null;
 
     const handleDownload = (nombreArchivo: string, nombreOriginal: string) => {
@@ -41,13 +55,13 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onC
     };
 
     return (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-100 flex items-center justify-center p-4">
             <div className="absolute inset-0 bg-slate-950/40 backdrop-blur-sm transition-opacity" onClick={onClose} />
 
-            <div className="relative bg-white dark:bg-slate-900 w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-[2rem] shadow-2xl border border-slate-200 dark:border-slate-800 custom-scrollbar animate-in fade-in zoom-in duration-300">
+            <div className="relative bg-white dark:bg-slate-900 w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-4xl shadow-2xl border border-slate-200 dark:border-slate-800 custom-scrollbar animate-in fade-in zoom-in duration-300">
 
                 <header className="h-32 bg-brand-blue relative overflow-hidden">
-                    <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white via-transparent to-transparent" />
+                    <div className="absolute inset-0 opacity-20  from-white via-transparent to-transparent" />
                     <button onClick={onClose} className="cursor-pointer absolute top-4 right-4 p-2 bg-white/20 hover:bg-white/40 text-white rounded-full transition-colors z-10"><X size={20} /></button>
                 </header>
 
@@ -64,7 +78,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, isOpen, onC
                         </div>
 
                         <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
-                            <div className="flex-grow">
+                            <div className="grow">
                                 <h2 className="text-3xl font-black text-slate-950 dark:text-white tracking-tight">{project.titulo}</h2>
                                 <div className="flex items-center gap-2 mt-2">
                                     <span className="text-sm font-bold uppercase" style={{ color: project.areaColor }}>
