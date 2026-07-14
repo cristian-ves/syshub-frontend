@@ -1,6 +1,7 @@
 import {
     createSlice,
     createAsyncThunk,
+    isAnyOf,
     type PayloadAction,
 } from "@reduxjs/toolkit";
 import { articleService } from "../../features/articles/services/article.service";
@@ -39,6 +40,19 @@ const initialState: ArticleState = {
         sort: "puntos,desc",
     },
 };
+
+function patchArticle(
+    state: ArticleState,
+    id: number,
+    patch: Partial<Article>
+) {
+    const listArticle = state.articles.find((a) => a.id === id);
+    if (listArticle) Object.assign(listArticle, patch);
+
+    if (state.selectedArticle?.id === id) {
+        Object.assign(state.selectedArticle, patch);
+    }
+}
 
 export const fetchArticleBySlug = createAsyncThunk(
     "articles/fetchBySlug",
@@ -162,7 +176,7 @@ export const articleSlice = createSlice({
             };
         },
         resetArticleFilters: (state) => {
-            state.filters = initialState.filters;
+            state.filters = { ...initialState.filters };
         },
         clearSelectedArticle: (state) => {
             state.selectedArticle = null;
@@ -170,10 +184,6 @@ export const articleSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(fetchArticleBySlug.pending, (state) => {
-                state.loading = true;
-                state.error = null;
-            })
             .addCase(
                 fetchArticleBySlug.fulfilled,
                 (state, action: PayloadAction<ArticleDetail>) => {
@@ -181,15 +191,6 @@ export const articleSlice = createSlice({
                     state.selectedArticle = action.payload;
                 }
             )
-            .addCase(fetchArticleBySlug.rejected, (state, action) => {
-                state.loading = false;
-                state.error = action.payload as string;
-            })
-
-            .addCase(fetchArticles.pending, (state) => {
-                state.loading = true;
-                state.error = null;
-            })
             .addCase(
                 fetchArticles.fulfilled,
                 (state, action: PayloadAction<PaginatedResponse<Article>>) => {
@@ -199,83 +200,67 @@ export const articleSlice = createSlice({
                     state.currentPage = action.payload.number;
                 }
             )
-            .addCase(fetchArticles.rejected, (state, action) => {
-                state.loading = false;
-                state.error = action.payload as string;
-            })
             .addCase(voteArticleThunk.fulfilled, (state, action) => {
                 const { id, newPoints, vote } = action.payload;
-
-                const listArticle = state.articles.find((a) => a.id === id);
-                if (listArticle) {
-                    listArticle.puntos = newPoints;
-                    listArticle.vote = vote;
-                }
-
-                if (state.selectedArticle?.id === id) {
-                    state.selectedArticle.puntos = newPoints;
-                    state.selectedArticle.vote = vote;
-                }
+                patchArticle(state, id, { puntos: newPoints, vote });
             })
             .addCase(toggleFavoriteThunk.fulfilled, (state, action) => {
                 const id = action.payload;
-
-                const listArticle = state.articles.find((a) => a.id === id);
-                if (listArticle) {
-                    listArticle.favorite = !listArticle.favorite;
+                const current =
+                    state.articles.find((a) => a.id === id)?.favorite ??
+                    state.selectedArticle?.favorite ??
+                    false;
+                patchArticle(state, id, { favorite: !current });
+            })
+            .addCase(deleteArticleThunk.fulfilled, (state, action) => {
+                const deletedId = action.payload;
+                state.articles = state.articles.filter(
+                    (article) => article.id !== deletedId
+                );
+                if (state.selectedArticle?.id === deletedId) {
+                    state.selectedArticle = null;
                 }
-
-                if (state.selectedArticle?.id === id) {
-                    state.selectedArticle.favorite =
-                        !state.selectedArticle.favorite;
+            })
+            .addCase(updateArticleThunk.fulfilled, (state, action) => {
+                const updatedArticle = action.payload;
+                const index = state.articles.findIndex(
+                    (a) => a.id === updatedArticle.id
+                );
+                if (index !== -1) {
+                    state.articles[index] = updatedArticle;
                 }
-            });
-
-        builder.addCase(deleteArticleThunk.fulfilled, (state, action) => {
-            const deletedId = action.payload;
-            state.articles = state.articles.filter(
-                (article) => article.id !== deletedId
+                if (state.selectedArticle?.id === updatedArticle.id) {
+                    state.selectedArticle = {
+                        ...updatedArticle,
+                        comentarios: state.selectedArticle.comentarios,
+                    };
+                }
+            })
+            .addCase(addCommentThunk.fulfilled, (state, action) => {
+                state.selectedArticle?.comentarios.unshift(action.payload);
+            })
+            .addCase(deleteCommentThunk.fulfilled, (state, action) => {
+                if (state.selectedArticle) {
+                    state.selectedArticle.comentarios =
+                        state.selectedArticle.comentarios.filter(
+                            (c) => c.id !== action.payload
+                        );
+                }
+            })
+            .addMatcher(
+                isAnyOf(fetchArticleBySlug.pending, fetchArticles.pending),
+                (state) => {
+                    state.loading = true;
+                    state.error = null;
+                }
+            )
+            .addMatcher(
+                isAnyOf(fetchArticleBySlug.rejected, fetchArticles.rejected),
+                (state, action) => {
+                    state.loading = false;
+                    state.error = action.payload as string;
+                }
             );
-            if (state.selectedArticle?.id === deletedId) {
-                state.selectedArticle = null;
-            }
-        });
-
-        builder.addCase(updateArticleThunk.fulfilled, (state, action) => {
-            const updatedArticle = action.payload;
-
-            const index = state.articles.findIndex(
-                (a) => a.id === updatedArticle.id
-            );
-            if (index !== -1) {
-                state.articles[index] = updatedArticle;
-            }
-
-            if (
-                state.selectedArticle &&
-                state.selectedArticle.id === updatedArticle.id
-            ) {
-                state.selectedArticle = {
-                    ...updatedArticle,
-                    comentarios: state.selectedArticle.comentarios,
-                };
-            }
-        });
-
-        builder.addCase(addCommentThunk.fulfilled, (state, action) => {
-            if (state.selectedArticle) {
-                state.selectedArticle.comentarios.unshift(action.payload);
-            }
-        });
-
-        builder.addCase(deleteCommentThunk.fulfilled, (state, action) => {
-            if (state.selectedArticle) {
-                state.selectedArticle.comentarios =
-                    state.selectedArticle.comentarios.filter(
-                        (c) => c.id !== action.payload
-                    );
-            }
-        });
     },
 });
 

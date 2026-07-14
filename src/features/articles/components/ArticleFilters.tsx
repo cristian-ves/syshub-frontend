@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Search, Heart, X, Settings2 } from 'lucide-react';
 import { useAppDispatch, useAppSelector } from '../../../store';
 import { articleSlice } from '../../../store/slices/articleSlice';
-import { Select } from '../../../components/common/Select';
 import { Button } from '../../../components/common/Button';
 import { CourseSearchInput } from '../../projects/components';
 import { useNavigate } from 'react-router-dom';
-
+import type { Course } from '../../../types/course.types';
 
 type ArticleSearchMode = 'search' | 'tag';
 
-export const ArticleFilters: React.FC = () => {
+export const ArticleFilters = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const { filters } = useAppSelector(state => state.articles);
@@ -20,6 +19,7 @@ export const ArticleFilters: React.FC = () => {
     const [showAdvanced, setShowAdvanced] = useState(false);
     const [searchMode, setSearchMode] = useState<ArticleSearchMode>('search');
     const [localSearch, setLocalSearch] = useState('');
+    const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
 
     // Debounce search logic
     useEffect(() => {
@@ -37,12 +37,18 @@ export const ArticleFilters: React.FC = () => {
         return () => clearTimeout(timer);
     }, [localSearch, searchMode, dispatch, filters]);
 
-    const activeFiltersCount = [filters.courseId, filters.status].filter(Boolean).length;
+    const activeFiltersCount = [filters.courseId].filter(Boolean).length;
+
+    const handleResetFilters = () => {
+        dispatch(resetArticleFilters());
+        setLocalSearch('');
+        setSelectedCourse(null);
+    };
 
     return (
         <div className="w-full space-y-4 mb-10">
             <div className="flex flex-col md:flex-row gap-4">
-                <div className="relative flex-grow flex items-center">
+                <div className="relative grow flex items-center">
                     <Search className="absolute left-4 text-slate-400 pointer-events-none" size={20} />
                     <input
                         type="text"
@@ -102,31 +108,17 @@ export const ArticleFilters: React.FC = () => {
 
                     <div className="flex flex-col">
                         <CourseSearchInput
-                            onSelect={(course) => dispatch(setArticleFilters({ courseId: course.id, page: 0 }))}
+                            value={selectedCourse}
+                            onSelect={(course) => {
+                                setSelectedCourse(course);
+                                dispatch(setArticleFilters({ courseId: course.id, page: 0 }));
+                            }}
                         />
                     </div>
 
-                    {(user?.role === 'ROLE_AUXILIAR' || user?.role === 'ROLE_ADMIN') ? (
-                        <Select
-                            label="Estado del Contenido"
-                            options={[
-                                { id: 'PUBLISHED', nombre: 'Publicado' },
-                                { id: 'DRAFT', nombre: 'Borrador' }
-                            ]}
-                            labelKey="nombre"
-                            valueKey="id"
-                            value={filters.status || ""}
-                            onChange={(e) => dispatch(setArticleFilters({ status: e.target.value as any || undefined }))}
-                        />
-                    ) : (
-                        <div className="flex items-end pb-2">
-                            <p className="text-xs text-slate-400 italic">Filtrando solo material verificado por auxiliares.</p>
-                        </div>
-                    )}
-
                     <div className="md:col-span-2 flex justify-end pt-2">
                         <button
-                            onClick={() => { dispatch(resetArticleFilters()); setLocalSearch(''); }}
+                            onClick={handleResetFilters}
                             className="cursor-pointer text-[10px] font-black text-slate-400 hover:text-brand-pink flex items-center gap-1 uppercase tracking-widest transition-all"
                         >
                             <X size={14} /> Limpiar Filtros

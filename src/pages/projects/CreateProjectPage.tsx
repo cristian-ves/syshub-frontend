@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Input, Badge } from "../../components/common";
 import { ChevronLeft, Send, FileCode, Tags, Info } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { CourseSearchInput, FileUpload, TagInput } from "../../features/projects/components";
 import { useCreateProject } from "../../hooks/useCreateProject";
+import { type Course } from "../../types/course.types";
 
 export const CreateProjectPage: React.FC = () => {
     const navigate = useNavigate();
+    const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
     const {
         register, onSubmit, setValue, tags, files,
         handleTagsChange, handleFilesChange, formState: { errors }, isSubmitting
@@ -30,7 +32,7 @@ export const CreateProjectPage: React.FC = () => {
 
             <form
                 onSubmit={onSubmit}
-                className="w-full bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[2rem] shadow-2xl shadow-slate-200/50 dark:shadow-none overflow-hidden flex flex-col min-h-[900px]"
+                className="w-full bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-4xl shadow-2xl shadow-slate-200/50 dark:shadow-none overflow-hidden flex flex-col min-h-225"
             >
 
                 <section className="p-8 md:p-10 space-y-6">
@@ -53,7 +55,11 @@ export const CreateProjectPage: React.FC = () => {
                         />
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <CourseSearchInput
-                                onSelect={(course) => setValue("courseId", course.id, { shouldValidate: true })}
+                                value={selectedCourse}
+                                onSelect={(course) => {
+                                    setSelectedCourse(course);
+                                    setValue("courseId", course.id, { shouldValidate: true })
+                                }}
                                 error={errors.courseId?.message}
                             />
                             <Input
@@ -78,12 +84,12 @@ export const CreateProjectPage: React.FC = () => {
 
                 <hr className="border-slate-100 dark:border-slate-800" />
 
-                <section className="p-8 md:p-10 flex-grow flex flex-col">
+                <section className="p-8 md:p-10 grow flex flex-col">
                     <div className="flex items-center gap-2 mb-6 text-brand-blue">
                         <FileCode size={20} />
                         <h2 className="font-bold uppercase tracking-wider text-xs">Documentación y Archivos</h2>
                     </div>
-                    <div className="flex-grow">
+                    <div className="grow">
                         <FileUpload
                             value={files}
                             onChange={handleFilesChange}

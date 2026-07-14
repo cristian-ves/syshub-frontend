@@ -100,7 +100,7 @@ export const EditArticlePage: React.FC = () => {
                 tags={tags}
                 onTagsChange={handleTagsChange}
                 submitLabel="Guardar Cambios"
-                initialCourse={{ id: article.curso.id, nombre: article.curso.nombre }}
+                initialCourse={article.curso}
             />
         </div>
     );

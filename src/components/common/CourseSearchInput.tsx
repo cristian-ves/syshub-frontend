@@ -2,20 +2,28 @@ import { useState, useRef, useEffect } from "react";
 import { Search, ChevronDown } from "lucide-react";
 import api from "../../api/axios.config";
 
+import type { Course } from '../../types/course.types';
+
 interface Props {
+    value?: Course | null;
     onSelect: (course: any) => void;
     error?: string;
-    initialCourse?: { id: number; nombre: string; codigo?: string } | null;
 }
 
-export const CourseSearchInput: React.FC<Props> = ({ onSelect, error, initialCourse }) => {
-    const [query, setQuery] = useState(
-        initialCourse ? `${initialCourse.nombre} ${initialCourse.codigo ? `(${initialCourse.codigo})` : ''}` : ""
-    );
-    const [courses, setCourses] = useState<any[]>([]);
+const formatCourseLabel = (course?: Course | null) =>
+    course ? `${course.nombre}${course.codigo ? ` (${course.codigo})` : ''}` : "";
+
+export const CourseSearchInput = ({ value, onSelect, error }: Props) => {
+    const [query, setQuery] = useState(formatCourseLabel(value));
+    const [courses, setCourses] = useState<Course[]>([]);
     const [open, setOpen] = useState(false);
 
     const containerRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        setQuery(formatCourseLabel(value));
+    }, [value?.id])
+
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -29,15 +37,15 @@ export const CourseSearchInput: React.FC<Props> = ({ onSelect, error, initialCou
         };
     }, []);
 
-    const searchCourses = async (value: string) => {
-        setQuery(value);
-        if (value.length < 2) {
+    const searchCourses = async (val: string) => {
+        setQuery(val);
+        if (val.length < 2) {
             setCourses([]);
             setOpen(false);
             return;
         }
         try {
-            const { data } = await api.get("/catalog/courses/search", { params: { q: value } });
+            const { data } = await api.get("/catalog/courses/search", { params: { q: val } });
             setCourses(data);
             setOpen(data.length > 0);
         } catch (err) {
@@ -46,7 +54,7 @@ export const CourseSearchInput: React.FC<Props> = ({ onSelect, error, initialCou
     };
 
     return (
-        <div ref={containerRef} className="w-full text-left relative">
+        <div ref={containerRef} className="w-full text-left relative z-1000">
             <label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1.5 ml-1">
                 Curso
             </label>
@@ -58,8 +66,7 @@ export const CourseSearchInput: React.FC<Props> = ({ onSelect, error, initialCou
                     onFocus={() => courses.length > 0 && setOpen(true)}
                     placeholder="Buscar curso (Ej. Estructura de Datos)"
                     className={`
-                        w-full px-4 py-3 rounded-xl border outline-none transition-all
-                        bg-white dark:bg-slate-800 text-slate-900 dark:text-white
+                        w-full px-4 py-3 rounded-xl border outline-none transition-all bg-white dark:bg-slate-800 text-slate-900 dark:text-white
                         ${error ? "border-red-500 shadow-sm shadow-red-100" : "border-slate-200 dark:border-slate-700 focus:border-brand-blue"}
                     `}
                 />
