@@ -73,7 +73,7 @@ export const ArticleForm = ({
             </div>
 
             <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-4xl overflow-hidden shadow-xl shadow-slate-200/50 dark:shadow-none">
-                <div className="flex items-center justify-between p-6 border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/30">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-6 border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/30">
                     <div className="flex items-center gap-2 text-brand-blue">
                         <FileText size={20} />
                         <h2 className="font-bold uppercase tracking-wider text-xs">Contenido</h2>
@@ -82,14 +82,14 @@ export const ArticleForm = ({
                         <button
                             type="button"
                             onClick={() => setPreviewMode(false)}
-                            className={`cursor-pointer flex items-center gap-2 px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${!previewMode ? 'bg-brand-blue text-white shadow-sm' : 'text-slate-500 hover:text-brand-blue'}`}
+                            className={`cursor-pointer flex-1 sm:flex-initial flex items-center justify-center gap-2 px-3 sm:px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${!previewMode ? 'bg-brand-blue text-white shadow-sm' : 'text-slate-500 hover:text-brand-blue'}`}
                         >
                             <Edit3 size={14} /> Escribir
                         </button>
                         <button
                             type="button"
                             onClick={() => setPreviewMode(true)}
-                            className={`cursor-pointer flex items-center gap-2 px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${previewMode ? 'bg-brand-blue text-white shadow-sm' : 'text-slate-500 hover:text-brand-blue'}`}
+                            className={`cursor-pointer flex-1 sm:flex-initial flex items-center justify-center gap-2 px-3 sm:px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${previewMode ? 'bg-brand-blue text-white shadow-sm' : 'text-slate-500 hover:text-brand-blue'}`}
                         >
                             <Eye size={14} /> Vista Previa
                         </button>
