@@ -9,6 +9,7 @@ import { AreaBadge, FeaturedBadge, FileItem, ProjectSection, ProjectTag } from '
 import { formatDate } from '../../../helpers/date.helper';
 import { toggleProjectFeatured } from '../../../store/slices/projectSlice';
 import { useAppDispatch } from '../../../store';
+import { createPortal } from 'react-dom';
 
 interface ProjectModalProps {
     project: Project | null;
@@ -54,11 +55,11 @@ export const ProjectModal = ({ project, isOpen, onClose, canToggleDestacado }: P
         }
     };
 
-    return (
-        <div className="fixed inset-0 z-100 flex items-center justify-center p-4">
+    return createPortal(
+        <div className="fixed inset-0 z-100 flex items-center justify-center p-2 sm:p-4">
             <div className="absolute inset-0 bg-slate-950/40 backdrop-blur-sm transition-opacity" onClick={onClose} />
 
-            <div className="relative bg-white dark:bg-slate-900 w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-4xl shadow-2xl border border-slate-200 dark:border-slate-800 custom-scrollbar animate-in fade-in zoom-in duration-300">
+            <div className="relative bg-white dark:bg-slate-900 w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl sm:rounded-4xl shadow-2xl border border-slate-200 dark:border-slate-800 custom-scrollbar animate-in fade-in zoom-in duration-300">
 
                 <header className="h-32 bg-brand-blue relative overflow-hidden">
                     <div className="absolute inset-0 opacity-20  from-white via-transparent to-transparent" />
@@ -134,6 +135,7 @@ export const ProjectModal = ({ project, isOpen, onClose, canToggleDestacado }: P
                     )}
                 </div>
             </div>
-        </div>
+        </div>,
+        document.body
     );
 };
