@@ -30,9 +30,9 @@ api.interceptors.response.use(
         }
 
         const message =
-            error.response?.data?.message || "Ocurrió un error inesperado";
+            error.response?.data?.message || "An unexpected error happened";
 
-        console.error("Error desde el servidor:", message);
+        console.error("Server error:", message);
         return Promise.reject(message);
     }
 );

@@ -1,6 +1,6 @@
 export interface Course {
     id: number;
-    nombre: string;
-    codigo: string;
-    pensumNombre?: string;
+    name: string;
+    code: string;
+    studyPlanName?: string;
 }

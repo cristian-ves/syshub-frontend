@@ -11,7 +11,7 @@ import {
 import { Button, Input, Badge, Select, ErrorModal, ConfirmDeleteModal } from "../../../components/common";
 import { useUserCard } from "../../../hooks/admin/useUserCard";
 import { ROLE_OPTIONS, getRoleLabel } from "../../../helpers/roleOptions.helper";
-import { CARRERAS } from "../../../helpers/carreras.helper";
+import { CARRERAS } from "../../../helpers/majors.helper";
 import type { UserResponse } from "../../../types/users.types";
 
 interface Props {

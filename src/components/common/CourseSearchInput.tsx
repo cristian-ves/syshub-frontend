@@ -11,7 +11,7 @@ interface Props {
 }
 
 const formatCourseLabel = (course?: Course | null) =>
-    course ? `${course.nombre}${course.codigo ? ` (${course.codigo})` : ''}` : "";
+    course ? `${course.name}${course.code ? ` (${course.code})` : ''}` : "";
 
 export const CourseSearchInput = ({ value, onSelect, error }: Props) => {
     const [query, setQuery] = useState(formatCourseLabel(value));
@@ -82,17 +82,17 @@ export const CourseSearchInput = ({ value, onSelect, error }: Props) => {
                         <div
                             key={c.id}
                             onClick={() => {
-                                setQuery(`${c.nombre} (${c.codigo})`);
+                                setQuery(`${c.name} (${c.code})`);
                                 setOpen(false);
                                 onSelect(c);
                             }}
                             className="px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer text-sm border-b last:border-none border-slate-50 dark:border-slate-800 transition-colors"
                         >
                             <p className="font-semibold text-slate-900 dark:text-white">
-                                {c.nombre} <span className="text-slate-400 font-normal">({c.codigo})</span>
+                                {c.name} <span className="text-slate-400 font-normal">({c.code})</span>
                             </p>
                             <p className="text-xs text-slate-500 italic mt-0.5">
-                                {c.pensumNombre}
+                                {c.studyPlanName}
                             </p>
                         </div>
                     ))}

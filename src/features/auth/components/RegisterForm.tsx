@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector, type RootState } from '../../../store';
 import { useNavigate } from 'react-router-dom';
 import { registerUser } from '../../../store/slices/authSlice';
 import { toast } from 'sonner';
-import { CARRERAS } from '../../../helpers/carreras.helper';
+import { CARRERAS } from '../../../helpers/majors.helper';
 
 export const RegisterForm: React.FC = () => {
 
