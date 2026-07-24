@@ -14,10 +14,10 @@ export const RegisterPage: React.FC = () => {
                         <span className="text-3xl font-black tracking-tighter">syshub</span>
                     </Link>
                     <h2 className="text-5xl font-black mt-20 leading-tight">
-                        Únete a la red <br /> tecnológica del <br /> <span className="text-brand-pink">CUNOC</span>.
+                        Join the <span className="text-brand-pink">CUNOC</span> <br /> technology network!
                     </h2>
                     <p className="mt-6 text-xl text-blue-100 max-w-md">
-                        Gestiona tus cursos, colabora en proyectos y mantente conectado con tu facultad.
+                        Manage your courses, projects, and connect with the community.
                     </p>
                 </div>
 
@@ -32,15 +32,15 @@ export const RegisterPage: React.FC = () => {
                 <div className="w-full max-w-md">
                     <div className="mb-10 lg:hidden flex flex-col items-center">
                         <img src={logo} alt="Logo" className="h-12 w-auto mb-4" />
-                        <h1 className="text-3xl font-black dark:text-white">Crear cuenta</h1>
+                        <h1 className="text-3xl font-black dark:text-white">Create Account</h1>
                     </div>
 
                     <div className="hidden lg:block mb-10">
-                        <h1 className="text-4xl font-black text-slate-950 dark:text-white">Empieza ahora</h1>
+                        <h1 className="text-4xl font-black text-slate-950 dark:text-white">Begin now</h1>
                         <p className="text-slate-500 dark:text-slate-400 mt-2 font-medium">
-                            ¿Ya tienes cuenta? {' '}
+                            Have an account already? {' '}
                             <Link to="/login" className="text-brand-blue dark:text-blue-400 font-bold hover:underline">
-                                Inicia sesión aquí
+                                Login here
                             </Link>
                         </p>
                     </div>
@@ -48,8 +48,8 @@ export const RegisterPage: React.FC = () => {
                     <RegisterForm />
 
                     <p className="mt-8 text-center text-sm text-slate-500 lg:hidden">
-                        ¿Ya tienes cuenta? {' '}
-                        <Link to="/login" className="text-brand-blue font-bold">Inicia sesión</Link>
+                        Have an account already? {' '}
+                        <Link to="/login" className="text-brand-blue font-bold">Login</Link>
                     </p>
                 </div>
             </div>

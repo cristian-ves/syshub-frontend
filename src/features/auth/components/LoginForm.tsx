@@ -25,7 +25,7 @@ export const LoginForm = () => {
     const onSubmit = async (data: LoginFormValues) => {
         try {
             const response = await dispatch(loginUser(data)).unwrap();
-            toast.success(`¡Qué tal, ${response.username}! Bienvenido.`);
+            toast.success(`Hey, ${response.username}! Welcome.`);
             navigate("/profile");
         } catch (error: any) {
             setErrorMsg(error);
@@ -36,14 +36,14 @@ export const LoginForm = () => {
         <div className="w-full max-w-md space-y-6">
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                 <Input
-                    label="Usuario"
+                    label="Username"
                     {...register("username")}
                     error={errors.username?.message}
-                    placeholder="Tu nombre de usuario"
+                    placeholder="Your username"
                 />
 
                 <Input
-                    label="Contraseña"
+                    label="Password"
                     type="password"
                     {...register("password")}
                     error={errors.password?.message}
@@ -55,7 +55,7 @@ export const LoginForm = () => {
                         to="/forgot-password"
                         className="text-sm font-semibold text-brand-blue dark:text-blue-400 hover:underline"
                     >
-                        ¿Olvidaste tu contraseña?
+                        Forgot password?
                     </Link>
                 </div>
 
@@ -64,7 +64,7 @@ export const LoginForm = () => {
                     className="w-full"
                     isLoading={loading}
                 >
-                    Iniciar Sesión
+                    Login
                 </Button>
             </form>
 

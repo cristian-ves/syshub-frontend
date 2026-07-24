@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector, type RootState } from '../../../store';
 import { useNavigate } from 'react-router-dom';
 import { registerUser } from '../../../store/slices/authSlice';
 import { toast } from 'sonner';
-import { CARRERAS } from '../../../helpers/majors.helper';
+import { MAJORS } from '../../../helpers/majors.helper';
 
 export const RegisterForm: React.FC = () => {
 
@@ -20,13 +20,13 @@ export const RegisterForm: React.FC = () => {
     } = useForm<RegisterFormValues>({
         resolver: zodResolver(registerSchema) as any,
         defaultValues: {
-            nombreCompleto: '',
+            fullName: '',
             username: '',
-            registroAcademico: '',
+            academicRecord: '',
             email: '',
             password: '',
             confirmPassword: '',
-            idCarrera: 1
+            majorId: 1
         }
     });
 
@@ -38,7 +38,7 @@ export const RegisterForm: React.FC = () => {
         try {
             const { confirmPassword, ...registerDto } = data;
             await dispatch(registerUser(registerDto)).unwrap();
-            toast.success("Cuenta creada exitosamente");
+            toast.success("Account created successfully");
             navigate('/profile');
         } catch (error: any) {
             setErrorMsg(error);
@@ -52,52 +52,52 @@ export const RegisterForm: React.FC = () => {
                 className="space-y-4 text-left"
             >
                 <Input
-                    label="Nombre Completo"
-                    placeholder="Ej. Alejandro Pérez"
-                    error={errors.nombreCompleto?.message}
-                    {...register('nombreCompleto')}
+                    label="Full Name"
+                    placeholder="Ej. Cristian"
+                    error={errors.fullName?.message}
+                    {...register('fullName')}
                 />
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <Input
-                        label="Usuario"
-                        placeholder="ale_perez"
+                        label="Username"
+                        placeholder="username_example"
                         error={errors.username?.message}
                         {...register('username')}
                     />
                     <Input
-                        label="Registro Académico"
+                        label="Academic Record"
                         placeholder="202012345"
-                        error={errors.registroAcademico?.message}
-                        {...register('registroAcademico')}
+                        error={errors.academicRecord?.message}
+                        {...register('academicRecord')}
                     />
                 </div>
 
                 <Input
-                    label="Correo Electrónico"
+                    label="Email"
                     type="email"
-                    placeholder="estudiante@cunoc.edu.gt"
+                    placeholder="student@cunoc.edu.gt"
                     error={errors.email?.message}
                     {...register('email')}
                 />
 
                 <Select
-                    label="Carrera"
-                    options={CARRERAS}
-                    error={errors.idCarrera?.message}
-                    {...register('idCarrera', { valueAsNumber: true })}
+                    label="Major"
+                    options={MAJORS}
+                    error={errors.majorId?.message}
+                    {...register('majorId', { valueAsNumber: true })}
                 />
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <Input
-                        label="Contraseña"
+                        label="Password"
                         type="password"
                         placeholder="••••••••"
                         error={errors.password?.message}
                         {...register('password')}
                     />
                     <Input
-                        label="Confirmar"
+                        label="Confirm password"
                         type="password"
                         placeholder="••••••••"
                         error={errors.confirmPassword?.message}
@@ -110,7 +110,7 @@ export const RegisterForm: React.FC = () => {
                     className="w-full py-4 mt-2"
                     isLoading={loading}
                 >
-                    Crear Cuenta
+                    Create account
                 </Button>
             </form>
 

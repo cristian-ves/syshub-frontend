@@ -24,7 +24,7 @@ export const ResetPasswordForm = () => {
 
     const onSubmit = async (data: ResetPasswordFormData) => {
         if (!token) {
-            setErrorMsg("El token de recuperación no es válido.");
+            setErrorMsg("The validation token is not valid.");
             return;
         }
 
@@ -34,8 +34,8 @@ export const ResetPasswordForm = () => {
 
             await authService.resetPassword(token, data.password);
 
-            toast.success("¡Contraseña actualizada!", {
-                description: "Ya puedes iniciar sesión con tus nuevas credenciales.",
+            toast.success("Password updated!", {
+                description: "You can now login with the new credentials.",
             });
 
             navigate("/login");
@@ -50,7 +50,7 @@ export const ResetPasswordForm = () => {
         <div className="w-full max-w-md space-y-6">
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                 <Input
-                    label="Nueva Contraseña"
+                    label="New Password"
                     type="password"
                     {...register("password")}
                     error={errors.password?.message}
@@ -58,7 +58,7 @@ export const ResetPasswordForm = () => {
                 />
 
                 <Input
-                    label="Confirmar Contraseña"
+                    label="Confirm Password"
                     type="password"
                     {...register("confirmPassword")}
                     error={errors.confirmPassword?.message}
@@ -70,7 +70,7 @@ export const ResetPasswordForm = () => {
                     className="w-full mt-2"
                     isLoading={loading}
                 >
-                    Cambiar Contraseña
+                    Change Password
                 </Button>
             </form>
 

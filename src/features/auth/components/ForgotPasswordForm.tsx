@@ -19,7 +19,7 @@ export const ForgotPasswordForm: React.FC = () => {
         try {
             await authService.forgotPassword(email);
             setIsSent(true);
-            toast.success("¡Correo enviado!");
+            toast.success("Email sent!");
         } catch (error: any) {
 
             setErrorMsg(error);
@@ -32,11 +32,11 @@ export const ForgotPasswordForm: React.FC = () => {
         return (
             <div className="text-center space-y-4 animate-in fade-in duration-500">
                 <p className="text-slate-600 dark:text-slate-400 font-medium">
-                    Hemos enviado las instrucciones a: <br />
+                    We have sent the instructions to: <br />
                     <span className="text-slate-900 dark:text-white font-bold">{email}</span>
                 </p>
                 <p className="text-sm text-slate-500">
-                    Si no lo recibes en un par de minutos, prueba de nuevo.
+                    If you don't receive it within a few minutes, try again.
                 </p>
             </div>
         );
@@ -46,9 +46,9 @@ export const ForgotPasswordForm: React.FC = () => {
         <div className="w-full space-y-6">
             <form onSubmit={onSubmit} className="space-y-4">
                 <Input
-                    label="Correo Electrónico"
+                    label="Email"
                     type="email"
-                    placeholder="tu-correo@cunoc.edu.gt"
+                    placeholder="your-email@cunoc.edu.gt"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
@@ -59,7 +59,7 @@ export const ForgotPasswordForm: React.FC = () => {
                     className="w-full"
                     isLoading={loading}
                 >
-                    Enviar instrucciones
+                    Send instructions
                 </Button>
             </form>
 

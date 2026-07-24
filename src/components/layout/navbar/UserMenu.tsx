@@ -26,7 +26,7 @@ export const UserMenu = () => {
             </div>
             <Button
                 variant="ghost"
-                className="!px-3 text-slate-500 hover:text-red-600 dark:text-slate-400 dark:hover:text-red-400"
+                className="px-3! text-slate-500 hover:text-red-600 dark:text-slate-400 dark:hover:text-red-400"
                 onClick={handleLogout}
             >
                 <LogOut className="h-5 w-5" />

@@ -2,9 +2,9 @@ export interface RegisterRequestDTO {
     username: string;
     email: string;
     password: string;
-    nombreCompleto: string;
-    registroAcademico: string;
-    idCarrera: number;
+    fullName: string;
+    academicRecord: string;
+    majorId: number;
 }
 
 export interface AuthResponseDTO {
@@ -13,10 +13,10 @@ export interface AuthResponseDTO {
     username: string;
     email: string;
     role: string;
-    nombreCompleto: string;
-    registroAcademico: string;
-    carreraId: number;
-    carreraNombre: string;
+    fullName: string;
+    academicRecord: string;
+    majorId: number;
+    majorName: string;
 }
 
 export interface LoginRequestDTO {

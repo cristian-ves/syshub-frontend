@@ -40,8 +40,8 @@ export const Navbar = () => {
                 <div className="hidden md:flex items-center gap-2">
                     {isAuthenticated ? <UserMenu /> : (
                         <>
-                            <Button variant="ghost" onClick={() => navigate('/login')}>Iniciar Sesión</Button>
-                            <Button onClick={() => navigate('/register')}>Empezar</Button>
+                            <Button variant="ghost" onClick={() => navigate('/login')}>Log In</Button>
+                            <Button onClick={() => navigate('/register')}>Get Started</Button>
                         </>
                     )}
                 </div>
@@ -74,13 +74,13 @@ export const Navbar = () => {
                                 className="w-full justify-center"
                                 onClick={() => { navigate('/login'); closeMenu(); }}
                             >
-                                Iniciar Sesión
+                                Log In
                             </Button>
                             <Button
                                 className="w-full justify-center"
                                 onClick={() => { navigate('/register'); closeMenu(); }}
                             >
-                                Empezar
+                                Get Started
                             </Button>
                         </div>
                     )}

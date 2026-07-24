@@ -11,7 +11,7 @@ import {
 import { Button, Input, Badge, Select, ErrorModal, ConfirmDeleteModal } from "../../../components/common";
 import { useUserCard } from "../../../hooks/admin/useUserCard";
 import { ROLE_OPTIONS, getRoleLabel } from "../../../helpers/roleOptions.helper";
-import { CARRERAS } from "../../../helpers/majors.helper";
+import { MAJORS } from "../../../helpers/majors.helper";
 import type { UserResponse } from "../../../types/users.types";
 
 interface Props {
@@ -34,7 +34,7 @@ export const UserCard = ({ user }: Props) => {
         isDeleting
     } = useUserCard(user);
 
-    const carreraActual = CARRERAS.find(c => c.id === user.carreraId)?.nombre || "No asignada";
+    const carreraActual = MAJORS.find(c => c.id === user.carreraId)?.nombre || "No asignada";
 
     return (
         <>
@@ -161,7 +161,7 @@ export const UserCard = ({ user }: Props) => {
                     {isEditing ? (
                         <Select
                             label="Carrera / Facultad"
-                            options={CARRERAS}
+                            options={MAJORS}
                             labelKey="nombre"
                             valueKey="id"
                             error={errors.carreraId?.message}

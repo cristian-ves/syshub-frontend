@@ -21,7 +21,7 @@ export const MyProfileLayout = () => {
                         Área Personal
                     </Badge>
                     <h1 className="text-4xl md:text-5xl font-black text-slate-950 dark:text-white mt-4">
-                        Bienvenido, <span className="text-brand-blue">{user?.nombreCompleto.split(' ')[0]}</span>
+                        Bienvenido, <span className="text-brand-blue">{user?.fullName.split(' ')[0]}</span>
                     </h1>
                     <p className="text-slate-500 mt-3 text-lg">
                         Gestiona tu identidad académica y revisa tus contribuciones.

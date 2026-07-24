@@ -4,11 +4,11 @@ export const resetPasswordSchema = z
     .object({
         password: z
             .string()
-            .min(8, "La contraseña debe tener al menos 8 caracteres"),
+            .min(8, "The password must contain at least 8 characters"),
         confirmPassword: z.string(),
     })
     .refine((data) => data.password === data.confirmPassword, {
-        message: "Las contraseñas no coinciden",
+        message: "The passwords must contain",
         path: ["confirmPassword"],
     });
 

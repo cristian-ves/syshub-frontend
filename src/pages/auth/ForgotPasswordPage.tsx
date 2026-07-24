@@ -10,7 +10,7 @@ export const ForgotPasswordPage: React.FC = () => {
             <div className="w-full max-w-md bg-white dark:bg-slate-900 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-800 p-8">
                 <div className="flex flex-col items-center mb-8">
                     <img src={logo} alt="Logo" className="h-10 w-auto mb-6" />
-                    <h1 className="text-2xl font-black dark:text-white">Recuperar acceso</h1>
+                    <h1 className="text-2xl font-black dark:text-white">Recover access</h1>
                 </div>
 
                 <ForgotPasswordForm />
@@ -21,7 +21,7 @@ export const ForgotPasswordPage: React.FC = () => {
                         className="inline-flex items-center gap-2 text-slate-500 hover:text-brand-blue transition-colors font-bold text-sm"
                     >
                         <ArrowLeft size={16} />
-                        Volver al inicio
+                        Back to home
                     </Link>
                 </div>
             </div>

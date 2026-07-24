@@ -1,4 +1,4 @@
-export const CARRERAS = [
+export const MAJORS = [
     { id: 1, nombre: "Computer Science and Systems Engineering" },
     { id: 2, nombre: "Mechanical Engineering" },
     { id: 3, nombre: "Industrial Mechanical Engineering" },
@@ -7,5 +7,5 @@ export const CARRERAS = [
 ];
 
 export const getCarreraNombre = (id: number) => {
-    return CARRERAS.find((c) => c.id === id)?.nombre || "Not assigned";
+    return MAJORS.find((c) => c.id === id)?.nombre || "Not assigned";
 };

@@ -4,7 +4,7 @@ import { ChevronLeft, UserPlus, GraduationCap, Lock, Info } from "lucide-react";
 import { Button, Input, Badge, Select, ErrorModal } from "../../components/common";
 import { useCreateUser } from "../../hooks/admin/useCreateUser";
 import { ROLE_OPTIONS } from "../../helpers/roleOptions.helper";
-import { CARRERAS } from "../../helpers/majors.helper";
+import { MAJORS } from "../../helpers/majors.helper";
 
 export const CreateUserPage: React.FC = () => {
     const navigate = useNavigate();
@@ -91,7 +91,7 @@ export const CreateUserPage: React.FC = () => {
                         <div className="md:col-span-2">
                             <Select
                                 label="Carrera"
-                                options={CARRERAS}
+                                options={MAJORS}
                                 labelKey="nombre"
                                 valueKey="id"
                                 {...register("carreraId")}

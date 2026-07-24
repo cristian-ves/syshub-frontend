@@ -25,11 +25,11 @@ export const ProfileInfoPage = () => {
     } = useForm<UpdateProfileFormValues>({
         resolver: zodResolver(updateProfileSchema) as any,
         defaultValues: {
-            nombreCompleto: user?.nombreCompleto,
+            nombreCompleto: user?.fullName,
             username: user?.username,
             email: user?.email,
-            registroAcademico: user?.registroAcademico,
-            carreraId: user?.carreraId,
+            registroAcademico: user?.academicRecord,
+            carreraId: user?.majorId,
         },
     });
 
@@ -69,7 +69,7 @@ export const ProfileInfoPage = () => {
 
                     <div>
                         <h2 className="text-xl font-bold dark:text-white">
-                            {user?.nombreCompleto}
+                            {user?.fullName}
                         </h2>
                         <p className="text-sm text-slate-500">
                             @{user?.username}

@@ -14,23 +14,22 @@ export const LandingPage: React.FC = () => {
             <div className="grow flex w-full">
                 <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center my-auto w-full">
                     <div>
-                        <Badge>Ecosistema para Ingeniería</Badge>
+                        <Badge>Engineering ecosystem</Badge>
                         <h1 className="text-5xl md:text-7xl leading-[1.1] dark:text-white">
-                            Enfócate en <span className="text-brand-blue">aprender</span>, nosotros hacemos el resto.
+                            Focus on <span className="text-brand-blue">learning</span>, we do the rest.
                         </h1>
                         <p className="mt-8 md:text-xl text-slate-600 dark:text-slate-400 leading-relaxed max-w-xl font-medium">
-                            SysHub es la plataforma modular diseñada para la próxima generación de ingenieros del {' '}
-                            <span className="text-brand-pink font-bold">CUNOC</span>.
-                            Centraliza tus cursos, foros y proyectos en un solo lugar.
+                            SysHub is the modular platform designed for the next generation of{' '}
+                            <span className="text-brand-pink font-bold">CUNOC</span> engineers.
+                            Centralize your courses, forums, and projects in one place.
                         </p>
                         <div className="mt-12 flex flex-col sm:flex-row gap-5">
                             {isAuthenticated ?
-
                                 (<Button className="text-lg py-4 px-10" onClick={() => navigate('/profile')}>
-                                    Ver mi perfil
+                                    View my profile
                                 </Button>) :
                                 (<Button className="text-lg py-4 px-10" onClick={() => navigate('/register')}>
-                                    Crear Cuenta
+                                    Create Account
                                 </Button>)
                             }
                         </div>

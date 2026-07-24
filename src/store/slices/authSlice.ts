@@ -17,10 +17,10 @@ interface AuthState {
         username: string;
         email: string;
         role: string;
-        nombreCompleto: string;
-        registroAcademico?: string;
-        carreraId?: number;
-        carreraNombre?: string;
+        fullName: string;
+        academicRecord?: string;
+        majorId?: number;
+        majorName?: string;
     } | null;
     token: string | null;
     isAuthenticated: boolean;
@@ -47,7 +47,7 @@ export const loginUser = createAsyncThunk(
             return data;
         } catch (error: any) {
             return rejectWithValue(
-                error.response?.data?.message || "Error al iniciar sesión"
+                error.response?.data?.message || "Error logging in"
             );
         }
     }
@@ -62,7 +62,7 @@ export const registerUser = createAsyncThunk(
             return data;
         } catch (error: any) {
             return rejectWithValue(
-                error.response?.data?.message || "Error al registrarse"
+                error.response?.data?.message || "Error signing up"
             );
         }
     }
@@ -73,13 +73,13 @@ export const checkAuth = createAsyncThunk(
     async (_, { rejectWithValue }) => {
         try {
             const token = localStorage.getItem("token");
-            if (!token) return rejectWithValue("No hay sesión activa");
+            if (!token) return rejectWithValue("There's no active session");
             return await authService.validateToken();
         } catch (error: any) {
             const errorMessage =
                 error?.response?.data?.message ||
                 error.message ||
-                "Authentication error";
+                "Error authenticating";
             return rejectWithValue(errorMessage);
         }
     }
@@ -92,7 +92,7 @@ export const updateUserProfile = createAsyncThunk(
             return await userService.updateProfile(id, data);
         } catch (error: any) {
             return rejectWithValue(
-                error.response?.data?.message || "Error al actualizar perfil"
+                error.response?.data?.message || "Error updating profile"
             );
         }
     }
@@ -163,10 +163,10 @@ export const authSlice = createSlice({
                         username: action.payload.username,
                         email: action.payload.email,
                         role: action.payload.role,
-                        nombreCompleto: action.payload.nombreCompleto,
-                        registroAcademico: action.payload.registroAcademico,
-                        carreraId: action.payload.carreraId,
-                        carreraNombre: action.payload.carreraNombre,
+                        fullName: action.payload.fullName,
+                        academicRecord: action.payload.academicRecord,
+                        majorId: action.payload.majorId,
+                        majorName: action.payload.majorName,
                     };
                     state.error = null;
                 }

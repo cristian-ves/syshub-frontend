@@ -8,7 +8,7 @@ interface ErrorModalProps {
     message: string;
 }
 
-export const ErrorModal: React.FC<ErrorModalProps> = ({ isOpen, onClose, title = "¡Hubo un problema!", message }) => {
+export const ErrorModal: React.FC<ErrorModalProps> = ({ isOpen, onClose, title = "There was a problem!", message }) => {
     if (!isOpen) return null;
 
     return (
@@ -33,7 +33,7 @@ export const ErrorModal: React.FC<ErrorModalProps> = ({ isOpen, onClose, title =
                         onClick={onClose}
                         className="px-6 py-2.5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl font-bold hover:opacity-90 transition-opacity cursor-pointer"
                     >
-                        Entendido
+                        Ok
                     </button>
                 </div>
             </div>

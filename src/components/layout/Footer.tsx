@@ -1,7 +1,6 @@
-import React from 'react';
 import logo from '../../assets/logo.svg';
 
-const Footer: React.FC = () => {
+const Footer = () => {
     return (
         <footer className="py-10 bg-white dark:bg-slate-950 border-t border-slate-100 dark:border-slate-800 transition-colors shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.03)] dark:shadow-none">
             <div className="max-w-7xl mx-auto px-12 flex flex-col md:flex-row justify-between items-center gap-6">
@@ -10,7 +9,7 @@ const Footer: React.FC = () => {
                     <span className="font-bold text-slate-950 dark:text-white">syshub</span>
                 </div>
                 <p className="text-slate-500 dark:text-slate-400 text-sm font-medium">
-                    &copy; {new Date().getFullYear()} Facultad de Ingeniería. Todos los derechos reservados.
+                    &copy; {new Date().getFullYear()} Faculty of Engineering. All rights reserved.
                 </p>
             </div>
         </footer>
