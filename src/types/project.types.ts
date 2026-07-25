@@ -23,7 +23,7 @@ export interface Project {
 
 export interface Tag {
     color: string;
-    nombre: string;
+    name: string;
 }
 
 export interface PaginatedResponse<T> {

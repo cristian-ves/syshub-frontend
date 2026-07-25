@@ -30,9 +30,7 @@ export const fetchMyFavorites = createAsyncThunk(
         try {
             return await articleService.getMyFavorites(page);
         } catch (error: any) {
-            return rejectWithValue(
-                error.message || "Error al cargar favoritos"
-            );
+            return rejectWithValue(error.message || "Error loading favorites");
         }
     }
 );
@@ -91,8 +89,8 @@ const favoriteArticlesSlice = createSlice({
             );
 
             if (articleToUpdate) {
-                articleToUpdate.puntos = newPoints;
-                articleToUpdate.vote = vote;
+                articleToUpdate.points = newPoints;
+                articleToUpdate.votes = vote;
             }
         });
     },

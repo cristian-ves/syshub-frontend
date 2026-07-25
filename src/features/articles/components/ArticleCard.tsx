@@ -22,7 +22,7 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
     const { toggleFavorite } = useArticleActions();
 
     const { user } = useAppSelector(state => state.auth);
-    const isOwner = user?.id === article.autor.id;
+    const isOwner = user?.id === article.author.id;
     const isAdmin = user?.role === "ROLE_ADMIN";
     const canEdit = isOwner || isAdmin;
 
@@ -33,10 +33,10 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
         try {
             setIsDeleting(true);
             await dispatch(deleteArticleThunk(article.id)).unwrap();
-            toast.success("Artículo eliminado con éxito");
+            toast.success("The article was deleted successfully");
             setIsDeleteModalOpen(false);
         } catch (error: any) {
-            toast.error(error || "Ocurrió un error al eliminar");
+            toast.error(error || "There was an error deleting the article, try again later");
         } finally {
             setIsDeleting(false);
         }
@@ -47,8 +47,8 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
             <div className="relative h-full">
                 <VoteControl
                     articleId={article.id}
-                    puntos={article.puntos}
-                    userVote={article.vote}
+                    points={article.points}
+                    userVote={article.votes}
                     className="absolute -left-4 top-8 z-30 bg-white/90 dark:bg-slate-800/90 backdrop-blur-md border border-slate-200/60 dark:border-slate-700/50 rounded-2xl shadow-xl shadow-slate-200/40 dark:shadow-none"
                 />
 
@@ -56,13 +56,13 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
                     onClick={() => navigate(`/articles/${article.slug}`)}
                     className="group bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm hover:shadow-xl hover:shadow-brand-blue/5 transition-all cursor-pointer flex flex-col h-full"
                 >
-                    <div className="flex-grow pl-4">
+                    <div className="grow pl-4">
                         <header className="mb-4">
                             <div className="flex justify-between items-start gap-2 mb-2">
                                 <div className="flex items-center gap-2">
                                     <span className="w-2 h-2 rounded-full bg-brand-blue" />
                                     <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
-                                        {article.curso.nombre}
+                                        {article.course.name}
                                     </span>
                                 </div>
 
@@ -113,17 +113,17 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
                             </div>
 
                             <h3 className="ml-2 text-xl font-black text-slate-950 dark:text-white leading-tight group-hover:text-brand-blue transition-colors line-clamp-2">
-                                {article.titulo}
+                                {article.title}
                             </h3>
                         </header>
 
                         <p className="text-sm text-slate-600 dark:text-slate-400 line-clamp-3 mb-6 font-medium italic">
-                            "{article.extracto}"
+                            "{article.excerpt}"
                         </p>
 
                         <div className="flex flex-wrap gap-2 mb-4">
                             {article.tags.slice(0, 3).map((tag) => (
-                                <ProjectTag key={tag.nombre} tag={tag} />
+                                <ProjectTag key={tag.name} tag={tag} />
                             ))}
                         </div>
                     </div>
@@ -134,9 +134,9 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
                                 <User size={14} />
                             </div>
                             <div className="flex flex-col">
-                                <span className="text-[10px] text-slate-400 font-bold uppercase leading-none mb-0.5">Autor</span>
+                                <span className="text-[10px] text-slate-400 font-bold uppercase leading-none mb-0.5">Author</span>
                                 <span className="text-xs font-bold text-slate-700 dark:text-slate-200">
-                                    {article.autor.nombreCompleto}
+                                    {article.author.fullName}
                                 </span>
                             </div>
                         </div>
@@ -153,8 +153,8 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({ article }) => {
                 isDeleting={isDeleting}
                 onClose={() => setIsDeleteModalOpen(false)}
                 onConfirm={handleDelete}
-                title="¿Eliminar Artículo?"
-                description={`Estás a punto de eliminar "${article.titulo}". Esta acción no se puede deshacer.`}
+                title="Delete article?"
+                description={`You're about to delete "${article.title}". This action can't be undone.`}
             />
         </>
     );

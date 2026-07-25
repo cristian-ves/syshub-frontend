@@ -51,7 +51,7 @@ export const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages,
                 </Button>
             </div>
             <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 italic">
-                Página {currentPage + 1} de {totalPages}
+                Page {currentPage + 1} of {totalPages}
             </p>
         </nav>
     );

@@ -40,7 +40,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick }) =>
                 <p className="text-sm text-slate-600 dark:text-slate-400 line-clamp-3 mb-6 font-medium italic">"{project.descripcion}"</p>
 
                 <div className="flex flex-wrap gap-2 mb-4">
-                    {project.tags.slice(0, 3).map((tag) => <ProjectTag key={tag.nombre} tag={tag} />)}
+                    {project.tags.slice(0, 3).map((tag) => <ProjectTag key={tag.name} tag={tag} />)}
                     {project.tags.length > 3 && <span className="text-[10px] text-slate-400 font-bold self-center">+{project.tags.length - 3}</span>}
                 </div>
             </div>

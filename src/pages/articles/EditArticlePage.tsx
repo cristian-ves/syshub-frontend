@@ -21,7 +21,7 @@ export const EditArticlePage: React.FC = () => {
     const { user } = useAppSelector(state => state.auth);
     const { article, loading } = useArticleDetail(slug);
 
-    const [tags, setTags] = useState<{ nombre: string; color: string }[]>([]);
+    const [tags, setTags] = useState<{ name: string; color: string }[]>([]);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const formMethods = useForm<CreateArticleFormValues>({
@@ -31,15 +31,15 @@ export const EditArticlePage: React.FC = () => {
     useEffect(() => {
         if (article) {
             const formattedTags = article.tags.map(t => ({
-                nombre: t.nombre,
+                name: t.name,
                 color: t.color || "#4f46e5"
             }));
 
             formMethods.reset({
-                titulo: article.titulo,
-                extracto: article.extracto,
-                contenido: article.contenido,
-                courseId: article.curso.id,
+                title: article.title,
+                excerpt: article.excerpt,
+                content: article.content,
+                courseId: article.course.id,
                 status: article.status || "PUBLISHED",
                 tags: formattedTags
             });
@@ -48,26 +48,26 @@ export const EditArticlePage: React.FC = () => {
         }
     }, [article, formMethods]);
 
-    const isOwner = user?.id === article?.autor?.id;
-    const isAdmin = user?.role === "ROLE_ADMIN" || user?.role === "ROLE_AUXILIAR";
+    const isOwner = user?.id === article?.author?.id;
+    const isAdmin = user?.role === "ROLE_ADMIN" || user?.role === "ROLE_ASSISTANT";
 
     if (!loading && article && !isOwner && !isAdmin) {
-        toast.error("No tienes permisos para editar este artículo");
+        toast.error("You are not allowed to edit this article");
         navigate(`/articles/${slug}`, { replace: true });
         return null;
     }
 
-    if (loading) return <div className="py-20 text-center animate-pulse text-slate-500 font-medium">Cargando editor...</div>;
-    if (!article) return <div className="py-20 text-center text-slate-500">Artículo no encontrado</div>;
+    if (loading) return <div className="py-20 text-center animate-pulse text-slate-500 font-medium">Loading editor...</div>;
+    if (!article) return <div className="py-20 text-center text-slate-500">Article not found</div>;
 
     const onSubmit = async (data: CreateArticleFormValues) => {
         try {
             setIsSubmitting(true);
             await dispatch(updateArticleThunk({ id: article.id, data })).unwrap();
-            toast.success("Artículo actualizado correctamente");
+            toast.success("Article updated successfully!");
             navigate(`/articles/${article.slug}`);
         } catch (error: any) {
-            toast.error(error || "Error al actualizar el artículo");
+            toast.error(error || "Error updating the article");
         } finally {
             setIsSubmitting(false);
         }
@@ -86,10 +86,10 @@ export const EditArticlePage: React.FC = () => {
                     className="cursor-pointer flex items-center gap-2 text-slate-500 hover:text-brand-blue transition-colors mb-6 text-sm font-medium"
                 >
                     <ChevronLeft size={16} />
-                    Cancelar Edición
+                    Cancel editing
                 </button>
                 <h1 className="text-4xl md:text-5xl font-black text-slate-950 dark:text-white mt-2">
-                    Editar <span className="text-brand-blue">Artículo</span>
+                    Edit <span className="text-brand-blue">Article</span>
                 </h1>
             </header>
 
@@ -99,8 +99,8 @@ export const EditArticlePage: React.FC = () => {
                 isSubmitting={isSubmitting}
                 tags={tags}
                 onTagsChange={handleTagsChange}
-                submitLabel="Guardar Cambios"
-                initialCourse={article.curso}
+                submitLabel="Save Changes"
+                initialCourse={article.course}
             />
         </div>
     );

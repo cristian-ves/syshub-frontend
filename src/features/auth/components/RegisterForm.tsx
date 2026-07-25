@@ -53,7 +53,7 @@ export const RegisterForm: React.FC = () => {
             >
                 <Input
                     label="Full Name"
-                    placeholder="Ej. Cristian"
+                    placeholder="e.g. John Smith"
                     error={errors.fullName?.message}
                     {...register('fullName')}
                 />

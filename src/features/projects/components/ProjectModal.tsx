@@ -104,7 +104,7 @@ export const ProjectModal = ({ project, isOpen, onClose, canToggleDestacado }: P
 
                         <ProjectSection icon={<TagIcon size={14} />} title="Stack Tecnológico">
                             <div className="flex flex-wrap gap-2">
-                                {project.tags.map((tag) => <ProjectTag key={tag.nombre} tag={tag} />)}
+                                {project.tags.map((tag) => <ProjectTag key={tag.name} tag={tag} />)}
                             </div>
                         </ProjectSection>
 

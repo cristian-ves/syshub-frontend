@@ -11,7 +11,7 @@ interface ArticleFormProps {
     formMethods: UseFormReturn<CreateArticleFormValues>;
     onSubmit: (data: CreateArticleFormValues) => void;
     isSubmitting: boolean;
-    tags: { nombre: string; color: string }[];
+    tags: { name: string; color: string }[];
     onTagsChange: (newTags: any[]) => void;
     submitLabel?: string;
     initialCourse?: Course | null;
@@ -23,13 +23,13 @@ export const ArticleForm = ({
     isSubmitting,
     tags,
     onTagsChange,
-    submitLabel = "Publicar Artículo",
+    submitLabel = "Publish article",
     initialCourse
 }: ArticleFormProps) => {
     const [previewMode, setPreviewMode] = useState(false);
     const [selectedCourse, setSelectedCourse] = useState<Course | null>(initialCourse ?? null);
     const { register, setValue, watch, formState: { errors } } = formMethods;
-    const contenidoActual = watch("contenido");
+    const currentContent = watch("content");
 
     useEffect(() => {
         if (initialCourse) setSelectedCourse(initialCourse);
@@ -40,21 +40,21 @@ export const ArticleForm = ({
             <div className="bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-4xl p-8 md:p-10 shadow-xl shadow-slate-200/50 dark:shadow-none">
                 <div className="flex items-center gap-2 mb-8 text-brand-blue border-b border-slate-50 dark:border-slate-800 pb-4">
                     <Info size={20} />
-                    <h2 className="font-bold uppercase tracking-wider text-xs">Información General</h2>
+                    <h2 className="font-bold uppercase tracking-wider text-xs">General Information</h2>
                 </div>
 
                 <div className="grid grid-cols-1 gap-6">
                     <Input
-                        label="Título del Artículo"
-                        placeholder="Ej. Optimización de consultas en PostgreSQL"
-                        {...register("titulo")}
-                        error={errors.titulo?.message}
+                        label="Title"
+                        placeholder="Ex. Query optimization in PostgreSQL"
+                        {...register("title")}
+                        error={errors.title?.message}
                     />
                     <Input
-                        label="Extracto / Resumen"
-                        placeholder="Una breve introducción..."
-                        {...register("extracto")}
-                        error={errors.extracto?.message}
+                        label="Excerpt / Summary"
+                        placeholder="A brief introduction..."
+                        {...register("excerpt")}
+                        error={errors.excerpt?.message}
                     />
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <CourseSearchInput
@@ -76,7 +76,7 @@ export const ArticleForm = ({
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-6 border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/30">
                     <div className="flex items-center gap-2 text-brand-blue">
                         <FileText size={20} />
-                        <h2 className="font-bold uppercase tracking-wider text-xs">Contenido</h2>
+                        <h2 className="font-bold uppercase tracking-wider text-xs">Content</h2>
                     </div>
                     <div className="flex bg-white dark:bg-slate-800 rounded-xl p-1 border border-slate-200 dark:border-slate-700">
                         <button
@@ -84,14 +84,14 @@ export const ArticleForm = ({
                             onClick={() => setPreviewMode(false)}
                             className={`cursor-pointer flex-1 sm:flex-initial flex items-center justify-center gap-2 px-3 sm:px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${!previewMode ? 'bg-brand-blue text-white shadow-sm' : 'text-slate-500 hover:text-brand-blue'}`}
                         >
-                            <Edit3 size={14} /> Escribir
+                            <Edit3 size={14} /> Write
                         </button>
                         <button
                             type="button"
                             onClick={() => setPreviewMode(true)}
                             className={`cursor-pointer flex-1 sm:flex-initial flex items-center justify-center gap-2 px-3 sm:px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${previewMode ? 'bg-brand-blue text-white shadow-sm' : 'text-slate-500 hover:text-brand-blue'}`}
                         >
-                            <Eye size={14} /> Vista Previa
+                            <Eye size={14} /> Preview
                         </button>
                     </div>
                 </div>
@@ -99,21 +99,21 @@ export const ArticleForm = ({
                 <div className="min-h-125 flex flex-col w-full overflow-x-hidden bg-transparent">
                     {!previewMode ? (
                         <textarea
-                            {...register("contenido")}
+                            {...register("content")}
                             className="w-full grow p-8 md:p-10 bg-transparent text-slate-700 dark:text-slate-200 focus:outline-none resize-none font-mono text-sm leading-relaxed min-h-125"
-                            placeholder="# Tu contenido aquí..."
+                            placeholder="# Your content here..."
                         />
                     ) : (
                         <div className="w-full p-8 md:p-10">
                             <div className="prose dark:prose-invert max-w-none w-full">
-                                <ReactMarkdown>{contenidoActual || "*No hay nada que mostrar*"}</ReactMarkdown>
+                                <ReactMarkdown>{currentContent || "*Nothing to preview*"}</ReactMarkdown>
                             </div>
                         </div>
                     )}
                 </div>
-                {errors.contenido && (
+                {errors.content && (
                     <div className="p-4 bg-red-50 dark:bg-red-900/10 border-t border-red-100 dark:border-red-900/20 text-red-500 text-xs font-bold">
-                        {errors.contenido.message}
+                        {errors.content.message}
                     </div>
                 )}
             </div>
@@ -121,7 +121,7 @@ export const ArticleForm = ({
             <footer className="flex flex-col md:flex-row items-center justify-between gap-6 py-4">
                 <div className="text-sm text-slate-500 flex items-center gap-2">
                     <Info size={16} className="text-brand-blue" />
-                    Markdown habilitado para código y tablas.
+                    Markdown supported for code and tables.
                 </div>
                 <Button
                     type="submit"

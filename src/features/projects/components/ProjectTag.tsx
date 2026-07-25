@@ -9,6 +9,6 @@ export const ProjectTag = ({ tag }: { tag: Tag }) => (
         }}
         className="text-[10px] px-2 py-1 rounded-md font-bold uppercase border transition-all hover:brightness-110"
     >
-        #{tag.nombre}
+        #{tag.name}
     </span>
 );

@@ -25,31 +25,31 @@ export const ArticlesPage: React.FC = () => {
         <div className="flex-grow flex flex-col w-full max-w-6xl mx-auto px-6 md:px-12 py-10">
             <header className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
                 <div className="max-w-2xl">
-                    <Badge>Centro de Conocimiento</Badge>
+                    <Badge>Knowledge center</Badge>
 
                     <h1 className="text-4xl md:text-5xl font-black text-slate-950 dark:text-white mt-4 leading-tight">
-                        Explora el material de <br />
-                        aprendizaje de <span className="text-brand-blue">SysHub</span>
+                        Explore SysHub's <br />
+                        learning <span className="text-brand-blue">material</span>
                     </h1>
                     <p className="text-slate-600 dark:text-slate-400 mt-4 text-lg font-medium">
-                        Tutoriales, guías y recursos técnicos creados por la comunidad para la comunidad.
+                        Tutorials, guides, and technical resources built by the community, for the community.
                     </p>
                 </div>
 
-                {(user?.role === "ROLE_AUXILIAR" || user?.role === "ROLE_ADMIN") && (
+                {(user?.role === "ROLE_ASSISTANT" || user?.role === "ROLE_ADMIN") && (
                     <Button
                         className="gap-2 shadow-lg shadow-brand-blue/20"
                         onClick={() => navigate("/articles/create")}
                     >
                         <Plus size={18} />
-                        Crear Artículo
+                        Create Article
                     </Button>
                 )}
             </header>
 
             <ArticleFilters />
 
-            <div className="flex-grow">
+            <div className="grow">
                 <ArticleList
                     articles={articles}
                     loading={loading}
@@ -57,7 +57,7 @@ export const ArticlesPage: React.FC = () => {
                     totalPages={totalPages}
                     onPageChange={(page) => setFilters({ page })}
                     emptyIcon={<BookOpenText size={32} className="text-slate-400" />}
-                    emptyTitle="No se encontraron artículos"
+                    emptyTitle="No articles found"
                 />
             </div>
         </div>

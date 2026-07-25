@@ -13,14 +13,14 @@ import {
 export const useCreateArticle = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const [tags, setTags] = useState<{ nombre: string; color: string }[]>([]);
+    const [tags, setTags] = useState<{ name: string; color: string }[]>([]);
 
     const form = useForm<CreateArticleFormValues>({
         resolver: zodResolver(createArticleSchema) as any,
         defaultValues: {
-            titulo: "",
-            extracto: "",
-            contenido: "",
+            title: "",
+            excerpt: "",
+            content: "",
             status: "PUBLISHED",
             tags: [],
         },
@@ -34,10 +34,10 @@ export const useCreateArticle = () => {
     const onSubmit = async (data: CreateArticleFormValues) => {
         try {
             await dispatch(createArticleThunk(data)).unwrap();
-            toast.success("¡Artículo publicado con éxito!");
+            toast.success("Article published successfully!");
             navigate("/articles");
         } catch (error: any) {
-            toast.error(error || "Error al crear el artículo");
+            toast.error(error || "Error creating the article");
         }
     };
 

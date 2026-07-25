@@ -5,14 +5,14 @@ import { cn } from '../../../helpers/combineClasses';
 
 interface VoteControlProps {
     articleId: number;
-    puntos: number;
+    points: number;
     userVote: number;
     className?: string;
 }
 
 export const VoteControl: React.FC<VoteControlProps> = ({
     articleId,
-    puntos,
+    points,
     userVote,
     className = ""
 }) => {
@@ -31,7 +31,7 @@ export const VoteControl: React.FC<VoteControlProps> = ({
                     ? 'text-brand-blue'
                     : 'text-slate-400 hover:text-brand-blue/70'
                     }`}
-                title="Votar positivo"
+                title="Positive vote"
             >
                 <ArrowUp
                     size={20}
@@ -42,10 +42,10 @@ export const VoteControl: React.FC<VoteControlProps> = ({
 
             <div className="flex flex-col items-center leading-tight py-1 px-3">
                 <span className="text-[13px] font-black text-slate-700 dark:text-slate-100">
-                    {puntos}
+                    {points}
                 </span>
                 <span className="text-[8px] font-bold uppercase tracking-tight text-slate-400">
-                    {Math.abs(puntos) === 1 ? 'VOTO' : 'VOTOS'}
+                    {Math.abs(points) === 1 ? 'VOTE' : 'VOTES'}
                 </span>
             </div>
 
@@ -58,7 +58,7 @@ export const VoteControl: React.FC<VoteControlProps> = ({
                     ? 'text-brand-blue'
                     : 'text-slate-400 hover:text-brand-blue/70'
                     }`}
-                title="Votar negativo"
+                title="Negative vote"
             >
                 <ArrowDown
                     size={20}

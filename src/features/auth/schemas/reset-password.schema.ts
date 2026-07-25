@@ -8,7 +8,7 @@ export const resetPasswordSchema = z
         confirmPassword: z.string(),
     })
     .refine((data) => data.password === data.confirmPassword, {
-        message: "The passwords must contain",
+        message: "The passwords must match",
         path: ["confirmPassword"],
     });
 

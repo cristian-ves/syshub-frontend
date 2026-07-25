@@ -18,11 +18,11 @@ export const useArticleActions = () => {
         dispatch(toggleFavoriteThunk(id));
 
         if (isCurrentlyFavorite) {
-            toast.info("Artículo eliminado de tus favoritos", {
+            toast.info("Article deleted from your favorites.", {
                 icon: <HeartOff size={16} className="text-slate-500" />
             });
         } else {
-            toast.success("Artículo guardado en tus favoritos", {
+            toast.success("Article added to you favorites.", {
                 icon: <Heart size={16} className="text-red-500 fill-red-500" />,
             });
         }

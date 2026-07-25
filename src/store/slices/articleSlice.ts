@@ -37,7 +37,7 @@ const initialState: ArticleState = {
         courseId: undefined,
         tag: undefined,
         status: "PUBLISHED",
-        sort: "puntos,desc",
+        sort: "points,desc",
     },
 };
 
@@ -60,7 +60,7 @@ export const fetchArticleBySlug = createAsyncThunk(
         try {
             return await articleService.getArticleBySlug(slug);
         } catch (error: any) {
-            return rejectWithValue("Error al cargar el artículo");
+            return rejectWithValue("Error loading the article");
         }
     }
 );
@@ -72,7 +72,7 @@ export const fetchArticles = createAsyncThunk(
             return await articleService.getArticles(filters);
         } catch (error: any) {
             return rejectWithValue(
-                error.response?.data?.message || "Error al cargar artículos"
+                error.response?.data?.message || "Error loading the articles"
             );
         }
     }
@@ -85,7 +85,7 @@ export const createArticleThunk = createAsyncThunk(
             return await articleService.createArticle(article);
         } catch (error: any) {
             return rejectWithValue(
-                error.message || "Error al crear el artículo"
+                error.message || "Error creating the article"
             );
         }
     }
@@ -118,7 +118,7 @@ export const deleteArticleThunk = createAsyncThunk(
             return id;
         } catch (error: any) {
             return rejectWithValue(
-                error.message || "Error al eliminar el artículo"
+                error.message || "Error deleting the article"
             );
         }
     }
@@ -134,8 +134,7 @@ export const updateArticleThunk = createAsyncThunk(
             return await articleService.updateArticle(id, data);
         } catch (error: any) {
             return rejectWithValue(
-                error.response?.data?.message ||
-                    "Error al actualizar el artículo"
+                error.response?.data?.message || "Error updating the article"
             );
         }
     }
@@ -145,12 +144,12 @@ export const addCommentThunk = createAsyncThunk(
     "articles/addComment",
     async ({
         articleId,
-        contenido,
+        content: content,
     }: {
         articleId: number;
-        contenido: string;
+        content: string;
     }) => {
-        return await articleService.addComment(articleId, contenido);
+        return await articleService.addComment(articleId, content);
     }
 );
 
@@ -202,7 +201,7 @@ export const articleSlice = createSlice({
             )
             .addCase(voteArticleThunk.fulfilled, (state, action) => {
                 const { id, newPoints, vote } = action.payload;
-                patchArticle(state, id, { puntos: newPoints, vote });
+                patchArticle(state, id, { points: newPoints, votes: vote });
             })
             .addCase(toggleFavoriteThunk.fulfilled, (state, action) => {
                 const id = action.payload;
@@ -232,17 +231,17 @@ export const articleSlice = createSlice({
                 if (state.selectedArticle?.id === updatedArticle.id) {
                     state.selectedArticle = {
                         ...updatedArticle,
-                        comentarios: state.selectedArticle.comentarios,
+                        comments: state.selectedArticle.comments,
                     };
                 }
             })
             .addCase(addCommentThunk.fulfilled, (state, action) => {
-                state.selectedArticle?.comentarios.unshift(action.payload);
+                state.selectedArticle?.comments.unshift(action.payload);
             })
             .addCase(deleteCommentThunk.fulfilled, (state, action) => {
                 if (state.selectedArticle) {
-                    state.selectedArticle.comentarios =
-                        state.selectedArticle.comentarios.filter(
+                    state.selectedArticle.comments =
+                        state.selectedArticle.comments.filter(
                             (c) => c.id !== action.payload
                         );
                 }

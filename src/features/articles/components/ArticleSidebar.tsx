@@ -31,11 +31,11 @@ export const ArticleSidebar: React.FC<ArticleSidebarProps> = ({ article, canEdit
         try {
             setIsDeleting(true);
             await dispatch(deleteArticleThunk(article.id)).unwrap();
-            toast.success("Artículo eliminado con éxito");
+            toast.success("Article deleted successfully");
             setIsDeleteModalOpen(false);
             navigate("/articles", { replace: true });
         } catch (error: any) {
-            toast.error(error || "Ocurrió un error al eliminar");
+            toast.error(error || "There was a problem deleting the article");
         } finally {
             setIsDeleting(false);
         }
@@ -47,8 +47,8 @@ export const ArticleSidebar: React.FC<ArticleSidebarProps> = ({ article, canEdit
                 <div className="flex flex-col items-center gap-2">
                     <VoteControl
                         articleId={article.id}
-                        puntos={article.puntos}
-                        userVote={article.vote}
+                        points={article.points}
+                        userVote={article.votes}
                         className="bg-transparent border-none shadow-none"
                     />
                 </div>
@@ -61,7 +61,7 @@ export const ArticleSidebar: React.FC<ArticleSidebarProps> = ({ article, canEdit
                         ? 'bg-red-50 border-red-100 text-red-500 shadow-sm'
                         : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-400 hover:text-red-500'
                         }`}
-                    title={article.favorite ? "Quitar de favoritos" : "Guardar en favoritos"}
+                    title={article.favorite ? "Remove from favorites" : "Save to favorites"}
                 >
                     <Heart size={22} fill={article.favorite ? "currentColor" : "none"} />
                 </button>
@@ -72,14 +72,14 @@ export const ArticleSidebar: React.FC<ArticleSidebarProps> = ({ article, canEdit
                         <button
                             onClick={handleEdit}
                             className="cursor-pointer p-3 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-400 hover:text-brand-blue transition-all"
-                            title="Editar artículo"
+                            title="Edit article"
                         >
                             <Edit2 size={22} />
                         </button>
                         <button
                             onClick={() => setIsDeleteModalOpen(true)}
                             className="cursor-pointer p-3 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-400 hover:text-red-600 hover:border-red-200 hover:bg-red-50 dark:hover:bg-red-900/20 transition-all"
-                            title="Eliminar artículo"
+                            title="Delete article"
                         >
                             <Trash2 size={22} />
                         </button>
@@ -91,8 +91,8 @@ export const ArticleSidebar: React.FC<ArticleSidebarProps> = ({ article, canEdit
                 isDeleting={isDeleting}
                 onClose={() => setIsDeleteModalOpen(false)}
                 onConfirm={handleDelete}
-                title="¿Eliminar Artículo?"
-                description={`Estás a punto de eliminar "${article.titulo}". Esta acción no se puede deshacer y perderás todos los votos asociados.`}
+                title="Delete article?"
+                description={`You're about to delete "${article.title}". This action can't be undone and you'll lose all the associated votes.`}
             />
         </>
 

@@ -17,11 +17,11 @@ export const CreateArticlePage: React.FC = () => {
                     className="cursor-pointer flex items-center gap-2 text-slate-500 hover:text-brand-blue transition-colors mb-6 text-sm font-medium"
                 >
                     <ChevronLeft size={16} />
-                    Volver atrás
+                    Go back to the community
                 </button>
-                <Badge className="mt-4 bg-emerald-500/10 text-emerald-600 border-emerald-200">Nuevo Aporte</Badge>
+                <Badge className="mt-4 bg-emerald-500/10 text-emerald-600 border-emerald-200">New Contribution</Badge>
                 <h1 className="text-4xl md:text-5xl font-black text-slate-950 dark:text-white mt-2">
-                    Escribe un <span className="text-brand-blue">Artículo</span>
+                    Write an <span className="text-brand-blue">Article</span>
                 </h1>
             </header>
 

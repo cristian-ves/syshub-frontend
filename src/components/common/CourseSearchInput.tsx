@@ -64,7 +64,7 @@ export const CourseSearchInput = ({ value, onSelect, error }: Props) => {
                     value={query}
                     onChange={(e) => searchCourses(e.target.value)}
                     onFocus={() => courses.length > 0 && setOpen(true)}
-                    placeholder="Buscar curso (Ej. Estructura de Datos)"
+                    placeholder="Search course (e.g. Data Structures and Algorithms)"
                     className={`
                         w-full px-4 py-3 rounded-xl border outline-none transition-all bg-white dark:bg-slate-800 text-slate-900 dark:text-white
                         ${error ? "border-red-500 shadow-sm shadow-red-100" : "border-slate-200 dark:border-slate-700 focus:border-brand-blue"}

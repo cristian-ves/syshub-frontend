@@ -4,7 +4,7 @@ import { X, Plus } from "lucide-react";
 import { Button } from ".";
 
 interface Tag {
-    nombre: string;
+    name: string;
     color: string;
 }
 
@@ -24,14 +24,14 @@ export const TagInput: React.FC<Props> = ({ value, onChange, error }) => {
         if (!trimmed) return;
 
         const exists = value.some(
-            (t) => t.nombre.toLowerCase() === trimmed.toLowerCase()
+            (t) => t.name.toLowerCase() === trimmed.toLowerCase()
         );
         if (exists) {
             setName("");
             return;
         }
 
-        onChange([...value, { nombre: trimmed, color }]);
+        onChange([...value, { name: trimmed, color }]);
         setName("");
         setShowPicker(false);
     };
@@ -52,7 +52,7 @@ export const TagInput: React.FC<Props> = ({ value, onChange, error }) => {
                 <input
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    placeholder="Ej. React, Compiladores..."
+                    placeholder="e.g. React, Compilers..."
                     className="flex-1 min-w-0 px-4 py-3 rounded-xl border transition-all outline-none                     bg-white dark:bg-slate-800 text-slate-900 dark:text-white border-slate-200 dark:border-slate-700 focus:ring-brand-blue/20 focus:border-brand-blue"
                 />
 
@@ -88,7 +88,7 @@ export const TagInput: React.FC<Props> = ({ value, onChange, error }) => {
             )}
 
             <p className="text-xs text-slate-500">
-                Si la tag ya existe, se usará el color original.
+                If the tag already exists, it will use its original color.
             </p>
 
             <div className="flex flex-wrap gap-2">
@@ -98,7 +98,7 @@ export const TagInput: React.FC<Props> = ({ value, onChange, error }) => {
                         style={{ background: tag.color }}
                         className="px-3 py-1 rounded-full text-white text-xs flex items-center gap-2"
                     >
-                        {tag.nombre}
+                        {tag.name}
                         <button type="button" onClick={() => removeTag(i)} className="cursor-pointer">
                             <X size={14} />
                         </button>

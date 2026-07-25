@@ -17,7 +17,7 @@ export const ArticleDetailPage: React.FC = () => {
     const { article, loading } = useArticleDetail(slug);
 
     const isAdmin = user?.role === "ROLE_ADMIN";
-    const isOwner = user?.id === article?.autor?.id;
+    const isOwner = user?.id === article?.author?.id;
     const canEdit = isAdmin || isOwner;
 
     if (loading) {
@@ -35,7 +35,7 @@ export const ArticleDetailPage: React.FC = () => {
                 <div className="p-2 rounded-full group-hover:bg-brand-blue/10 transition-colors">
                     <ChevronLeft size={20} />
                 </div>
-                Volver a la comunidad
+                Go back to the community
             </button>
 
             <div className="flex flex-col lg:flex-row gap-12 relative">
@@ -46,12 +46,12 @@ export const ArticleDetailPage: React.FC = () => {
                     <ArticleHeader article={article} />
 
                     <div className="prose dark:prose-invert max-w-none prose-pre:bg-slate-900 dark:prose-pre:bg-black prose-img:rounded-3xl">
-                        <ReactMarkdown>{article.contenido}</ReactMarkdown>
+                        <ReactMarkdown>{article.content}</ReactMarkdown>
                     </div>
 
                     <CommentSection
                         articleId={article.id}
-                        comments={article.comentarios}
+                        comments={article.comments}
                     />
                 </main>
             </div>

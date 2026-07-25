@@ -8,7 +8,7 @@ import { useFavorites } from '../../hooks/articles/useFavorites';
 const LoadingState = () => (
     <div className="flex flex-col items-center justify-center py-24 text-slate-500">
         <Loader2 className="w-8 h-8 animate-spin mb-4 text-brand-blue" />
-        <p className="font-medium text-sm">Cargando tu colección...</p>
+        <p className="font-medium text-sm">Loading your collection...</p>
     </div>
 );
 
@@ -19,7 +19,7 @@ const ErrorState = ({ error, onRetry }: { error: string, onRetry: () => void }) 
             onClick={onRetry}
             className="mt-4 text-sm font-bold text-brand-blue hover:text-brand-blue/80 transition-colors"
         >
-            Intentar de nuevo
+            Try again
         </button>
     </div>
 );
@@ -29,9 +29,9 @@ const EmptyState = () => (
         <div className="w-16 h-16 mb-4 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400">
             <BookX size={28} />
         </div>
-        <h3 className="text-lg font-bold text-slate-700 dark:text-slate-300">Tu colección está vacía</h3>
+        <h3 className="text-lg font-bold text-slate-700 dark:text-slate-300">Your collection is empty</h3>
         <p className="text-slate-500 mt-2 max-w-sm text-center text-sm">
-            Explora la plataforma y guarda los artículos que te parezcan interesantes para leerlos después.
+            Explore the platform and save the articles that look interesting to read them later.
         </p>
     </div>
 );
@@ -50,11 +50,11 @@ export const MyFavoriteArticles: React.FC = () => {
                 <div className="flex items-center gap-2.5 mb-1.5">
                     <Bookmark size={22} className="text-brand-blue" />
                     <h1 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
-                        Lecturas Guardadas
+                        Saved articles
                     </h1>
                 </div>
                 <p className="text-slate-500 font-medium text-sm ml-8">
-                    Tu colección personal de artículos para consultar en cualquier momento.
+                    Your personal articles collection to read at any moment.
                 </p>
             </header>
 

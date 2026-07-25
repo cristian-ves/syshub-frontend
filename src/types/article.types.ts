@@ -1,12 +1,12 @@
 import type { Tag, PaginatedResponse } from "./project.types";
 
 export interface CreateArticleRequest {
-    titulo: string;
-    extracto: string;
-    contenido: string;
+    title: string;
+    excerpt: string;
+    content: string;
     courseId: number;
     status: "DRAFT" | "PUBLISHED";
-    tags: { nombre: string; color?: string }[];
+    tags: { name: string; color?: string }[];
 }
 
 export interface VoteResponse {
@@ -17,42 +17,42 @@ export interface VoteResponse {
 
 export interface ArticleComment {
     id: number;
-    contenido: string;
+    content: string;
     createdAt: string;
-    autor: {
+    author: {
         id: string;
         username: string;
-        nombreCompleto: string;
+        fullName: string;
         roleId: number;
     };
 }
 
 export interface Article {
     id: number;
-    titulo: string;
+    title: string;
     slug: string;
-    extracto: string;
-    contenido: string;
+    excerpt: string;
+    content: string;
     status: "DRAFT" | "PUBLISHED";
-    puntos: number;
-    vote: number;
+    points: number;
+    votes: number;
     createdAt: string;
     favorite: boolean;
-    autor: {
+    author: {
         id: string;
         username: string;
-        nombreCompleto: string;
+        fullName: string;
     };
-    curso: {
+    course: {
         id: number;
-        codigo: string;
-        nombre: string;
+        code: string;
+        name: string;
     };
     tags: Tag[];
 }
 
 export interface ArticleDetail extends Article {
-    comentarios: ArticleComment[];
+    comments: ArticleComment[];
 }
 
 export interface ArticleFilters {

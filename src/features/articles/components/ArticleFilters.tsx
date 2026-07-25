@@ -52,7 +52,7 @@ export const ArticleFilters = () => {
                     <Search className="absolute left-4 text-slate-400 pointer-events-none" size={20} />
                     <input
                         type="text"
-                        placeholder={`Buscar artículos por ${searchMode === 'search' ? 'título o extracto' : 'etiqueta'}...`}
+                        placeholder={`Search articles by ${searchMode === 'search' ? 'title or excerpt' : 'tag'}...`}
                         className="w-full pl-12 pr-32 py-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 outline-none focus:border-brand-blue transition-all font-medium dark:text-white shadow-sm"
                         value={localSearch}
                         onChange={(e) => setLocalSearch(e.target.value)}
@@ -84,7 +84,7 @@ export const ArticleFilters = () => {
                             className="border border-slate-200 dark:border-slate-800 rounded-2xl px-6 gap-2 hover:bg-red-50 hover:text-red-500 transition-all"
                         >
                             <Heart size={18} className="text-red-500" />
-                            <span className="hidden sm:inline">Favoritos</span>
+                            <span className="hidden sm:inline">Favorites</span>
                         </Button>
                     )}
 
@@ -121,7 +121,7 @@ export const ArticleFilters = () => {
                             onClick={handleResetFilters}
                             className="cursor-pointer text-[10px] font-black text-slate-400 hover:text-brand-pink flex items-center gap-1 uppercase tracking-widest transition-all"
                         >
-                            <X size={14} /> Limpiar Filtros
+                            <X size={14} /> Clear filters
                         </button>
                     </div>
                 </div>

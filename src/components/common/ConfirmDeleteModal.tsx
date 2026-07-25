@@ -52,14 +52,14 @@ export const ConfirmDeleteModal: React.FC<ConfirmDeleteModalProps> = ({
                             disabled={isDeleting}
                             className="w-full bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 border-none"
                         >
-                            Cancelar
+                            Cancel
                         </Button>
                         <Button
                             onClick={onConfirm}
                             isLoading={isDeleting}
                             className="w-full bg-red-500 hover:bg-red-600 shadow-lg shadow-red-500/30 text-white border-none"
                         >
-                            Sí, Eliminar
+                            Yes, delete
                         </Button>
                     </div>
                 </div>
