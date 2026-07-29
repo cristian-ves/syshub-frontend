@@ -6,6 +6,6 @@ export const FeaturedBadge = ({ full = false }: { full?: boolean }) => (
         ${full ? '' : 'shadow-lg'}
     `}>
         <Star size={12} fill="currentColor" />
-        {full ? 'Proyecto Destacado' : 'Destacado'}
+        {full ? 'Featured project' : 'Featured'}
     </span>
 );

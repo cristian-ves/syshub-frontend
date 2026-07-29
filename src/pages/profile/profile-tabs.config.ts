@@ -7,7 +7,7 @@ interface ProfileTab {
 }
 
 export const PROFILE_TABS: ProfileTab[] = [
-    { label: "Información Personal", path: "/profile/info", icon: UserCircle },
-    { label: "Mis Proyectos", path: "/profile/projects", icon: FolderKanban },
-    { label: "Mis articulos", path: "/profile/favorites", icon: Star },
+    { label: "Profile", path: "/profile/info", icon: UserCircle },
+    { label: "My projects", path: "/profile/projects", icon: FolderKanban },
+    { label: "My articles", path: "/profile/favorites", icon: Star },
 ];

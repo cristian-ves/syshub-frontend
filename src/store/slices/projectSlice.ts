@@ -28,12 +28,12 @@ const initialState: ProjectState = {
     filters: {
         page: 0,
         size: 8,
-        destacado: undefined,
-        pensumId: undefined,
-        semestreNum: undefined,
+        featured: undefined,
+        studyPlanId: undefined,
+        semesterNum: undefined,
         areaId: undefined,
         tag: undefined,
-        cursoNombre: undefined,
+        courseName: undefined,
         userId: undefined,
         search: undefined,
     },
@@ -57,7 +57,7 @@ export const toggleProjectFeatured = createAsyncThunk(
         { rejectWithValue }
     ) => {
         try {
-            return await projectService.toggleDestacado(id, featured);
+            return await projectService.toggleFeatured(id, featured);
         } catch (error: any) {
             return rejectWithValue(error);
         }

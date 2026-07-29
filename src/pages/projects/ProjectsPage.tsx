@@ -19,19 +19,19 @@ export const ProjectsPage: React.FC = () => {
         loading,
         totalPages,
         currentPage,
-        setFilters,
+        updateFilters: setFilters,
     } = useProjects();
 
     return (
-        <div className="flex-grow flex flex-col w-full max-w-6xl mx-auto px-6 md:px-12 py-10">
+        <div className="grow flex flex-col w-full max-w-6xl mx-auto px-6 md:px-12 py-10">
             <header className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
                 <div className="max-w-2xl">
-                    <Badge>Explorador de Repositorios</Badge>
+                    <Badge>Repository Explorer</Badge>
 
                     <h1 className="text-4xl md:text-5xl font-black text-slate-950 dark:text-white mt-4 leading-tight">
-                        Descubre soluciones de <br />
-                        la comunidad{" "}
-                        <span className="text-brand-blue">SysHub</span>
+                        Discover solutions from <br />
+                        the{" "}
+                        <span className="text-brand-blue">SysHub</span> community
                     </h1>
                 </div>
 
@@ -40,25 +40,25 @@ export const ProjectsPage: React.FC = () => {
                     onClick={() => navigate("/projects/create")}
                 >
                     <Rocket size={18} />
-                    Subir Proyecto
+                    Publish Project
                 </Button>
             </header>
 
             <ProjectFilters />
 
-            <div className="flex-grow mt-8">
+            <div className="grow mt-8">
                 <ProjectList
                     projects={projects}
                     loading={loading}
                     currentPage={currentPage}
                     totalPages={totalPages}
                     onPageChange={(page) => setFilters({ page })}
-                    canToggleDestacado={
-                        user?.role === "ROLE_AUXILIAR" ||
+                    canToggleFeatured={
+                        user?.role === "ROLE_ASSISTANT" ||
                         user?.role === "ROLE_ADMIN"
                     }
-                    emptyTitle="No se encontraron proyectos"
-                    emptySubtitle="Prueba ajustando los filtros o el término de búsqueda."
+                    emptyTitle="No projects found"
+                    emptySubtitle="Try adjusting the filters or search term."
                 />
             </div>
         </div>

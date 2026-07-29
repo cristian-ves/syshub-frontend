@@ -22,7 +22,7 @@ export const useArticleActions = () => {
                 icon: <HeartOff size={16} className="text-slate-500" />
             });
         } else {
-            toast.success("Article added to you favorites.", {
+            toast.success("Article added to your favorites.", {
                 icon: <Heart size={16} className="text-red-500 fill-red-500" />,
             });
         }

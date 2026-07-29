@@ -1,24 +1,24 @@
-export interface Archivo {
+export interface ProjectFile {
     id: number;
-    nombreArchivo: string;
-    nombreOriginal: string;
-    tipoArchivo: string;
+    fileName: string;
+    originalName: string;
+    fileType: string;
 }
 
 export interface Project {
     id: number;
-    titulo: string;
-    descripcion: string;
-    autorNombre: string;
-    cursoNombre: string;
-    pensumNombre: string;
+    title: string;
+    description: string;
+    authorName: string;
+    courseName: string;
+    studyPlanName: string;
     repoUrl: string;
-    destacado: boolean;
+    featured: boolean;
     tags: Tag[];
-    archivos: Archivo[];
+    files: ProjectFile[];
     areaColor: string;
-    areaNombre: string;
-    fechaSubida: string;
+    areaName: string;
+    uploadDate: string;
 }
 
 export interface Tag {
@@ -41,12 +41,12 @@ export interface PaginatedResponse<T> {
 export interface ProjectFilters {
     page?: number;
     size?: number;
-    destacado?: boolean;
-    pensumId?: number;
-    semestreNum?: number;
+    featured?: boolean;
+    studyPlanId?: number;
+    semesterNum?: number;
     areaId?: number;
     tag?: string;
-    cursoNombre?: string;
+    courseName?: string;
     search?: string;
     userId?: string;
 }

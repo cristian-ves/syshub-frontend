@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { X, Link, Star, BookOpen, Tag as TagIcon, FileText } from 'lucide-react';
 import { toast } from 'sonner';
 
-import { projectService } from '../services/project.service';
 import type { Project } from '../../../types/project.types';
 import { Badge, Button } from '../../../components/common';
 import { AreaBadge, FeaturedBadge, FileItem, ProjectSection, ProjectTag } from './';
@@ -10,15 +9,16 @@ import { formatDate } from '../../../helpers/date.helper';
 import { toggleProjectFeatured } from '../../../store/slices/projectSlice';
 import { useAppDispatch } from '../../../store';
 import { createPortal } from 'react-dom';
+import { downloadFile } from '../../../helpers/download.helper';
 
 interface ProjectModalProps {
     project: Project | null;
     isOpen: boolean;
     onClose: () => void;
-    canToggleDestacado?: boolean;
+    canToggleFeatured?: boolean;
 }
 
-export const ProjectModal = ({ project, isOpen, onClose, canToggleDestacado }: ProjectModalProps) => {
+export const ProjectModal = ({ project, isOpen, onClose, canToggleFeatured }: ProjectModalProps) => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -35,11 +35,11 @@ export const ProjectModal = ({ project, isOpen, onClose, canToggleDestacado }: P
 
     if (!isOpen || !project) return null;
 
-    const handleDownload = (nombreArchivo: string, nombreOriginal: string) => {
-        toast.promise(projectService.downloadFile(nombreArchivo, nombreOriginal), {
-            loading: 'Descargando archivo...',
-            success: 'Archivo guardado correctamente',
-            error: 'No se pudo descargar el archivo',
+    const handleDownload = (fileName: string, originalName: string) => {
+        toast.promise(downloadFile(fileName, originalName), {
+            loading: 'Downloading file...',
+            success: 'File saved successfully',
+            error: "We couldn't download the file",
         });
     };
 
@@ -47,10 +47,10 @@ export const ProjectModal = ({ project, isOpen, onClose, canToggleDestacado }: P
         try {
             await dispatch(toggleProjectFeatured({
                 id: project.id,
-                featured: !project.destacado
+                featured: !project.featured
             })).unwrap();
 
-            toast.success(project.destacado ? "Removido de destacados" : "¡Proyecto destacado!");
+            toast.success(project.featured ? "Project unfeatured" : "Project featured!");
         } catch (error) {
         }
     };
@@ -73,20 +73,20 @@ export const ProjectModal = ({ project, isOpen, onClose, canToggleDestacado }: P
 
                     <div className="mb-8">
                         <div className="flex flex-wrap items-center gap-3 mb-4">
-                            <Badge noMargin>{project.pensumNombre}</Badge>
-                            <AreaBadge name={project.areaNombre} color={project.areaColor} />
-                            {project.destacado && <FeaturedBadge full />}
+                            <Badge noMargin>{project.studyPlanName}</Badge>
+                            <AreaBadge name={project.areaName} color={project.areaColor} />
+                            {project.featured && <FeaturedBadge full />}
                         </div>
 
                         <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
                             <div className="grow">
-                                <h2 className="text-3xl font-black text-slate-950 dark:text-white tracking-tight">{project.titulo}</h2>
+                                <h2 className="text-3xl font-black text-slate-950 dark:text-white tracking-tight">{project.title}</h2>
                                 <div className="flex items-center gap-2 mt-2">
                                     <span className="text-sm font-bold uppercase" style={{ color: project.areaColor }}>
-                                        {project.cursoNombre} <span className="opacity-40 mx-1">|</span> {project.pensumNombre}
+                                        {project.courseName} <span className="opacity-40 mx-1">|</span> {project.studyPlanName}
                                     </span>
                                     <span className="hidden md:block text-slate-300">•</span>
-                                    <span className="text-xs font-medium italic text-slate-500">Publicado el {formatDate(project.fechaSubida)}</span>
+                                    <span className="text-xs font-medium italic text-slate-500">Published on {formatDate(project.uploadDate)}</span>
                                 </div>
                             </div>
                             {project.repoUrl && (
@@ -98,38 +98,38 @@ export const ProjectModal = ({ project, isOpen, onClose, canToggleDestacado }: P
                     </div>
 
                     <div className="space-y-8">
-                        <ProjectSection icon={<FileText size={14} />} title="Descripción">
-                            <p className="text-slate-600 dark:text-slate-300 leading-relaxed font-medium">{project.descripcion}</p>
+                        <ProjectSection icon={<FileText size={14} />} title="Description">
+                            <p className="text-slate-600 dark:text-slate-300 leading-relaxed font-medium">{project.description}</p>
                         </ProjectSection>
 
-                        <ProjectSection icon={<TagIcon size={14} />} title="Stack Tecnológico">
+                        <ProjectSection icon={<TagIcon size={14} />} title="Stack">
                             <div className="flex flex-wrap gap-2">
                                 {project.tags.map((tag) => <ProjectTag key={tag.name} tag={tag} />)}
                             </div>
                         </ProjectSection>
 
-                        <ProjectSection title="Material Adjunto" className="bg-slate-50 dark:bg-slate-800/50 rounded-2xl p-6">
+                        <ProjectSection title="Attached files" className="bg-slate-50 dark:bg-slate-800/50 rounded-2xl p-6">
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                {project.archivos.length > 0 ? (
-                                    project.archivos.map((file) =>
+                                {project.files.length > 0 ? (
+                                    project.files.map((file) =>
                                         <FileItem
                                             key={file.id}
-                                            nombre={file.nombreOriginal}
-                                            onDownload={() => handleDownload(file.nombreArchivo, file.nombreOriginal)}
+                                            name={file.originalName}
+                                            onDownload={() => handleDownload(file.fileName, file.originalName)}
                                         />
                                     )
                                 ) : (
-                                    <p className="col-span-full text-center text-xs text-slate-400 py-2 italic">No hay archivos adjuntos</p>
+                                    <p className="col-span-full text-center text-xs text-slate-400 py-2 italic">No attached files</p>
                                 )}
                             </div>
                         </ProjectSection>
                     </div>
 
-                    {canToggleDestacado && (
+                    {canToggleFeatured && (
                         <footer className="mt-8 flex justify-end pt-6 border-t border-slate-100 dark:border-slate-800">
                             <Button variant="ghost" onClick={handleToggle} className="...">
-                                <Star size={18} fill={project.destacado ? "currentColor" : "none"} />
-                                {project.destacado ? 'Quitar Destacado' : 'Marcar como Destacado'}
+                                <Star size={18} fill={project.featured ? "currentColor" : "none"} />
+                                {project.featured ? 'Unfeature' : 'Feature'}
                             </Button>
                         </footer>
                     )}

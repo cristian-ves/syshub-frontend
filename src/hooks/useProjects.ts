@@ -29,6 +29,6 @@ export const useProjects = (initialFilters?: Partial<ProjectFilters>) => {
         totalPages,
         currentPage,
         filters,
-        setFilters: updateFilters,
+        updateFilters,
     };
 };

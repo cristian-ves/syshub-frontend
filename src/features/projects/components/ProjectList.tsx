@@ -15,7 +15,7 @@ interface Props {
     emptyTitle: string;
     emptySubtitle: string;
     emptyActionPath?: string;
-    canToggleDestacado?: boolean;
+    canToggleFeatured?: boolean;
 }
 
 export const ProjectList: React.FC<Props> = ({
@@ -28,7 +28,7 @@ export const ProjectList: React.FC<Props> = ({
     emptyTitle,
     emptySubtitle,
     emptyActionPath,
-    canToggleDestacado = false,
+    canToggleFeatured = false,
 }) => {
     const {
         selectedProject,
@@ -68,7 +68,7 @@ export const ProjectList: React.FC<Props> = ({
                         onClick={() => navigate(emptyActionPath)}
                     >
                         <Rocket size={18} />
-                        Subir Proyecto
+                        Publish a project
                     </Button>
                 }
             </div>
@@ -98,7 +98,7 @@ export const ProjectList: React.FC<Props> = ({
                 project={selectedProject}
                 isOpen={isModalOpen}
                 onClose={closeModal}
-                canToggleDestacado={canToggleDestacado}
+                canToggleFeatured={canToggleFeatured}
             />
         </div>
     );

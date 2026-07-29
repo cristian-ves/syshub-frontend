@@ -1,11 +1,11 @@
 import { Download } from 'lucide-react';
 
 interface FileItemProps {
-    nombre: string;
+    name: string;
     onDownload: () => void;
 }
 
-export const FileItem = ({ nombre, onDownload }: FileItemProps) => (
+export const FileItem = ({ name, onDownload }: FileItemProps) => (
     <div
         onClick={onDownload}
         className="cursor-pointer flex items-center justify-between p-3 bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl group hover:border-brand-blue transition-all"
@@ -15,7 +15,7 @@ export const FileItem = ({ nombre, onDownload }: FileItemProps) => (
                 <Download size={16} />
             </div>
             <span className="text-xs font-bold text-slate-700 dark:text-slate-200 truncate pr-2">
-                {nombre}
+                {name}
             </span>
         </div>
         <Download size={18} className="p-0.5 text-slate-400 group-hover:text-brand-blue transition-colors" />

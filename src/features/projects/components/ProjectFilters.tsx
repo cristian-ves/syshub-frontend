@@ -6,7 +6,7 @@ import { Select } from '../../../components/common/Select';
 import { Button } from '../../../components/common/Button';
 import { catalogService } from '../services/catalog.service';
 
-type SearchMode = 'search' | 'tag' | 'cursoNombre';
+type SearchMode = 'search' | 'tag' | 'courseName';
 
 export const ProjectFilters: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -19,27 +19,27 @@ export const ProjectFilters: React.FC = () => {
     const [localSearch, setLocalSearch] = useState('');
 
     // Catalog States
-    const [catalogs, setCatalogs] = useState({ pensums: [], areas: [], semesters: [] });
+    const [catalogs, setCatalogs] = useState({ studyPlans: [], areas: [], semesters: [] });
 
     // Load catalogs
     useEffect(() => {
         const fetchBase = async () => {
-            const [pensums, areas] = await Promise.all([catalogService.getPensums(), catalogService.getAreas()]);
-            setCatalogs(prev => ({ ...prev, pensums, areas }));
+            const [pensums, areas] = await Promise.all([catalogService.getStudyPlans(), catalogService.getAreas()]);
+            setCatalogs(prev => ({ ...prev, studyPlans: pensums, areas }));
         };
         fetchBase();
     }, []);
 
     // Load semesters when pensum changes
     useEffect(() => {
-        if (filters.pensumId) {
-            catalogService.getSemesters(filters.pensumId).then(s =>
+        if (filters.studyPlanId) {
+            catalogService.getSemesters(filters.studyPlanId).then(s =>
                 setCatalogs(prev => ({ ...prev, semesters: s }))
             );
         } else {
             setCatalogs(prev => ({ ...prev, semesters: [] }));
         }
-    }, [filters.pensumId]);
+    }, [filters.studyPlanId]);
 
     // Debounce search
     useEffect(() => {
@@ -49,7 +49,7 @@ export const ProjectFilters: React.FC = () => {
                 const searchUpdate: any = {
                     search: undefined,
                     tag: undefined,
-                    cursoNombre: undefined,
+                    courseName: undefined,
                     page: 0
                 };
                 if (localSearch) searchUpdate[searchMode] = localSearch;
@@ -62,21 +62,21 @@ export const ProjectFilters: React.FC = () => {
     const handlePensumChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const val = Number(e.target.value) || undefined;
         dispatch(setFilters({
-            pensumId: val,
-            semestreNum: undefined
+            studyPlanId: val,
+            semesterNum: undefined
         }));
     };
 
-    const activeFiltersCount = [filters.pensumId, filters.semestreNum, filters.areaId].filter(Boolean).length;
+    const activeFiltersCount = [filters.studyPlanId, filters.semesterNum, filters.areaId].filter(Boolean).length;
 
     return (
         <div className="w-full space-y-4 mb-10">
             <div className="flex flex-col md:flex-row gap-4">
-                <div className="relative flex-grow flex items-center">
+                <div className="relative grow flex items-center">
                     <Search className="absolute left-4 text-slate-400 pointer-events-none" size={20} />
                     <input
                         type="text"
-                        placeholder={`Buscar por ${searchMode === 'search' ? 'título/descripción' : searchMode === 'tag' ? 'etiqueta' : 'nombre de curso'}...`}
+                        placeholder={`Search by ${searchMode === 'search' ? 'title/description' : searchMode === 'tag' ? 'tag' : 'course name'}...`}
                         className="w-full pl-12 pr-36 py-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 outline-none focus:border-brand-blue transition-all font-medium dark:text-white"
                         value={localSearch}
                         onChange={(e) => setLocalSearch(e.target.value)}
@@ -91,21 +91,21 @@ export const ProjectFilters: React.FC = () => {
                             }}
                             className="bg-transparent text-[10px] font-black uppercase tracking-widest text-slate-400 outline-none cursor-pointer p-2 hover:text-brand-blue transition-colors"
                         >
-                            <option value="search">Título</option>
+                            <option value="search">Title</option>
                             <option value="tag">Tag</option>
-                            <option value="cursoNombre">Curso</option>
+                            <option value="courseName">Course</option>
                         </select>
                     </div>
                 </div>
 
                 <div className="flex gap-2">
                     <Button
-                        variant={filters.destacado ? 'primary' : 'ghost'}
-                        onClick={() => dispatch(setFilters({ destacado: filters.destacado ? undefined : true }))}
-                        className={`border border-slate-200 dark:border-slate-800 rounded-2xl px-6 gap-2 ${filters.destacado ? 'bg-brand-blue text-white' : ''}`}
+                        variant={filters.featured ? 'primary' : 'ghost'}
+                        onClick={() => dispatch(setFilters({ featured: filters.featured ? undefined : true }))}
+                        className={`border border-slate-200 dark:border-slate-800 rounded-2xl px-6 gap-2 ${filters.featured ? 'bg-brand-blue text-white' : ''}`}
                     >
-                        <Star size={18} fill={filters.destacado ? "currentColor" : "none"} />
-                        <span className="hidden sm:inline">Destacados</span>
+                        <Star size={18} fill={filters.featured ? "currentColor" : "none"} />
+                        <span className="hidden sm:inline">Featured</span>
                     </Button>
 
                     <Button
@@ -126,24 +126,26 @@ export const ProjectFilters: React.FC = () => {
             {showAdvanced && (
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6 bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-2xl animate-in fade-in slide-in-from-top-2 duration-200">
                     <Select
-                        label="Plan de Estudios"
-                        options={catalogs.pensums}
-                        value={filters.pensumId || ""}
+                        label="Study plan"
+                        labelKey='name'
+                        options={catalogs.studyPlans}
+                        value={filters.studyPlanId || ""}
                         onChange={handlePensumChange}
                     />
 
                     <Select
-                        label="Semestre"
+                        label="Semester"
                         options={catalogs.semesters}
-                        labelKey="numero"
-                        disabled={!filters.pensumId}
-                        placeholder={!filters.pensumId ? "Selecciona Pensum" : "Todos los semestres"}
-                        value={filters.semestreNum || ""}
-                        onChange={(e) => dispatch(setFilters({ semestreNum: Number(e.target.value) || undefined }))}
+                        labelKey="number"
+                        disabled={!filters.studyPlanId}
+                        placeholder={!filters.studyPlanId ? "Choose a study plan" : "All semesters"}
+                        value={filters.semesterNum || ""}
+                        onChange={(e) => dispatch(setFilters({ semesterNum: Number(e.target.value) || undefined }))}
                     />
 
                     <Select
-                        label="Área Técnica"
+                        label="Technical area"
+                        labelKey='name'
                         options={catalogs.areas}
                         value={filters.areaId || ""}
                         onChange={(e) => dispatch(setFilters({ areaId: Number(e.target.value) || undefined }))}
@@ -154,7 +156,7 @@ export const ProjectFilters: React.FC = () => {
                             onClick={() => { dispatch(resetFilters()); setLocalSearch(''); }}
                             className="cursor-pointer text-[10px] font-black text-slate-400 hover:text-brand-pink flex items-center gap-1 uppercase tracking-widest transition-all"
                         >
-                            <X size={14} /> Limpiar Filtros
+                            <X size={14} /> Clear filters
                         </button>
                     </div>
                 </div>

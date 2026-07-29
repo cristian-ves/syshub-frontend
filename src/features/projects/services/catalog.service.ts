@@ -1,17 +1,17 @@
 import api from "../../../api/axios.config";
 
 export const catalogService = {
-    getPensums: async () => {
-        const { data } = await api.get("/catalog/pensums");
+    getStudyPlans: async () => {
+        const { data } = await api.get("/catalog/study-plans");
         return data;
     },
     getAreas: async () => {
         const { data } = await api.get("/catalog/areas");
         return data;
     },
-    getSemesters: async (pensumId: number) => {
+    getSemesters: async (studyPlanId: number) => {
         const { data } = await api.get(`/catalog/semesters`, {
-            params: { pensumId },
+            params: { studyPlanId: studyPlanId },
         });
         return data;
     },

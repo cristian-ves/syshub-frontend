@@ -13,12 +13,12 @@ import { createProject } from "../store/slices/projectSlice";
 export const useCreateProject = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const [tags, setTags] = useState<{ nombre: string; color: string }[]>([]);
+    const [tags, setTags] = useState<{ name: string; color: string }[]>([]);
     const [files, setFiles] = useState<File[]>([]);
 
     const form = useForm<CreateProjectFormValues>({
         resolver: zodResolver(createProjectSchema) as any,
-        defaultValues: { tags: [], titulo: "", descripcion: "", repoUrl: "" },
+        defaultValues: { tags: [], title: "", description: "", repoUrl: "" },
     });
 
     const handleTagsChange = (newTags: any[]) => {
@@ -33,15 +33,15 @@ export const useCreateProject = () => {
 
     const onSubmit = async (data: CreateProjectFormValues) => {
         if (tags.length === 0) {
-            toast.error("Debes agregar al menos una etiqueta");
+            toast.error("You must add at least one tag");
             return;
         }
 
         try {
             const formData = new FormData();
             const payload = {
-                titulo: data.titulo,
-                descripcion: data.descripcion,
+                title: data.title,
+                description: data.description,
                 courseId: data.courseId,
                 repoUrl: data.repoUrl,
                 tags: tags,
@@ -59,10 +59,10 @@ export const useCreateProject = () => {
             });
 
             await dispatch(createProject(formData)).unwrap();
-            toast.success("¡Proyecto publicado con éxito!");
+            toast.success("The project was published successfully!");
             navigate("/profile/projects");
         } catch (error: any) {
-            toast.error(error || "Error al crear el proyecto");
+            toast.error(error || "Error creating the project");
         }
     };
 

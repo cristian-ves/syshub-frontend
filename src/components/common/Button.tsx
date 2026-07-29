@@ -37,7 +37,7 @@ export const Button: React.FC<ButtonProps> = ({
             {isLoading ? (
                 <div className="flex items-center gap-2">
                     <div className={`border-2 border-current/30 border-t-current rounded-full animate-spin ${size === 'sm' ? 'w-3 h-3' : 'w-4 h-4'}`} />
-                    {size !== 'sm' && <span>Cargando...</span>}
+                    {size !== 'sm' && <span>Loading...</span>}
                 </div>
             ) : children}
         </button>

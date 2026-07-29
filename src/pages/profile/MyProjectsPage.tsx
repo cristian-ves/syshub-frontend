@@ -15,8 +15,8 @@ export const MyProjectsPage = () => {
             totalPages={totalPages}
             onPageChange={fetchPage}
             emptyIcon={<Folder size={32} className="text-slate-400" />}
-            emptyTitle="No has subido proyectos"
-            emptySubtitle="Empieza subiendo tu primer proyecto"
+            emptyTitle="You haven't uploaded any projects"
+            emptySubtitle="Start by uploading your first project"
             emptyActionPath="/projects/create"
         />
     );

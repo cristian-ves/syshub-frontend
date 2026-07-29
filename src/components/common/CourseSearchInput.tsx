@@ -37,32 +37,42 @@ export const CourseSearchInput = ({ value, onSelect, error }: Props) => {
         };
     }, []);
 
-    const searchCourses = async (val: string) => {
-        setQuery(val);
-        if (val.length < 2) {
-            setCourses([]);
-            setOpen(false);
-            return;
-        }
-        try {
-            const { data } = await api.get("/catalog/courses/search", { params: { q: val } });
-            setCourses(data);
-            setOpen(data.length > 0);
-        } catch (err) {
-            console.error("Error buscando cursos:", err);
-        }
-    };
+    useEffect(() => {
+        const fetchCourses = async () => {
+            if (query.length < 2) {
+                setCourses([]);
+                setOpen(false);
+                return;
+            }
+
+            if (value && query === formatCourseLabel(value)) return;
+
+            try {
+                const { data } = await api.get("/catalog/courses/search", { params: { q: query } });
+                setCourses(data);
+                setOpen(data.length > 0);
+            } catch (err) {
+                console.error("Error searching for courses:", err);
+            }
+        };
+
+        const timer = setTimeout(() => {
+            fetchCourses();
+        }, 500);
+
+        return () => clearTimeout(timer);
+    }, [query, value]);
 
     return (
         <div ref={containerRef} className="w-full text-left relative z-1000">
             <label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1.5 ml-1">
-                Curso
+                Course
             </label>
 
             <div className="relative">
                 <input
                     value={query}
-                    onChange={(e) => searchCourses(e.target.value)}
+                    onChange={(e) => setQuery(e.target.value)}
                     onFocus={() => courses.length > 0 && setOpen(true)}
                     placeholder="Search course (e.g. Data Structures and Algorithms)"
                     className={`

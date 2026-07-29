@@ -32,8 +32,8 @@ export const FileUpload: React.FC<Props> = ({ value, onChange, error }) => {
         if (rejected.length > 0) {
             toast.error(
                 rejected.length === 1
-                    ? `"${rejected[0]}" supera el tamaño máximo de 5MB`
-                    : `${rejected.length} archivos superan el tamaño máximo de 5MB`
+                    ? `"${rejected[0]}" is above the 5MB size limit`
+                    : `${rejected.length} files are above the 5MB size limit`
             );
         }
 
@@ -41,7 +41,7 @@ export const FileUpload: React.FC<Props> = ({ value, onChange, error }) => {
             [...value, ...newFiles].reduce((acc, file) => acc + file.size, 0);
 
         if (totalSize > MAX_TOTAL_SIZE) {
-            toast.error("El tamaño total de los archivos no puede superar 15MB");
+            toast.error("The total file size cannot exceed 15MB");
             return;
         }
 
@@ -83,7 +83,7 @@ export const FileUpload: React.FC<Props> = ({ value, onChange, error }) => {
                 Archivos
             </label>
 
-            {/* 📦 Drop zone */}
+            {/* Drop zone */}
             <div
                 onClick={() => inputRef.current?.click()}
                 onDragOver={handleDragOver}
@@ -105,12 +105,12 @@ export const FileUpload: React.FC<Props> = ({ value, onChange, error }) => {
 
                 <p className="text-sm text-slate-600 dark:text-slate-400">
                     {isDragging
-                        ? "Suelta los archivos aquí"
-                        : "Arrastra archivos o haz click"}
+                        ? "Drop your files here"
+                        : "Drag files or click here"}
                 </p>
 
                 <p className="text-xs text-slate-400 mt-1">
-                    Máximo 5MB por archivo
+                    5MB size limit per file
                 </p>
             </div>
 
@@ -122,7 +122,7 @@ export const FileUpload: React.FC<Props> = ({ value, onChange, error }) => {
                 onChange={(e) => handleFiles(e.target.files)}
             />
 
-            {/* 📄 Preview */}
+            {/* Preview */}
             {value.length > 0 && (
                 <div className="space-y-2 max-h-40 overflow-y-auto custom-scrollbar">
                     {value.map((file, i) => (
@@ -145,7 +145,7 @@ export const FileUpload: React.FC<Props> = ({ value, onChange, error }) => {
                             <button
                                 type="button"
                                 onClick={() => removeFile(i)}
-                                className="text-slate-400 hover:text-red-500"
+                                className="text-slate-400 hover:text-red-500 cursor-pointer"
                             >
                                 <X size={16} />
                             </button>

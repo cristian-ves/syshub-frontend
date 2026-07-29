@@ -22,11 +22,11 @@ export const CreateProjectPage: React.FC = () => {
                     className="cursor-pointer flex items-center gap-2 text-slate-500 hover:text-brand-blue transition-colors mb-6 text-sm font-medium"
                 >
                     <ChevronLeft size={16} />
-                    Volver atrás
+                    Go back
                 </button>
-                <Badge className="mt-4">Nuevo Aporte</Badge>
+                <Badge className="mt-4">New contribution</Badge>
                 <h1 className="text-4xl md:text-5xl font-black text-slate-950 dark:text-white mt-2">
-                    Comparte tu <span className="text-brand-blue">conocimiento</span>
+                    Share your <span className="text-brand-blue">knowledge</span>
                 </h1>
             </header>
 
@@ -38,20 +38,20 @@ export const CreateProjectPage: React.FC = () => {
                 <section className="p-8 md:p-10 space-y-6">
                     <div className="flex items-center gap-2 mb-2 text-brand-blue">
                         <Info size={20} />
-                        <h2 className="font-bold uppercase tracking-wider text-xs">Información del Proyecto</h2>
+                        <h2 className="font-bold uppercase tracking-wider text-xs">Project information</h2>
                     </div>
                     <div className="grid grid-cols-1 gap-6">
                         <Input
-                            label="Título del Proyecto"
-                            placeholder="Ej. Intérprete de Haskell"
-                            {...register("titulo")}
-                            error={errors.titulo?.message}
+                            label="Project title"
+                            placeholder="e.g. Haskell interpreter"
+                            {...register("title")}
+                            error={errors.title?.message}
                         />
                         <Input
-                            label="Descripción Corta"
-                            placeholder="¿Qué problema resuelve tu proyecto?"
-                            {...register("descripcion")}
-                            error={errors.descripcion?.message}
+                            label="Short description"
+                            placeholder="What problem does your project solve?"
+                            {...register("description")}
+                            error={errors.description?.message}
                         />
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <CourseSearchInput
@@ -63,8 +63,8 @@ export const CreateProjectPage: React.FC = () => {
                                 error={errors.courseId?.message}
                             />
                             <Input
-                                label="URL del Repositorio"
-                                placeholder="https://github.com/usuario/repo"
+                                label="Repository URL"
+                                placeholder="https://github.com/user/repo"
                                 {...register("repoUrl")}
                                 error={errors.repoUrl?.message}
                             />
@@ -77,7 +77,7 @@ export const CreateProjectPage: React.FC = () => {
                 <section className="p-8 md:p-10">
                     <div className="flex items-center gap-2 mb-6 text-brand-blue">
                         <Tags size={20} />
-                        <h2 className="font-bold uppercase tracking-wider text-xs">Etiquetas y Categorías</h2>
+                        <h2 className="font-bold uppercase tracking-wider text-xs">Tags and categories</h2>
                     </div>
                     <TagInput value={tags} onChange={handleTagsChange} error={errors.tags?.message} />
                 </section>
@@ -87,7 +87,7 @@ export const CreateProjectPage: React.FC = () => {
                 <section className="p-8 md:p-10 grow flex flex-col">
                     <div className="flex items-center gap-2 mb-6 text-brand-blue">
                         <FileCode size={20} />
-                        <h2 className="font-bold uppercase tracking-wider text-xs">Documentación y Archivos</h2>
+                        <h2 className="font-bold uppercase tracking-wider text-xs">Files and documentation</h2>
                     </div>
                     <div className="grow">
                         <FileUpload
@@ -103,7 +103,7 @@ export const CreateProjectPage: React.FC = () => {
                 <footer className="p-8 md:p-10 bg-slate-50/50 dark:bg-slate-800/20">
                     <div className="flex flex-col md:flex-row items-center justify-between gap-6">
                         <div className="text-sm text-slate-500 max-w-xs text-center md:text-left">
-                            Asegúrate de que tus archivos no contengan información sensible antes de publicar.
+                            Make sure your files don't contain sensitive information before publishing your project
                         </div>
                         <Button
                             type="submit"
@@ -111,7 +111,7 @@ export const CreateProjectPage: React.FC = () => {
                             isLoading={isSubmitting}
                         >
                             <Send size={20} />
-                            Publicar Proyecto Ahora
+                            Publish project
                         </Button>
                     </div>
                 </footer>
