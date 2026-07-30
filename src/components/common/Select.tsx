@@ -14,9 +14,9 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(({
     label,
     options,
     error,
-    placeholder = "Seleccionar...",
+    placeholder = "Choose...",
     valueKey = "id",
-    labelKey = "nombre",
+    labelKey = "name",
     className = "",
     ...props
 }, ref) => {

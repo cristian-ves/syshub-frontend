@@ -8,7 +8,7 @@ import {
     Shield,
     BookOpen,
 } from "lucide-react";
-import { Button, Input, Badge, Select, ErrorModal, ConfirmDeleteModal } from "../../../components/common";
+import { Button, Input, Badge, Select, ConfirmDeleteModal } from "../../../components/common";
 import { useUserCard } from "../../../hooks/admin/useUserCard";
 import { ROLE_OPTIONS, getRoleLabel } from "../../../helpers/roleOptions.helper";
 import { MAJORS } from "../../../helpers/majors.helper";
@@ -26,15 +26,13 @@ export const UserCard = ({ user }: Props) => {
         setIsEditing,
         isLoading,
         handleDelete,
-        errorMsg,
-        setErrorMsg,
         formState: { errors },
         isDeleteModalOpen,
         setIsDeleteModalOpen,
         isDeleting
     } = useUserCard(user);
 
-    const carreraActual = MAJORS.find(c => c.id === user.carreraId)?.nombre || "No asignada";
+    const currentMajor = MAJORS.find(major => major.id === user.majorId)?.name || "Not assigned";
 
     return (
         <>
@@ -54,7 +52,7 @@ export const UserCard = ({ user }: Props) => {
                         </div>
                         <div>
                             <h3 className="font-black text-xl text-slate-900 dark:text-white tracking-tight">
-                                {user.nombreCompleto}
+                                {user.fullName}
                             </h3>
                             <div className="flex gap-2 mt-1.5">
                                 <Badge variant="info" noMargin className="px-3 py-0.5 text-[10px] font-black">
@@ -62,7 +60,7 @@ export const UserCard = ({ user }: Props) => {
                                 </Badge>
                                 {!user.enabled && (
                                     <Badge variant="destructive" noMargin className="px-3 py-0.5 text-[10px] font-black animate-pulse">
-                                        SUSPENDIDO
+                                        SUSPENDED
                                     </Badge>
                                 )}
                             </div>
@@ -101,17 +99,17 @@ export const UserCard = ({ user }: Props) => {
 
                     <div className="col-span-1 md:col-span-2">
                         <Input
-                            label="Nombre Completo"
-                            {...register("nombreCompleto")}
+                            label="Full Name"
+                            {...register("fullName")}
                             disabled={!isEditing}
-                            error={errors.nombreCompleto?.message}
+                            error={errors.fullName?.message}
                             className="bg-slate-50/50"
                         />
                     </div>
 
                     <div className="col-span-1 md:col-span-2">
                         <Input
-                            label="Correo Electrónico"
+                            label="Email Address"
                             {...register("email")}
                             disabled={!isEditing}
                             error={errors.email?.message}
@@ -120,7 +118,7 @@ export const UserCard = ({ user }: Props) => {
                     </div>
 
                     <Input
-                        label="Nombre de Usuario"
+                        label="Username"
                         {...register("username")}
                         disabled={!isEditing}
                         error={errors.username?.message}
@@ -128,26 +126,26 @@ export const UserCard = ({ user }: Props) => {
                     />
 
                     <Input
-                        label="Registro Académico"
-                        {...register("registroAcademico")}
+                        label="Academic record"
+                        {...register("academicRecord")}
                         disabled={!isEditing}
-                        error={errors.registroAcademico?.message}
+                        error={errors.academicRecord?.message}
                         className="bg-slate-50/50"
                     />
 
                     {isEditing ? (
                         <Select
-                            label="Rol en la Plataforma"
+                            label="Platform Role"
                             options={ROLE_OPTIONS}
                             labelKey="label"
                             valueKey="id"
-                            error={errors.rolId?.message}
-                            {...register("rolId")}
+                            error={errors.roleId?.message}
+                            {...register("roleId")}
                         />
                     ) : (
                         <div className="space-y-1.5">
                             <label className="block text-sm font-bold text-slate-700 dark:text-slate-300 ml-1 italic opacity-80">
-                                Rol Asignado
+                                Assigned Role
                             </label>
                             <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 text-slate-600 dark:text-slate-400">
                                 <Shield size={16} className="text-brand-blue" />
@@ -160,22 +158,22 @@ export const UserCard = ({ user }: Props) => {
 
                     {isEditing ? (
                         <Select
-                            label="Carrera / Facultad"
+                            label="Major"
                             options={MAJORS}
-                            labelKey="nombre"
+                            labelKey="name"
                             valueKey="id"
-                            error={errors.carreraId?.message}
-                            {...register("carreraId")}
+                            error={errors.majorId?.message}
+                            {...register("majorId")}
                         />
                     ) : (
                         <div className="space-y-1.5">
                             <label className="block text-sm font-bold text-slate-700 dark:text-slate-300 ml-1 italic opacity-80">
-                                Carrera
+                                Major
                             </label>
                             <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 text-slate-600 dark:text-slate-400">
                                 <BookOpen size={16} className="text-brand-blue" />
                                 <span className="text-sm font-semibold truncate">
-                                    {carreraActual}
+                                    {currentMajor}
                                 </span>
                             </div>
                         </div>
@@ -184,9 +182,9 @@ export const UserCard = ({ user }: Props) => {
                     {isEditing && (
                         <div className="col-span-1 md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-slate-100 dark:border-slate-800 mt-2">
                             <Input
-                                label="Nueva Contraseña"
+                                label="New Password"
                                 type="password"
-                                placeholder="Dejar vacío para no cambiar"
+                                placeholder="Leave blank to keep current"
                                 {...register("password")}
                                 error={errors.password?.message}
                             />
@@ -199,7 +197,7 @@ export const UserCard = ({ user }: Props) => {
                                     />
                                     <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-brand-blue"></div>
                                     <span className="ml-3 text-sm font-bold text-slate-700 dark:text-slate-300 italic opacity-80">
-                                        Cuenta Habilitada
+                                        Account Enabled
                                     </span>
                                 </label>
                             </div>
@@ -212,8 +210,8 @@ export const UserCard = ({ user }: Props) => {
                 isOpen={isDeleteModalOpen}
                 onClose={() => setIsDeleteModalOpen(false)}
                 onConfirm={handleDelete}
-                title="Eliminar Usuario"
-                description={`¿Estás seguro de que deseas eliminar permanentemente al usuario ${user.username}? Esta acción no se puede deshacer.`}
+                title="Delete User"
+                description={`Are you sure you want to permanently delete user ${user.username}? This action cannot be undone.`}
                 isDeleting={isDeleting}
             />
         </>

@@ -32,7 +32,7 @@ export const createUserAction = createAsyncThunk(
         try {
             return await adminService.createUser(data);
         } catch (error: any) {
-            return rejectWithValue(error || "Error al crear usuario");
+            return rejectWithValue(error || "Error creating the user");
         }
     }
 );
@@ -47,7 +47,7 @@ export const fetchUsers = createAsyncThunk(
             return await adminService.getAllUsers(page, size);
         } catch (error: any) {
             return rejectWithValue(
-                error.response?.data?.message || "Error al cargar usuarios"
+                error.response?.data?.message || "Error loading the users"
             );
         }
     }
@@ -61,7 +61,7 @@ export const deleteUserAction = createAsyncThunk(
             return id;
         } catch (error: any) {
             return rejectWithValue(
-                error.response?.data?.message || "Error al eliminar"
+                error.response?.data?.message || "Error deleting the user"
             );
         }
     }
@@ -74,7 +74,7 @@ export const updateUserAction = createAsyncThunk(
             return await adminService.updateUser(id, data);
         } catch (error: any) {
             return rejectWithValue(
-                error.response?.data?.message || "Error al actualizar"
+                error.response?.data?.message || "Error updating the user"
             );
         }
     }
@@ -109,7 +109,7 @@ const adminSlice = createSlice({
                     state.users = state.users.filter(
                         (user) => user.id !== action.payload
                     );
-                    toast.success("Usuario eliminado");
+                    toast.success("User deleted successfully!");
                 }
             )
             .addCase(
@@ -121,7 +121,7 @@ const adminSlice = createSlice({
                     if (index !== -1) {
                         state.users[index] = action.payload;
                     }
-                    toast.success("Usuario actualizado");
+                    toast.success("User updated successfully");
                 }
             )
             .addCase(

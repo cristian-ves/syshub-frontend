@@ -1,28 +1,28 @@
 import { z } from "zod";
 
 const baseUserSchema = z.object({
-    nombreCompleto: z.string().min(3, "El nombre es muy corto"),
-    username: z.string().min(3, "El usuario es muy corto"),
-    email: z.string().email("Correo inválido"),
-    registroAcademico: z
+    fullName: z.string().min(3, "The name is too short"),
+    username: z.string().min(3, "The username is too short"),
+    email: z.string().email("Invalid email"),
+    academicRecord: z
         .string()
-        .min(1, "El registro académico es obligatorio")
-        .regex(/^\d{9}$/, "Debe tener exactamente 9 dígitos numéricos"),
-    rolId: z.coerce.number().min(1, "Selecciona un rol"),
-    carreraId: z.coerce.number().min(1, "Selecciona una carrera"),
+        .min(1, "The academic record is required")
+        .regex(/^\d{9}$/, "It must contain exactly 9 digits"),
+    roleId: z.coerce.number().min(1, "Choose a role"),
+    majorId: z.coerce.number().min(1, "Choose a major"),
     enabled: z.boolean().default(true),
 });
 
 export const createUserSchema = baseUserSchema.extend({
     password: z
         .string()
-        .min(8, "La contraseña debe tener al menos 8 caracteres"),
+        .min(8, "The password must contain at least 8 characters"),
 });
 
 export const updateUserSchema = baseUserSchema.extend({
     password: z
         .string()
-        .min(8, "Mínimo 8 caracteres")
+        .min(8, "The password must contain at least 8 characters")
         .optional()
         .or(z.literal("")),
 });

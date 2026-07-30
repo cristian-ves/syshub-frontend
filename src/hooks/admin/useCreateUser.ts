@@ -18,13 +18,13 @@ export const useCreateUser = () => {
     const form = useForm<CreateUserFormValues>({
         resolver: zodResolver(createUserSchema) as any,
         defaultValues: {
-            nombreCompleto: "",
+            fullName: "",
             username: "",
             email: "",
-            registroAcademico: "",
+            academicRecord: "",
             enabled: true,
-            rolId: 2,
-            carreraId: 1,
+            roleId: 2,
+            majorId: 1,
             password: "",
         },
     });
@@ -32,7 +32,7 @@ export const useCreateUser = () => {
     const handleFormSubmit = async (data: CreateUserFormValues) => {
         try {
             await dispatch(createUserAction(data)).unwrap();
-            toast.success("Usuario creado exitosamente");
+            toast.success("The user was created successfully");
             navigate("/users");
         } catch (error: any) {
             setErrorMsg(error);

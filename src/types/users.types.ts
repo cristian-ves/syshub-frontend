@@ -2,10 +2,10 @@ export interface UserResponse {
     id: string;
     username: string;
     email: string;
-    nombreCompleto: string;
-    registroAcademico: string;
+    fullName: string;
+    academicRecord: string;
     roleId: number;
-    carreraId: number;
+    majorId: number;
     enabled: boolean;
 }
 

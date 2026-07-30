@@ -23,12 +23,12 @@ export const useUserCard = (user: any) => {
     const form = useForm<UpdateUserFormValues>({
         resolver: zodResolver(updateUserSchema) as any,
         defaultValues: {
-            nombreCompleto: user.nombreCompleto,
+            fullName: user.fullName,
             username: user.username,
             email: user.email,
-            registroAcademico: user.registroAcademico || "",
-            rolId: user.roleId,
-            carreraId: user.carreraId,
+            academicRecord: user.academicRecord || "",
+            roleId: user.roleId,
+            majorId: user.majorId,
             enabled: user.enabled,
             password: "",
         },

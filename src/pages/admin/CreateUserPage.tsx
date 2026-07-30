@@ -25,11 +25,11 @@ export const CreateUserPage: React.FC = () => {
                     className="cursor-pointer flex items-center gap-2 text-slate-500 hover:text-brand-blue transition-colors mb-6 text-sm font-medium"
                 >
                     <ChevronLeft size={16} />
-                    Volver a la lista
+                    Back to list
                 </button>
-                <Badge className="mt-4">Administración</Badge>
+                <Badge className="mt-4">Administration</Badge>
                 <h1 className="text-4xl md:text-5xl font-black text-slate-950 dark:text-white mt-2">
-                    Registrar nuevo <span className="text-brand-blue">integrante</span>
+                    Register new <span className="text-brand-blue">member</span>
                 </h1>
             </header>
 
@@ -40,26 +40,26 @@ export const CreateUserPage: React.FC = () => {
                 <section className="p-8 md:p-10 space-y-6">
                     <div className="flex items-center gap-2 mb-2 text-brand-blue">
                         <Info size={20} />
-                        <h2 className="font-bold uppercase tracking-wider text-xs">Identidad del Usuario</h2>
+                        <h2 className="font-bold uppercase tracking-wider text-xs">User Identity</h2>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="md:col-span-2">
                             <Input
-                                label="Nombre Completo"
-                                placeholder="Ej. Juan Pérez"
-                                {...register("nombreCompleto")}
-                                error={errors.nombreCompleto?.message}
+                                label="Full Name"
+                                placeholder="e.g. John Doe"
+                                {...register("fullName")}
+                                error={errors.fullName?.message}
                             />
                         </div>
                         <Input
-                            label="Nombre de Usuario"
-                            placeholder="jperez"
+                            label="Username"
+                            placeholder="jdoe"
                             {...register("username")}
                             error={errors.username?.message}
                         />
                         <Input
-                            label="Correo Electrónico"
-                            placeholder="juan.perez@correo.com"
+                            label="Email Address"
+                            placeholder="john.doe@email.com"
                             {...register("email")}
                             error={errors.email?.message}
                         />
@@ -71,31 +71,31 @@ export const CreateUserPage: React.FC = () => {
                 <section className="p-8 md:p-10 space-y-6">
                     <div className="flex items-center gap-2 mb-6 text-brand-blue">
                         <GraduationCap size={20} />
-                        <h2 className="font-bold uppercase tracking-wider text-xs">Academia y Permisos</h2>
+                        <h2 className="font-bold uppercase tracking-wider text-xs">Academics and Permissions</h2>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <Input
-                            label="Registro Académico"
+                            label="Academic Record"
                             placeholder="202301234"
-                            {...register("registroAcademico")}
-                            error={errors.registroAcademico?.message}
+                            {...register("academicRecord")}
+                            error={errors.academicRecord?.message}
                         />
                         <Select
-                            label="Rol Asignado"
+                            label="Assigned Role"
                             options={ROLE_OPTIONS}
                             labelKey="label"
                             valueKey="id"
-                            {...register("rolId")}
-                            error={errors.rolId?.message}
+                            {...register("roleId")}
+                            error={errors.roleId?.message}
                         />
                         <div className="md:col-span-2">
                             <Select
-                                label="Carrera"
+                                label="Major"
                                 options={MAJORS}
-                                labelKey="nombre"
+                                labelKey="name"
                                 valueKey="id"
-                                {...register("carreraId")}
-                                error={errors.carreraId?.message}
+                                {...register("majorId")}
+                                error={errors.majorId?.message}
                             />
                         </div>
                     </div>
@@ -106,13 +106,13 @@ export const CreateUserPage: React.FC = () => {
                 <section className="p-8 md:p-10">
                     <div className="flex items-center gap-2 mb-6 text-brand-blue">
                         <Lock size={20} />
-                        <h2 className="font-bold uppercase tracking-wider text-xs">Seguridad Inicial</h2>
+                        <h2 className="font-bold uppercase tracking-wider text-xs">Initial Security</h2>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <Input
-                            label="Contraseña"
+                            label="Password"
                             type="password"
-                            placeholder="Mínimo 8 caracteres"
+                            placeholder="Minimum 8 characters"
                             {...register("password")}
                             error={errors.password?.message}
                             required
@@ -124,7 +124,7 @@ export const CreateUserPage: React.FC = () => {
                                 <div className="relative shrink-0 w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-brand-blue"></div>
 
                                 <span className="ml-3 text-sm font-bold text-slate-700 dark:text-slate-300 italic opacity-80">
-                                    Activar cuenta inmediatamente
+                                    Activate account immediately
                                 </span>
                             </label>
                         </div>
@@ -134,7 +134,7 @@ export const CreateUserPage: React.FC = () => {
                 <footer className="p-8 md:p-10 bg-slate-50/50 dark:bg-slate-800/20">
                     <div className="flex flex-col md:flex-row items-center justify-between gap-6">
                         <div className="text-sm text-slate-500 max-w-xs text-center md:text-left">
-                            Para que el usuario cree su contrasena tiene que realizar el proceso de recuperacion de credenciales.
+                            For the user to create their password, they must go through the credential recovery process.
                         </div>
                         <Button
                             type="submit"
@@ -142,7 +142,7 @@ export const CreateUserPage: React.FC = () => {
                             isLoading={isSubmitting}
                         >
                             <UserPlus size={20} />
-                            Crear Usuario Ahora
+                            Create User Now
                         </Button>
                     </div>
                 </footer>

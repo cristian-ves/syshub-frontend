@@ -1,11 +1,11 @@
 export const MAJORS = [
-    { id: 1, nombre: "Computer Science and Systems Engineering" },
-    { id: 2, nombre: "Mechanical Engineering" },
-    { id: 3, nombre: "Industrial Mechanical Engineering" },
-    { id: 4, nombre: "Civil Engineering" },
-    { id: 5, nombre: "Industrial Engineering" },
+    { id: 1, name: "Computer Science and Systems Engineering" },
+    { id: 2, name: "Mechanical Engineering" },
+    { id: 3, name: "Industrial Mechanical Engineering" },
+    { id: 4, name: "Civil Engineering" },
+    { id: 5, name: "Industrial Engineering" },
 ];
 
-export const getCarreraNombre = (id: number) => {
-    return MAJORS.find((c) => c.id === id)?.nombre || "Not assigned";
+export const getMajorName = (id: number) => {
+    return MAJORS.find((c) => c.id === id)?.name || "Not assigned";
 };

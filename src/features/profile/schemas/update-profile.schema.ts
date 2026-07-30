@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const updateProfileSchema = z
     .object({
-        nombreCompleto: z.string().min(1, "El nombre es obligatorio"),
+        fullName: z.string().min(1, "El nombre es obligatorio"),
         username: z.string().min(4, "Mínimo 4 caracteres"),
         email: z.string().email("Correo inválido"),
         registroAcademico: z

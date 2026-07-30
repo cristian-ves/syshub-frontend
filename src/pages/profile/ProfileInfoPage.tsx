@@ -25,7 +25,7 @@ export const ProfileInfoPage = () => {
     } = useForm<UpdateProfileFormValues>({
         resolver: zodResolver(updateProfileSchema) as any,
         defaultValues: {
-            nombreCompleto: user?.fullName,
+            fullName: user?.fullName,
             username: user?.username,
             email: user?.email,
             registroAcademico: user?.academicRecord,
@@ -114,7 +114,7 @@ export const ProfileInfoPage = () => {
                 <Input
                     label="Nombre completo"
                     {...register("nombreCompleto")}
-                    error={errors.nombreCompleto?.message}
+                    error={errors.fullName?.message}
                     disabled={!isEditing}
                 />
 
