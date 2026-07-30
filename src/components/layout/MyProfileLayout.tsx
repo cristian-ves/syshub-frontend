@@ -18,13 +18,13 @@ export const MyProfileLayout = () => {
             <header className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6">
                 <div className="max-w-2xl">
                     <Badge className="">
-                        Área Personal
+                        Personal Area
                     </Badge>
                     <h1 className="text-4xl md:text-5xl font-black text-slate-950 dark:text-white mt-4">
-                        Bienvenido, <span className="text-brand-blue">{user?.fullName.split(' ')[0]}</span>
+                        Welcome, <span className="text-brand-blue">{user?.fullName.split(' ')[0]}</span>
                     </h1>
                     <p className="text-slate-500 mt-3 text-lg">
-                        Gestiona tu identidad académica y revisa tus contribuciones.
+                        Manage your academic profile and review your projects.
                     </p>
                 </div>
             </header>

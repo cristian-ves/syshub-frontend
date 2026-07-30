@@ -28,8 +28,8 @@ export const ProfileInfoPage = () => {
             fullName: user?.fullName,
             username: user?.username,
             email: user?.email,
-            registroAcademico: user?.academicRecord,
-            carreraId: user?.majorId,
+            academicRecord: user?.academicRecord,
+            majorId: user?.majorId,
         },
     });
 
@@ -50,7 +50,7 @@ export const ProfileInfoPage = () => {
                 })
             ).unwrap();
 
-            toast.success("Perfil actualizado");
+            toast.success("Profile updated");
             setIsEditing(false);
         } catch (error: any) {
             toast.error(error);
@@ -84,7 +84,7 @@ export const ProfileInfoPage = () => {
                         className="gap-2"
                     >
                         <Pencil size={16} />
-                        Editar
+                        Edit
                     </Button>
                 ) : (
                     <div className="flex gap-2">
@@ -101,7 +101,7 @@ export const ProfileInfoPage = () => {
                             className="gap-2"
                         >
                             <Save size={16} />
-                            Guardar
+                            Save
                         </Button>
                     </div>
                 )}
@@ -112,51 +112,51 @@ export const ProfileInfoPage = () => {
                 className="grid grid-cols-1 md:grid-cols-2 gap-5"
             >
                 <Input
-                    label="Nombre completo"
-                    {...register("nombreCompleto")}
+                    label="Full Name"
+                    {...register("fullName")}
                     error={errors.fullName?.message}
                     disabled={!isEditing}
                 />
 
                 <Input
-                    label="Usuario"
+                    label="Username"
                     {...register("username")}
                     error={errors.username?.message}
                     disabled={!isEditing}
                 />
 
                 <Input
-                    label="Correo"
+                    label="Email"
                     {...register("email")}
                     error={errors.email?.message}
                     disabled={!isEditing}
                 />
 
                 <Input
-                    label="Registro académico"
-                    {...register("registroAcademico")}
-                    error={errors.registroAcademico?.message}
+                    label="Academic Record"
+                    {...register("academicRecord")}
+                    error={errors.academicRecord?.message}
                     disabled={!isEditing}
                 />
 
                 {isEditing && (
                     <>
                         <Input
-                            label="Nueva contraseña"
+                            label="New Password"
                             type="password"
-                            placeholder="Opcional (Minimo 8 caracteres)"
+                            placeholder="Optional (At least 8 characters)"
                             {...register("password")}
                             error={errors.password?.message}
                         />
 
                         <Input
-                            label="Confirmar contraseña"
+                            label="Confirm Password"
                             type="password"
                             {...register("confirmPassword")}
                             error={errors.confirmPassword?.message}
                         />
                         <p className="text-xs text-slate-500 ml-1">
-                            Déjalo vacío si no deseas cambiar la contraseña
+                            Leave it empty if you don't want to change your password.
                         </p>
                     </>
                 )}

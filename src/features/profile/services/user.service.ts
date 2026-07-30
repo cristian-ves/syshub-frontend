@@ -4,9 +4,9 @@ import type { AuthResponseDTO } from "../../../types/auth.types";
 export interface UserProfileUpdateDTO {
     username: string;
     email: string;
-    nombreCompleto: string;
-    registroAcademico?: string;
-    carreraId?: number;
+    fullName: string;
+    academicRecord?: string;
+    majorId?: number;
     password?: string;
 }
 

@@ -2,21 +2,23 @@ import { z } from "zod";
 
 export const updateProfileSchema = z
     .object({
-        fullName: z.string().min(1, "El nombre es obligatorio"),
-        username: z.string().min(4, "Mínimo 4 caracteres"),
-        email: z.string().email("Correo inválido"),
-        registroAcademico: z
+        fullName: z.string().min(1, "The name is required"),
+        username: z
             .string()
-            .length(9, "Debe tener 9 dígitos")
-            .regex(/^\d+$/, "Solo números"),
-        carreraId: z.coerce.number().min(1),
+            .min(4, "The username must have at least 4 characters"),
+        email: z.string().email("The email is invalid"),
+        academicRecord: z
+            .string()
+            .length(9, "The academic record must contain exactly 9 digits")
+            .regex(/^\d+$/, "You can only use digits"),
+        majorId: z.coerce.number().min(1),
 
         password: z
             .string()
             .transform((val) => (val === "" ? undefined : val))
             .optional()
             .refine((val) => !val || val.length >= 8, {
-                message: "Mínimo 8 caracteres",
+                message: "The password must contain at least 8 characters",
             }),
         confirmPassword: z
             .string()
@@ -30,7 +32,7 @@ export const updateProfileSchema = z
             return data.password === data.confirmPassword;
         },
         {
-            message: "Las contraseñas no coinciden",
+            message: "The passwords must match",
             path: ["confirmPassword"],
         }
     );
