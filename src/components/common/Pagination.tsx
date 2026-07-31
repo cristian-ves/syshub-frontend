@@ -21,7 +21,7 @@ export const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages,
                     variant="ghost"
                     disabled={currentPage === 0 || isLoading}
                     onClick={() => onPageChange(currentPage - 1)}
-                    className="!p-2 !px-2 !rounded-xl"
+                    className="p-2! px-2! rounded-xl!"
                 >
                     <ChevronLeft size={20} />
                 </Button>
@@ -33,7 +33,7 @@ export const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages,
                             variant={currentPage === page ? 'primary' : 'ghost'}
                             onClick={() => onPageChange(page)}
                             disabled={isLoading}
-                            className={`!min-w-[40px] !h-10 !px-0 !py-0 !rounded-xl text-sm ${currentPage === page ? 'shadow-md' : ''
+                            className={`min-w-10! h-10! px-0! py-0! rounded-xl! text-sm ${currentPage === page ? 'shadow-md' : ''
                                 }`}
                         >
                             {page + 1}
@@ -45,7 +45,7 @@ export const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages,
                     variant="ghost"
                     disabled={currentPage + 1 === totalPages || isLoading}
                     onClick={() => onPageChange(currentPage + 1)}
-                    className="!p-2 !px-2 !rounded-xl"
+                    className="p-2! px-2! rounded-xl!"
                 >
                     <ChevronRight size={20} />
                 </Button>

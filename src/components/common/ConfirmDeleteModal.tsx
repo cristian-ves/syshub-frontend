@@ -17,13 +17,13 @@ export const ConfirmDeleteModal: React.FC<ConfirmDeleteModalProps> = ({
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-100 flex items-center justify-center p-4">
             <div
                 className="absolute inset-0 bg-slate-950/40 backdrop-blur-sm transition-opacity"
                 onClick={!isDeleting ? onClose : undefined}
             />
 
-            <div className="relative bg-white dark:bg-slate-900 w-full max-w-md overflow-hidden rounded-[2rem] shadow-2xl border border-slate-200 dark:border-slate-800 animate-in fade-in zoom-in duration-300">
+            <div className="relative bg-white dark:bg-slate-900 w-full max-w-md overflow-hidden rounded-4xl shadow-2xl border border-slate-200 dark:border-slate-800 animate-in fade-in zoom-in duration-300">
 
                 <header className="h-24 bg-red-500 relative overflow-hidden flex items-center justify-center">
                     <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white via-transparent to-transparent" />
