@@ -64,9 +64,9 @@ export const articleService = {
         await api.delete(`/articles/${id}`);
     },
 
-    addComment: async (articleId: number, contenido: string) => {
+    addComment: async (articleId: number, content: string) => {
         const { data } = await api.post(`/articles/${articleId}/comments`, {
-            contenido,
+            content,
         });
         return data;
     },

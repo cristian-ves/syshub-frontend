@@ -13,6 +13,9 @@ interface CommentSectionProps {
 }
 
 export const CommentSection: React.FC<CommentSectionProps> = ({ articleId, comments = [] }) => {
+
+    console.log(comments)
+
     const dispatch = useAppDispatch();
     const { isAuthenticated } = useAppSelector(state => state.auth);
 
