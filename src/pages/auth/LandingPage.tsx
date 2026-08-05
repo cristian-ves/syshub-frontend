@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import logo from '../../assets/logo.svg';
-import { Button, Badge } from '../../components/common';
+import { Button, Badge, DemoRoleButtons } from '../../components/common';
 import { useAppSelector } from '../../store';
 
 export const LandingPage: React.FC = () => {
@@ -33,6 +33,13 @@ export const LandingPage: React.FC = () => {
                                 </Button>)
                             }
                         </div>
+
+
+                        {!isAuthenticated && (
+                            <div className="mt-8 max-w-md">
+                                <DemoRoleButtons />
+                            </div>
+                        )}
                     </div>
 
                     <div className="flex justify-center relative">

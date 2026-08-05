@@ -6,3 +6,5 @@ export * from "./ThemeToggle";
 export * from "./ErrorModal";
 export * from "./Pagination";
 export * from "./ConfirmDeleteModal";
+export * from "./DemoRoleButtons";
+export * from "./ConnectionOverlay";

@@ -7,7 +7,7 @@ import { toast } from "sonner";
 
 import { loginSchema, type LoginFormValues } from "../schemas/login.schema";
 import { useAppDispatch, useAppSelector, type RootState } from "../../../store";
-import { Input, Button, ErrorModal } from "../../../components/common";
+import { Input, Button, ErrorModal, DemoRoleButtons } from "../../../components/common";
 import { loginUser } from "../../../store/slices/authSlice";
 
 export const LoginForm = () => {
@@ -67,6 +67,9 @@ export const LoginForm = () => {
                     Login
                 </Button>
             </form>
+
+
+            <DemoRoleButtons />
 
             <ErrorModal
                 isOpen={!!errorMsg}
