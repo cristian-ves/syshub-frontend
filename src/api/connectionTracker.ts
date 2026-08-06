@@ -1,6 +1,6 @@
 type ConnectionListener = (isWakingUp: boolean) => void;
 
-const SLOW_REQUEST_THRESHOLD_MS = 1200;
+const SLOW_REQUEST_THRESHOLD_MS = 3000;
 
 let connectionListener: ConnectionListener | null = null;
 let slowRequestCount = 0;
