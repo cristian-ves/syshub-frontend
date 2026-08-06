@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { useAppDispatch } from "../store";
@@ -14,8 +15,10 @@ export type DemoRole = keyof typeof DEMO_CREDENTIALS;
 export const useDemoLogin = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
+    const [loadingRole, setLoadingRole] = useState<DemoRole | null>(null);
 
     const loginAsDemo = async (role: DemoRole) => {
+        setLoadingRole(role);
         try {
             const response = await dispatch(
                 loginUser(DEMO_CREDENTIALS[role])
@@ -26,8 +29,10 @@ export const useDemoLogin = () => {
             navigate("/profile");
         } catch (error: any) {
             toast.error(error || "Could not start the demo session");
+        } finally {
+            setLoadingRole(null);
         }
     };
 
-    return { loginAsDemo };
+    return { loginAsDemo, loadingRole };
 };
