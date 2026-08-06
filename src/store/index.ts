@@ -12,7 +12,7 @@ import adminSlice from "./slices/adminSlice";
 import articleSlice from "./slices/articleSlice";
 import favoriteArticleSlice from "./slices/favoriteArticleSlice";
 import connectionSlice, { setWakingUp } from "./slices/connectionSlice";
-import { registerConnectionListener } from "../api/axios.config";
+import { registerConnectionListener } from "../api/connectionTracker";
 
 export const store = configureStore({
     reducer: {
