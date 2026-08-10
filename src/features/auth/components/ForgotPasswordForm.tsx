@@ -37,6 +37,7 @@ export const ForgotPasswordForm: React.FC = () => {
                 </p>
                 <p className="text-sm text-slate-500">
                     If you don't receive it within a few minutes, try again.
+                    (Due to free tier, emails are sent to mailtrap)
                 </p>
             </div>
         );
